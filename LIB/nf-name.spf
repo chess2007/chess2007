@@ -1,0 +1,31 @@
+\ Преобразователь выражений вида '?.?', где ?.? - ascii-символы - от 1-го до 4-х штук в одинарное число
+
+: NOTFOUND \ a u -- n  
+  2DUP OVER + 1- C@ 0x27 = SWAP C@ 0x27 = AND 0=
+  IF NOTFOUND EXIT THEN 0 -ROT  2- SWAP 1+ SWAP OVER + 1-
+  DO 8 LSHIFT I C@ + -1 +LOOP LIT, ;
+
+: LOAD-LEX ( A U -- ) HERE SWAP DUP ALLOT MOVE 0 C, ;
+
+: LOAD-TEXT
+  5 ALLOT HERE >R
+  BEGIN NextWord ( -- a u )
+  2DUP  DUP  2 = SWAP 1 = OR  \ a u a f
+        IF   DUP  W@ DUP ';M' = SWAP ';T' = OR SWAP C@ ';' = OR \ a u f
+             IF   2DROP 1
+             ELSE OVER C@ '\' =
+                  IF   DROP 0xD PARSE DROP OVER - ERASE  \ a a1 a
+                  ELSE LOAD-LEX THEN 0
+             THEN
+        ELSE DROP DUP 0=
+             IF 2DROP REFILL DROP ELSE LOAD-LEX THEN 0
+        THEN
+  UNTIL
+  HERE R@ 5 - DP ! 0xE9 C, DUP R@ - ,
+  DUP DP ! R@ SWAP R> - 1- DLIT, ;
+
+\ Слова-строки многострочные - допускают комментарии вида \ .....
+: T: ( name "text" -- ) : LOAD-TEXT POSTPONE ; ;
+
+\ Макросы многострочные - допускают комментарии вида \ .....
+: M: ( name "text" -- ) : IMMEDIATE LOAD-TEXT POSTPONE EVALUATE POSTPONE ; ;

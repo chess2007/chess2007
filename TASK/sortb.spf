@@ -1,0 +1,15 @@
+QuickSortBytes: ( a u -- a u )
+1024 3|h:443yFGIbg*4+jL,             \ создание, обнуление и заполнение массива счетчиков байтов
+1:543GI@yDJ4-g/5w'5jLgN124f ;        \ запись отсортированных байт в исходный массив и освобождение массива счетчиков
+
+\ EOF
+T: arrb
+34334547667dfsfgjh54356rtrtrfuyyuihGHDRFGDRTgfghfggf2122fdrtetreghdfhg354asdfdfd
+7667dfsfgjh54356rtrtrfuyyopihjdjl;jy674597987986764rrdfjfgjhhojhokl-0=9=-9978655
+fseghgujlklp9t67rupop]oopu78t5r56tuiop[opouiut6r56er56r6tyu0u09ii90u89y78ty78t87
+guytuyguytyftrrt674547gjhjkuyfTGGYGIRTTRWErfygukhlkjopjuiotertrwetrfiuyouuuyt567
+iuguiguyyrf354355476587698ygjhffsddfvbvnmlkopikpujkughuyrtgjhoiytuyguhuihiut6878
+;
+
+arrb QuickSortBytes TYPE
+tst: arrb QuickSortBytes ;  METER0 tst

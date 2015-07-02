@@ -1,0 +1,9 @@
+\ задача: given 3 numbers, produce the sum of the squares of the biggest 2 of 3
+Msumsq: ( a b c -- n ) 3|mMd*23Md*+ ;
+
+\ операторы в стандартном виде
+: Msumsq1 ( a b c -- n ) 
+3| MIN MAX DUP * \23 MAX DUP * + ;
+
+\ EOF
+12 34 65 Msumsq1

@@ -1,0 +1,36 @@
+\ суммарное время измеряемого кода и кода его измерителя
+M: dt1
+   A^A CPUID DA=TSC X1=A B=X0 :B
+   A^A CPUID DA=TSC
+;M
+\ время кода измерителя
+M: dt2
+   A^A CPUID DA=TSC X1=A B=X0
+   A^A CPUID DA=TSC
+;M
+: 'METER0 \ xt --
+  X0=A
+  dt1 C=X1 A-C X2=A
+  dt2 C=X1 A-C B=A A=X2 A-B
+  CR 3 / . ."  nsec "    \ вывод латентности(актуально для разового исполнения)  
+  S0 @ SP! \ сброс стека
+;
+: 'METER \ xt --
+  X0=A
+  dt1 C=X1 A-C X2=A
+  dt2 C=X1 A-C B=A A=X2 A-B
+  CR . ."  tics "    \ вывод латентности(актуально для разового исполнения)
+  dt1 dt1 dt1 dt1 dt1 C=X1 A-C X2=A
+  dt2 dt2 dt2 dt2 dt2 C=X1 A-C B=A A=X2 A-B
+  .        \ вывод времени кода в кэше(актуально для исполнения в цикле)
+  S0 @ SP! \ сброс стека
+;
+: METER0 ( "name" -- ) ' 'METER0 ;
+: METER  ( "name" -- ) ' 'METER  ;
+
+: 'DMETER
+X0=A DROP TIMER@ B=X0 :B TIMER@ D- DABS 3000000 UM/MOD NIP CR . ."  msec "
+S0 @ SP! \ сброс стека
+;
+: DMETER  ( "name" -- ) ' 'DMETER  ;
+

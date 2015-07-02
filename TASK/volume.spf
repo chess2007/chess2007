@@ -1,0 +1,26 @@
+\ Есть закольцованная по адресам микросхема памяти с последовательным доступом,
+\ объем ее памяти неизвестен, можно за раз только один бить прочесть или изменить на противоположный для текущего адреса.
+\ Нужно найти объем памяти для этой микросхемы.
+
+: volume ( -- # )
+\ создание модели памяти
+\"choi v! v \h b! b v + e! b v \"cho+ a!
+
+\ реализация алгоритма определения объема памяти ( сложность O(Nlog2N))
+0 m! 1 M! 0 MM! 0 f!
+\B
+a \bZ? a \b~ a \wt
+m 0  \D a e \=? b \e a \it is a \L
+M m  \D a e \=? b \e a \it is a a \b? a \b~ a \wtL
+M 0  \D a b \=? e \e a \`it is a \L
+a \bZ? M m \-o=?'." volume memory  find: " M \`i.\
+               \'." volume memory model: " v . b \f \;
+                   \e M is MM M m + 2/ is M 1 is f \t
+        \e M is m f IF MM is M 0 is f \e M 2* is M \tt
+\O ;
+
+\ EOF
+
+tst: \"rnd 50000000 volume CR ; 
+
+DMETER tst
