@@ -36,7 +36,7 @@ VARIABLE iol 0 iol !     \ направление ввода-вывода в л�
 : ) ( -- )  RET, }L ; IMMEDIATE
 
 \ локально-именованные многострочные строки  
-: NOTFOUND  ( a u -- )   '("' nf2-exit  2- headl L{ STR-XT ;
+: NOTFOUND  ( a u -- )   '("' nf2-exit  2- headl L{ LOAD-TEXT ;
 
 : ") ( -- )  ` xts RET, }L ; IMMEDIATE
 
