@@ -35,10 +35,10 @@ VARIABLE iol 0 iol !     \ направление ввода-вывода в л�
 \ окончание формирования кода с локальным именем
 : ) ( -- )  RET, }L ; IMMEDIATE
 
-\ локально-именованные строки  
-: NOTFOUND  ( a u -- )   '("'  nf2-exit  2- headl L{ POSTPONE S" ;
+\ локально-именованные многострочные строки  
+: NOTFOUND  ( a u -- )   '("' nf2-exit  2- headl L{ STR-XT ;
 
-: ") ( -- )  RET, }L ; IMMEDIATE
+: ") ( -- )  ` xts RET, }L ; IMMEDIATE
 
 \ окончание формирования кода с локальным именем, оставляющего токен на стеке
 : x) ( -- )  RET, }L axtloc @ @ LIT, ; IMMEDIATE
@@ -109,15 +109,6 @@ VARIABLE iol 0 iol !     \ направление ввода-вывода в л�
 : NOTFOUND ( a u -- ) u! a!  \ хвостовая оптимизация кода слова
   a u + 1- C@ ';' = u 1 > AND 0= IF a u NOTFOUND EXIT THEN
   a u 1- SFIND DROP BRANCH, POSTPONE -; ;
-
-\ замыкания
-: xts ( a u -- xt )
-  DP @ >R 1024  ALLOCATE THROW DUP >R DP !
-  TRUE STATE ! EVALUATE RET, FALSE STATE !
-  R@ DP @ R> -  RESIZE THROW  R> DP ! ; 
-
-
-
 
 \EOF
 
