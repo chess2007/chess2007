@@ -87,7 +87,7 @@ WINAPI: GetConsoleScreenBufferInfo KERNEL32.DLL
 
 USER-VALUE XSP 
 
-: NOTFOUND ( A U -- ) u! a! 0. f! beg! 40 buf] XSP sp!  0 flb! 0. sr! Lb! 0. f0! f9! 0. f/! f|! 0. f\! fc! 0. flen! nz!
+: NOTFOUND ( A U -- ) u! a! 0. f! beg! 40 buf] XSP sp!  0 flb! 0. sr! Lb! 0. f0! f9! 0. f/! f|! 0 f\! 0. flen! nz!
   u 1 > is flen 
   a C@ is nz 
   nz '\' = nz '|' = nz '/' = OR OR IF nz is sr '0' is nz 1 ELSE \ заголовок из одного из разделителей \ | / эквивалентен заголовку 0\ 0| 0/ соответственно
@@ -97,8 +97,8 @@ USER-VALUE XSP
   sr '/' = is f/             \ f/ - разделитель / - стек убрать в новый буфер, 0/ - завести новый буфер
   sr '|' = is f|             \ f| - разделитель | - стек скопировать в текущий буфер
   sr '\' = is f\             \ f\ - разделитель \ - стек убрать в текущий буфер, 0\ - новый буфер не заводить
-  a u 1- + C@ ',' <> is fc
-  flen f0 f9 OR AND f/ f| OR f\ OR AND fc AND 0=
+  
+  flen f0 f9 OR AND f/ f| OR f\ OR AND 0=
   IF a u NOTFOUND EXIT
   ELSE sr 
    CASE 
