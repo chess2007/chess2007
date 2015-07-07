@@ -30,7 +30,6 @@
 \ Макросы многострочные - допускают комментарии вида \ .....
 : M: ( name "text" -- ) : IMMEDIATE LOAD-TEXT POSTPONE EVALUATE POSTPONE ; ;
 
-
 \ замыкания
 : xts ( a u -- xt )
   DP @ >R 1024  ALLOCATE THROW DUP >R DP !

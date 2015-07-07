@@ -1,5 +1,6 @@
 \ Сокращенная форма записи мнемоник команд x86 - по мере необходимости пополняется из файла MP-Assm
 
+
 I: ` [COMPILE] POSTPONE ;
 
 USER-VALUE A-MNEM   USER-VALUE L-MNEM

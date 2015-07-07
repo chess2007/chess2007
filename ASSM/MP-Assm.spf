@@ -1,5 +1,6 @@
 \ Постфиксный целочисленный ассемблер для платформы IA-32(без набора команд расширения ММХ)
 
+
 0 WARNING !
 
 0 VALUE R1 0 VALUE R2 0 VALUE R3 0 VALUE SM 0 VALUE DT 0 VALUE ADR

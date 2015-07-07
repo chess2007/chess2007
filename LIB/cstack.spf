@@ -1,5 +1,6 @@
 \ Создание стеков в памяти 
 
+
 : STACK ( n -- )  CREATE HERE , CELLS ALLOT ;   \ использование: n STACK name
   100 STACK ST-COMP           \ создадим стек размером в 100 байт(25 ячеек)
 
