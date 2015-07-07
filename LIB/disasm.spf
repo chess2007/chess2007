@@ -1,3 +1,4 @@
+\ Расширение дизассемблера ( расчет количества инструкций и размера кода слов)
 \ 80386 DISASSEMBLER
 \ ANDREW MCKEWAN, APRIL 1994
 \ TOM ZIMMER,  05/18/94 PORT TO WIN32F
