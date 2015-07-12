@@ -12,4 +12,3 @@ gi BEGIN su gi ge? IF CR ." user win" 3\ EXIT THEN    sc gi ge? IF CR ." comp wi
 
 
 8 7 6   nim31
-

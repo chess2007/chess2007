@@ -2,7 +2,7 @@
 Msumsq: ( a b c -- n ) 3|mMd*23Md*+ ;
 
 \ операторы в стандартном виде
-: Msumsq1 ( a b c -- n ) 
+: Msumsq1 ( a b c -- n )
 3| MIN MAX DUP * \23 MAX DUP * + ;
 
 \ EOF

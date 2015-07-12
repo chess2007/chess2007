@@ -2,13 +2,13 @@
 
 CREATE lcode 0x10000 ALLOT lcode VALUE dpl    \ область кода для слов с локальными именами
 CREATE ldata 0x10000 ALLOT ldata VALUE ldhere \ область данных для локально-именованных переменных и массивов
-VARIABLE XHERE  VARIABLE xdpl                 \ переменные сохранения указателей компиляции
+USER XHERE  USER xdpl                 \ переменные сохранения указателей компиляции
 
 \ область локальных имен
 0x1000 CONSTANT lenlvoc
 USER-CREATE alvoc lenlvoc USER-ALLOT
-VARIABLE lhere
-VARIABLE axtloc
+USER lhere
+USER axtloc
 
 : lvoc ( -- a len )  alvoc lenlvoc ;  lvoc ERASE 1 lhere !
 
@@ -25,8 +25,8 @@ VARIABLE axtloc
 M: nf1-exit ( a u s  -- a u ) -ROT 2DUP + 1- C@ -ROT 2SWAP <> IF NOTFOUND EXIT THEN ;
 M: nf2-exit ( a u ss -- a u ) -ROT 2DUP + 2- W@ -ROT 2SWAP <> IF NOTFOUND EXIT THEN ;
 
-VARIABLE locxt 0 locxt ! \ XT для локально-именованного кода
-VARIABLE iol 0 iol !     \ направление ввода-вывода в лок переменные типа value
+USER locxt 0 locxt ! \ XT для локально-именованного кода
+USER iol 0 iol !     \ направление ввода-вывода в лок переменные типа value
 
 : +: : ;           \ склеивание определений - локальный словарь не удаляется, слово определенное по +: добавляется в основной словарь
 : : init-lvoc : ;

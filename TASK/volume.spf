@@ -21,6 +21,6 @@ a \bZ? M m \-o=?'." volume memory  find: " M \`i.\
 
 \ EOF
 
-tst: \"rnd 50000000 volume CR ; 
+tst: \"rnd 50000000 volume CR ;
 
 DMETER tst
