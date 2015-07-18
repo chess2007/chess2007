@@ -52,7 +52,7 @@ USER iol 0 iol !     \ направление ввода-вывода в лок 
 : lsearch { a u a1 u1 \ a2 u2 fl -- a u 0|1 }
   0 TO fl BEGIN a u a1 u1 SEARCH >R TO u2 TO a2
                 R> a2 u1 + razd? a2 1- razd? AND AND
-                IF   1 TO fl a2 u1 TRUE
+                IF   1 TO fl a2 u1 TRUE 
                 ELSE a2 u1 + 1+ TO a u2 u1 - 1- TO u
                      u u1 < IF 1 TO fl a u FALSE THEN
                 THEN
@@ -96,6 +96,7 @@ USER iol 0 iol !     \ направление ввода-вывода в лок 
 : NOTFOUND ( a u -- ) u! a!  \ создать заголовок слова с переводом STATE в режим компиляции
   a u + 1- C@ ':' = u 1 > AND 0= IF a u NOTFOUND EXIT THEN
   init-lvoc a u 1- SHEADER 3 TO XN [begin] ] HIDE ;
+
 
 : NOTFOUND ( a u -- ) u! a! 0 sa! \ исполнить слово или комбинатор независимо от STATE и от флага IMMEDIATE
   a u + 1- C@ '`' = u 1 > AND 0= IF a u NOTFOUND EXIT THEN

@@ -31,21 +31,21 @@ Z  0=          z  0<>                    ?  IF                  `? IFNOT
                                                                                 
 двухсимвольные операторы с префиксом '                           трехсимвольные операторы с префиксом "                                                                          
                                                                                                                                                          
-`hf  FREE                       '>=                              "hex HEX                                                                                           
-`ha  ALLOCATE                   '<=                              "dec DECIMAL                          
-`hr  RESIZE                     '<>                              "bin BINARY                           
-`ht  THROW                      '0>                                                                    
+'hf  FREE                       '>=                              "hex HEX                                                                                           
+'ha  ALLOCATE                   '<=                              "dec DECIMAL                          
+'hr  RESIZE                     '<>                              "bin BINARY                           
+'ht  THROW                      '0>                                                                    
                                 '0<                              "b=? NB=?                             
-'cs  SET-CURSOR                                                  "blc LB0                              
+'cs  SET-CURSOR                 'dp  DEPTH                       "blc LB0                              
 'c?  GET-CURSOR                 '..  .BL                         "bhc HB0                              
                                 '.0  .0                          "bsm SWBM                             
-'f;  CLOSE-FILE                 '.h  HEX . DECIMAL                                                      
-'f:  CREATE-FILE                '.b  .BIN                        "rnd RANDOMIZE                        
-'F:  CREATE-FILE-SHARED                                          "cho CHOOSE
-'Fo  OPEN-FILE-SHARED           'DS  D>S                         "0>= 
-'fx  DELETE-FILE                'SD  S>D                         "0<=   
-'fp  FILE-POSITION                                               
-'fs  FILE-SIZE                  'Ks  EKEY>SCAN                   
+'f;  CLOSE-FILE                 '.h  HEX . DECIMAL               "bMl MLB                                        
+'f:  CREATE-FILE                '.b  .BIN                                                
+'F:  CREATE-FILE-SHARED         'DS  D>S                         "rnd RANDOMIZE
+'Fo  OPEN-FILE-SHARED           'SD  S>D                         "cho CHOOSE 
+'fx  DELETE-FILE                'KB  kilobyte                       
+'fp  FILE-POSITION              'MB  megabyte                    "0>=            
+'fs  FILE-SIZE                  'Ks  EKEY>SCAN                   "0<=
 'fo  OPEN-FILE                  'Kc  EKEY>CHAR                   
 'fr  READ-FILE                  'k?  KEY?                        
 'fP  REPOSITION-FILE            'K?  EKEY?                       
@@ -62,9 +62,14 @@ Z  0=          z  0<>                    ?  IF                  `? IFNOT
 'tr  RESUME                     '/% MOD/          
 't;  STOP                                         
 'tp  PAUSE                      'ev EVALUATE
-'tx  TERMINATE                  
-'ti  THREAD-ID                  
-                                
+'tx  TERMINATE                  '+! +!
+'ti  THREAD-ID                  '-! -!
+                                '!+ !+
+                                '!- !- 
+
+
+
+
 назначение префиксов ` ' " p v     
 
 ` перед 0...9 - число, перед a...z, A...Z, ~...? - односимвольные операторы двойной разрядности или противоположные по действию тем же односимвольным операторам                                                                                

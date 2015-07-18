@@ -300,10 +300,8 @@ USER-VALUE XSP
                                            '.h' OF ` .HEX                ENDOF  ( n -- )
                                            '.b' OF ` .BIN                ENDOF  ( n -- )
                                            \ входной поток
-                                           'S"' OF ` S"                  ENDOF  
                                            'ev' OF ` EVALUATE            ENDOF  ( a u -- )
-                                           \ вывод 
-                                           '."' OF ` ."                  ENDOF
+                                           
                                            \ файлы
                                            'f;' OF ` CLOSE-FILE          ENDOF
                                            'f:' OF ` CREATE-FILE         ENDOF
