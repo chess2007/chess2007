@@ -1,0 +1,34 @@
+\ Написать слово, которое число на стеке печатает в "римской нотации"
+
+0 VALUE SMD
+
+: SYM. \ SM --
+  S" IVXLCDM" DROP SMD + + C@ EMIT ;
+
+: DIG.  \ DIG SM --
+  TO SMD 5 /MOD OVER 4 =
+  IF 0 SYM. 
+     IF   2 SYM.  
+     ELSE 1 SYM.  
+     THEN DROP
+  ELSE  
+     IF 1 SYM. THEN 
+     0 ?DO 0 SYM. LOOP 
+  THEN ;
+
+: ROME. \ N --
+  1000 /MOD 6 DIG. 100 /MOD 4 DIG. 10 /MOD 2 DIG. 0 DIG. ;
+
+\ с локальными словами и манипуляторами
+: Rome. 0 smd! 
+  sym.( S" IVXLCDM" smd 3/13++bc )
+  dig.( is smd 5 /MOD OVER 4 =
+        IF 0 sym. IF 2 sym. ELSE 1 sym.  THEN DROP
+        ELSE  IF 1 sym. THEN 0 ?DO 0 sym. LOOP THEN )
+  1000 /MOD 6 dig. 100 /MOD 4 dig. 10 /MOD 2 dig. 0 dig.
+;
+
+
+\ EOF
+3949 Rome.
+
