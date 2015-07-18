@@ -2,12 +2,8 @@
 : SPDROP ( p*n n --)  P+A DROP ;  \ убрать со стека n байтов
 : SPMOVE ( p*n addr n --) $ 4 B=aP D=A D+@P L1: $ -4 Da C=@B @D=C $ 4 Ba $ 4 A-# L1 J0<> 2DROP ; \ скопировать n байтов стека в память
 
-
 USER-CREATE xtarr 1024 USER-ALLOT \ массив для именованных символом исполняемых токенов с префиксом v
 USER-CREATE prarr 1024 USER-ALLOT \ массив для именованных символом параметров          с префиксом p
-
-\ USER-CREATE XTARR 65536 USER-ALLOT \ массив для именованных двумя символами исполняемых токенов с префиксом V
-\ USER-CREATE PRARR 65536 USER-ALLOT \ массив для именованных двумя символами  параметров         с префиксом P
 
 : odin  1 ;
 : kilobyte  1024 ;
@@ -129,7 +125,8 @@ USER-VALUE XSP
          'l' OF ` LSHIFT   0 ENDOF ( n1 n2 -- n )
          \ стек
          'd' OF ` DUP      0 ENDOF ( n -- n n )
-         'x' OF ` DROP     0 ENDOF ( n -- )       
+         'x' OF ` DROP     0 ENDOF ( n -- )
+         'P' OF ` DEPTH    0 ENDOF ( -- n )
          \ память
          '!' OF ` !        0 ENDOF
          '@' OF ` @        0 ENDOF
@@ -272,9 +269,7 @@ USER-VALUE XSP
                                            '+!' OF ` +!                  ENDOF  ( n addr -- )
                                            '-!' OF ` -!                  ENDOF  ( n addr -- )
                                            '!+' OF ` !+                  ENDOF  ( addr n -- )
-                                           '!-' OF ` !-                  ENDOF  ( addr n -- )
-                                           \ стек
-                                           'dp' OF ` DEPTH               ENDOF
+                                           '!-' OF ` !-                  ENDOF  ( addr n -- )                                                                                      
                                            \ память в хипе
                                            'ha' OF ` ALLOCATE            ENDOF
                                            'hf' OF ` FREE                ENDOF

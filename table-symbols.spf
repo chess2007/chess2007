@@ -36,7 +36,7 @@ Z  0=          z  0<>                    ?  IF                  `? IFNOT
 'hr  RESIZE                     '<>                              "bin BINARY                           
 'ht  THROW                      '0>                                                                    
                                 '0<                              "b=? NB=?                             
-'cs  SET-CURSOR                 'dp  DEPTH                       "blc LB0                              
+'cs  SET-CURSOR                                                  "blc LB0                              
 'c?  GET-CURSOR                 '..  .BL                         "bhc HB0                              
                                 '.0  .0                          "bsm SWBM                             
 'f;  CLOSE-FILE                 '.h  HEX . DECIMAL               "bMl MLB                                        
