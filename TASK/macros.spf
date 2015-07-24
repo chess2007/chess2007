@@ -1,0 +1,23 @@
+\ пример использования макросов и локально-именованных макросов
+
+CREATE arr  1 C, 2 C, 5 C, 4 C, 5 C,
+CREATE ARR  1  , 2  , 3  , 4  , 5  ,
+
+M: compdata ( a u -- fl )  0 f!
+   2/2 k * 0
+   DO /2 k * I k +
+      ?DO J /1 + r I /1 + r = IF 1 is f LEAVE THEN  L`
+      f IF LEAVE THEN
+   L` f ;
+
+: compbytes ( a u -- fl )
+  r( C@ ) L(" LOOP " m)  k( 1 )
+  compdata ;
+
+arr 5 compbytes
+
+: compcells ( a u -- fl )
+  r( @ )  L(" 4 +LOOP " m) k( 4 )
+  compdata ;
+
+ARR 5 compcells

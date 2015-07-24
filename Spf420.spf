@@ -11,10 +11,11 @@ REQUIRE 0SQRT        ~chess\assm\mp-assm.spf     \ встроенный пост
 REQUIRE IDN          ~chess\assm\sp-assm.spf     \ встроенный двухпроходный ассемблер с метками и коротким синтаксисом для инструкций
 REQUIRE )            ~chess\lib\nloc.spf         \ локально-именованные слова, переменные и массивы в стат.памяти, суффиксы для форт-слов
 REQUIRE SPMOVE       ~chess\lib\manipulators.spf \ стековые манипуляторы 
+\ REQUIRE SPMOVE       ~chess\lib\manipulators1.spf \ стековые манипуляторы 
 REQUIRE METER        ~chess\lib\meter.spf        \ измеритель времени исполнения слова при разовом и циклическом его исполнении
 
 S" F:\SPF4\spf4x.exe" SAVE BYE                   \ сохраняем расширенную форт-систему
-
+\ S" F:\SPF4\spf4y.exe" SAVE BYE
 \EOF
 
 Порядок получения расширенной форт-системы SPF4(spf4x.exe):
