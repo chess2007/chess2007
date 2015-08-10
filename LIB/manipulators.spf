@@ -82,6 +82,16 @@ WINAPI: GetConsoleScreenBufferInfo KERNEL32.DLL
 : SWBM ( n M -- n~ )  D^D S^S B=L\A C=H\A C=B\@P 1Dc<< C=C\@P 1Sc<< D^S          \ обмен 2 битов по маске
   L1 J= C=B\@P~ C=C\@P~ L1: DROP ;
 
+\ доп. слова - работа с файлами
+\ файл по имени anf unf скопировать в хип ah uh
+: FILE->HEAP ( anf unf -- ah uh )
+R/O OPEN-FILE THROW >R 
+R@ FILE-SIZE THROW DROP >R \ двойное в одинарное
+R@ ALLOCATE THROW DUP  
+R> R@ READ-FILE THROW
+R> CLOSE-FILE THROW
+;
+
 USER-VALUE XSP 
 
 : NOTFOUND ( A U -- ) u! a! 0. f! beg! 40 buf] XSP sp!  0 flb! 0. sr! Lb! 0. f0! f9! 0. f/! f|! 0 f\! 0. flen! nz!
@@ -298,23 +308,24 @@ USER-VALUE XSP
                                            'ev' OF ` EVALUATE            ENDOF  ( a u -- )
                                            
                                            \ файлы
-                                           'f;' OF ` CLOSE-FILE          ENDOF
-                                           'f:' OF ` CREATE-FILE         ENDOF
-                                           'F:' OF ` CREATE-FILE-SHARED  ENDOF
-                                           'Fo' OF ` OPEN-FILE-SHARED    ENDOF
-                                           'fx' OF ` DELETE-FILE         ENDOF
-                                           'fp' OF ` FILE-POSITION       ENDOF
-                                           'fs' OF ` FILE-SIZE           ENDOF
-                                           'fo' OF ` OPEN-FILE           ENDOF
-                                           'fr' OF ` READ-FILE           ENDOF
-                                           'fP' OF ` REPOSITION-FILE     ENDOF
-                                           'lr' OF ` READ-LINE           ENDOF
-                                           'fw' OF ` WRITE-FILE          ENDOF
-                                           'fS' OF ` RESIZE-FILE         ENDOF
-                                           'lw' OF ` WRITE-LINE          ENDOF
-                                           'ff' OF ` FLUSH-FILE          ENDOF
-                                           'fe' OF ` FILE-EXIST          ENDOF
-                                           'fE' OF ` FILE-EXISTS         ENDOF                                           
+                                           'f;' OF ` CLOSE-FILE          ENDOF  ( fileid -- ior )
+                                           'f:' OF ` CREATE-FILE         ENDOF  ( c-addr u fam -- fileid ior )
+                                           'F:' OF ` CREATE-FILE-SHARED  ENDOF  ( c-addr u fam -- fileid ior )
+                                           'Fo' OF ` OPEN-FILE-SHARED    ENDOF  ( c-addr u fam -- fileid ior )
+                                           'fx' OF ` DELETE-FILE         ENDOF  ( c-addr u -- ior )
+                                           'fp' OF ` FILE-POSITION       ENDOF  ( fileid -- ud ior )
+                                           'fs' OF ` FILE-SIZE           ENDOF  ( fileid -- ud ior )
+                                           'fo' OF ` OPEN-FILE           ENDOF  ( c-addr u fam -- fileid ior )
+                                           'fr' OF ` READ-FILE           ENDOF  ( c-addr u1 fileid -- u2 ior )
+                                           'fP' OF ` REPOSITION-FILE     ENDOF  ( ud fileid -- ior )
+                                           'lr' OF ` READ-LINE           ENDOF  ( c-addr u1 fileid -- u2 flag ior )
+                                           'fw' OF ` WRITE-FILE          ENDOF  ( c-addr u fileid -- ior )
+                                           'fS' OF ` RESIZE-FILE         ENDOF  ( ud fileid -- ior )
+                                           'lw' OF ` WRITE-LINE          ENDOF  ( c-addr u fileid -- ior )
+                                           'ff' OF ` FLUSH-FILE          ENDOF  ( fileid -- ior )
+                                           'fe' OF ` FILE-EXIST          ENDOF  ( addr u -- f )
+                                           'fE' OF ` FILE-EXISTS         ENDOF  ( addr u -- f )
+                                           'fh' OF ` FILE->HEAP          ENDOF  ( c-addr u -- c-addr1 u1 )
                                            \ многозадачность
                                            'ts' OF ` START               ENDOF
                                            't|' OF ` SUSPEND             ENDOF

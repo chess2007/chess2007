@@ -41,7 +41,7 @@ USER iol 0 iol !     \ направление ввода-вывода в лок 
 : NOTFOUND  ( a u -- )   '("' nf2-exit  2- headl L{ LOAD-TEXT ;
 
 \ макросы
-: m) ( -- ) ` EVALUATE RET, }L ; IMMEDIATE
+: m) ( -- )  ` EVALUATE RET, }L ; IMMEDIATE
 
 \ замыкания
 : c) ( -- )  ` xts RET, }L ; IMMEDIATE

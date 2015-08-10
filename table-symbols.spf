@@ -56,7 +56,8 @@ Z  0=          z  0<>                    ?  IF                  `? IFNOT
 'ff  FLUSH-FILE                 'b~  NB~                         
 'fe  FILE-EXIST                 'bl  NLB                         
 'fE  FILE-EXISTS                'bh  NHB                   
-                                'qb  QB1                   
+'fh  FILE->HEAP                 'qb  QB1                   
+
 'ts  START                                        
 't|  SUSPEND                    '%/ /MOD          
 'tr  RESUME                     '/% MOD/          
