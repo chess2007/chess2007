@@ -44,6 +44,11 @@ I: }LAMBDA ( res xt -- ) RET, >R >RESOLVE1 R> LIT, ;
 : BINARY 0x2 BASE ! ;
 : .BIN BINARY U. DECIMAL ;
 
+: .BLH HEX .BL DECIMAL ;
+: .BLB BINARY .BL DECIMAL ;
+: .0H HEX .0 DECIMAL ;
+: .0B BINARY .0 DECIMAL ;
+
 \ доп. слова - арифметика
 : MOD/ ( n1 n2 -- rez rest ) /MOD SWAP ;
 
@@ -361,6 +366,11 @@ USER-VALUE XSP
                                            'hex' OF ` HEX                ENDOF
                                            'dec' OF ` DECIMAL            ENDOF
                                            'bin' OF ` BINARY             ENDOF
+                                           \ вывод чисел
+                                           '.0b' OF ` .0B                ENDOF  ( n -- )
+                                           '..b' OF ` .BLB               ENDOF  ( n -- )
+                                           '.0h' OF ` .0H                ENDOF  ( n -- )
+                                           '..h' OF ` .BLH               ENDOF  ( n -- )
                                            \ случайный выбор числа из диапазона от 0 до n-1
                                            'cho' OF ` CHOOSE             ENDOF  ( n -- 0|1|2|..|n-1 )
                                            'rnd' OF ` RANDOMIZE          ENDOF
