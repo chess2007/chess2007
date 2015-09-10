@@ -15,19 +15,19 @@ M: compdata ( a u -- fl )  0 f!
    L` f ;
 
 : compbytes ( a u -- fl )
-  r( C@ ) L(" LOOP " m)     k( 1 )  c( = )
+  r( C@ ) L(m LOOP m)     k( 1 )  c( = )
   compdata ;
 
 : compwords ( a u -- fl )
-  r( W@ ) L(" 2 +LOOP " m)  k( 2 )  c( = )
+  r( W@ ) L(m 2 +LOOP m)  k( 2 )  c( = )
   compdata ;
 
 : compcells ( a u -- fl )
-  r( @ )  L(" 4 +LOOP " m)  k( 4 )  c( = )
+  r( @ )  L(m 4 +LOOP m)  k( 4 )  c( = )
   compdata ;
 
 : compdcells ( a u -- fl )
-  r( 2@ )  L(" 8 +LOOP " m) k( 8 )  c( D= )
+  r( 2@ )  L(m 8 +LOOP m) k( 8 )  c( D= )
   compdata ;
 
 

@@ -1,4 +1,4 @@
-\ локально-именованные слова, переменные, массивы, замыкания, строки
+\ лоMкально-именованные слова, переменные, массивы, замыкания, строки
 
 CREATE lcode 0x10000 ALLOT lcode VALUE dpl    \ область кода для слов с локальными именами
 CREATE ldata 0x10000 ALLOT ldata VALUE ldhere \ область данных для локально-именованных переменных и массивов
@@ -37,14 +37,15 @@ USER iol 0 iol !     \ направление ввода-вывода в лок 
 \ окончание формирования кода с локальным именем
 : ) ( -- )  RET, }L ; IMMEDIATE
 
-\ локально-именованные многострочные строки или макросы 
-: NOTFOUND  ( a u -- )   '("' nf2-exit  2- headl L{ LOAD-TEXT ;
 
-\ макросы
-: m) ( -- )  ` EVALUATE RET, }L ; IMMEDIATE
+\ локально-именованные  							   \ синтаксис
+\ строки 
+: NOTFOUND  ( a u -- )   '("' nf2-exit  2- headl L{ LOAD-TEXT            RET, }L ; \ name(" текст строки ")
+\ макросы 
+: NOTFOUND  ( a u -- )   '(m' nf2-exit  2- headl L{ LOAD-TEXT ` EVALUATE RET, }L ; \ name(m текст макроса m)
+\ замыкания 
+: NOTFOUND  ( a u -- )   '(c' nf2-exit  2- headl L{ LOAD-TEXT ` xts      RET, }L ; \ name(c текст замыкания c)
 
-\ замыкания
-: c) ( -- )  ` xts RET, }L ; IMMEDIATE
 
 \ окончание формирования кода с локальным именем, оставляющего токен на стеке
 : x) ( -- )  RET, }L axtloc @ @ LIT, ; IMMEDIATE
