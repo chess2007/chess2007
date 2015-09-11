@@ -41,11 +41,13 @@ USER iol 0 iol !     \ направление ввода-вывода в лок 
 \ локально-именованные  							   \ синтаксис
 \ строки 
 : NOTFOUND  ( a u -- )   '("' nf2-exit  2- headl L{ LOAD-TEXT            RET, }L ; \ name(" текст строки ")
+: NOTFOUND  ( a u -- )   '"'  nf1-exit  1- headl L{ LOAD-TEXT            RET, }L ; \ name"  текст строки "
 \ макросы 
 : NOTFOUND  ( a u -- )   '(m' nf2-exit  2- headl L{ LOAD-TEXT ` EVALUATE RET, }L ; \ name(m текст макроса m)
+: NOTFOUND  ( a u -- )   '['  nf1-exit  1- headl L{ LOAD-TEXT ` EVALUATE RET, }L ; \ name[  текст макроса ]
 \ замыкания 
 : NOTFOUND  ( a u -- )   '(c' nf2-exit  2- headl L{ LOAD-TEXT ` xts      RET, }L ; \ name(c текст замыкания c)
-
+: NOTFOUND  ( a u -- )   '{'  nf1-exit  1- headl L{ LOAD-TEXT ` xts      RET, }L ; \ name{  текст замыкания }
 
 \ окончание формирования кода с локальным именем, оставляющего токен на стеке
 : x) ( -- )  RET, }L axtloc @ @ LIT, ; IMMEDIATE

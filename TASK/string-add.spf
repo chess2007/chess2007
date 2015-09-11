@@ -7,5 +7,10 @@ s+: \ a1 u1 a2 u2 -- a u
 4|24 + ALLOCATE THROW 5\152 MOVE \352 + \4 MOVE \524 + ;
 
 \ EOF
+S" 123" S" a b c" s+ TYPE CR
 
-S" 123" S" abc" s+ TYPE
+\ сложение локально-именованных строк
+pr1: s1" 123 " 
+     s2" abc " 
+     s1 s2 s+ TYPE ;
+pr1

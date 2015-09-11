@@ -1,4 +1,4 @@
-\ пример использования макросов и локально-именованных макросов
+\ пример использования макросов и локально-именованных макросов(с разным синтаксисом ) 
 
 : 2,  ( D -- ) DP @ 2! 2 CELLS ALLOT ;
 
@@ -23,11 +23,11 @@ M: compdata ( a u -- fl )  0 f!
   compdata ;
 
 : compcells ( a u -- fl )
-  r( @ )  L(m 4 +LOOP m)  k( 4 )  c( = )
+  r( @ )  L[ 4 +LOOP ]  k( 4 )  c( = )
   compdata ;
 
 : compdcells ( a u -- fl )
-  r( 2@ )  L(m 8 +LOOP m) k( 8 )  c( D= )
+  r( 2@ )  L[ 8 +LOOP ] k( 8 )  c( D= )
   compdata ;
 
 
