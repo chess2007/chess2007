@@ -7,7 +7,7 @@
 
 : LOAD-LEX ( A U -- ) DP @ SWAP DUP ALLOT MOVE 0 C, ;
 
-: LOAD-TEXT
+: load-text ( -- a u )
   5 ALLOT DP @ >R
   BEGIN NextWord ( -- a u )
   2DUP  DUP  2 = SWAP 1 = OR  \ a u a f
@@ -23,9 +23,12 @@
         THEN
   UNTIL
   DP @ R@ 5 - DP ! 0xE9 C, DUP R@ - ,
-  DUP DP ! R@ SWAP R> - 1- DLIT, 
+  DUP DP ! R@ SWAP R> - 1-  
 ; 
 
+: LOAD-TEXT ( a u -- )  load-text DLIT,  ;
+  
+  
 \ Слова-строки многострочные - допускают комментарии вида \ .....
 : T: ( name "text" -- ) : LOAD-TEXT POSTPONE ; ;
 

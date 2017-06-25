@@ -2,19 +2,15 @@
 
 CREATE lcode 0x10000 ALLOT lcode VALUE dpl    \ область кода для слов с локальными именами
 CREATE ldata 0x10000 ALLOT ldata VALUE ldhere \ область данных для локально-именованных переменных и массивов
-\ USER XHERE  USER xdpl                 \ переменные сохранения указателей компиляции
-VARIABLE XHERE  VARIABLE xdpl 
+USER XHERE  USER xdpl                 \ переменные сохранения указателей компиляции
 
 \ область локальных имен
-0x100 CONSTANT lenlvoc
-USER-CREATE alvoc lenlvoc USER-ALLOT \ ****
-\ CREATE alvoc1 lenlvoc ALLOT         \ ****
-\ USER lhere
-\ USER axtloc
-VARIABLE lhere  
-VARIABLE axtloc 
+0x1000 CONSTANT lenlvoc
+USER-CREATE alvoc lenlvoc USER-ALLOT
+USER lhere
+USER axtloc
 
-: lvoc ( -- a len )  alvoc lenlvoc ;  lvoc ERASE  1 lhere !
+: lvoc ( -- a len )  alvoc lenlvoc ;  lvoc ERASE 1 lhere !
 
 \ формирование локального имени ( после последнего символа имени идет 0-й байт )
 : lname, ( a u -- axt)
@@ -43,45 +39,33 @@ USER iol 0 iol !     \ направление ввода-вывода в лок 
 
 
 \ локально-именованные  							   \ синтаксис
-\ строки
+\ строки 
+\ : NOTFOUND  ( a u -- )   '("' nf2-exit  2- headl L{ LOAD-TEXT            RET, }L ; \ name(" текст строки ")
 : NOTFOUND  ( a u -- )   '"'  nf1-exit  1- headl L{ LOAD-TEXT            RET, }L ; \ name"  текст строки "
 \ макросы 
+\ : NOTFOUND  ( a u -- )   '(m' nf2-exit  2- headl L{ LOAD-TEXT ` EVALUATE RET, }L ; \ name(m текст макроса m)
 : NOTFOUND  ( a u -- )   '['  nf1-exit  1- headl L{ LOAD-TEXT ` EVALUATE RET, }L ; \ name[  текст макроса ]
 \ замыкания 
+\ : NOTFOUND  ( a u -- )   '(c' nf2-exit  2- headl L{ LOAD-TEXT ` xts      RET, }L ; \ name(c текст замыкания c)
 : NOTFOUND  ( a u -- )   '{'  nf1-exit  1- headl L{ LOAD-TEXT ` xts      RET, }L ; \ name{  текст замыкания }
 
 \ окончание формирования кода с локальным именем, оставляющего токен на стеке
 : x) ( -- )  RET, }L axtloc @ @ LIT, ; IMMEDIATE
 
-\ CREATE arrloc 256 ALLOT
-\ : lsearch \ a u a1 u1  -- a u 0|1 
-\   2DUP \ TYPE CR 
-\   arrloc 256 ERASE >R 
-\   arrloc 1+ R@ MOVE  0 arrloc 1+ R@ + B!
-\   arrloc 1+ R@ 1+ SEARCH IF DROP R> TRUE ELSE RDROP FALSE THEN   
-\ ;
+
 
 
 : razd? ( a -- fl) DUP C@ 0= SWAP C@ 0x20 = OR ;
 
 \ процедура поиска имени в лок. словаре
-\ : lsearch { a u a1 u1 \ a2 u2 fl -- a u 0|1 } 
-\  0 TO fl BEGIN a u a1 u1 SEARCH >R TO u2 TO a2
-\             R> a2 u1 + razd? a2 1- razd? AND AND
-\             IF   1 TO fl a2 u1 TRUE 
-\             ELSE a2 u1 + 1+ TO a u2 u1 - 1- TO u
-\                u u1 < IF 1 TO fl a u FALSE THEN
-\             THEN
-\       fl UNTIL  ;
-
- : lsearch { a u a1 u1 \ a2  }
-\  128 ALLOCATE THROW TO a2
-\  a2 128 ERASE a1 a2 u1  MOVE
-  0 a1 u1 + C!
-  a u a1 u1  1+ SEARCH IF DROP u1 TRUE ELSE FALSE THEN
-\  IF   DROP u1 2DUP ." lst" TYPE CR TRUE 
-\  ELSE ." lsf" 2DUP TYPE CR FALSE THEN 
-; 
+: lsearch { a u a1 u1 \ a2 u2 fl -- a u 0|1 }
+  0 TO fl BEGIN a u a1 u1 SEARCH >R TO u2 TO a2
+                R> a2 u1 + razd? a2 1- razd? AND AND
+                IF   1 TO fl a2 u1 TRUE 
+                ELSE a2 u1 + 1+ TO a u2 u1 - 1- TO u
+                     u u1 < IF 1 TO fl a u FALSE THEN
+                THEN
+       fl UNTIL ;
 
 : l' ( 'lname' -- xt ) TRUE locxt ! ; IMMEDIATE  \ аналог ' для локально-именованных слов
 
@@ -89,26 +73,23 @@ USER iol 0 iol !     \ направление ввода-вывода в лок 
 : ib  2 iol ! ; IMMEDIATE
 : iw  3 iol ! ; IMMEDIATE
 : id  4 iol ! ; IMMEDIATE
-: if  5 iol ! ; IMMEDIATE
 
 \ компиляция кода с именами в лок. словаре
 : NOTFOUND \ a u --
   OVER C@ '`' = IF 1 /STRING TRUE locxt ! THEN
-  lvoc 2OVER  lsearch 0= lhere @ 1 = OR IF 2DROP NOTFOUND EXIT THEN
+  lvoc 2OVER lsearch 0= lhere @ 1 = OR IF 2DROP NOTFOUND EXIT THEN
   2SWAP NIP NIP + 1+ @ iol @
-  IF 12 + iol @ >R R@ 4 > IF 13 ELSE R@ 3 > IF  8 ELSE R@ 1 > IF 3 ELSE 0 THEN THEN THEN
+  IF 12 + iol @ >R R@ 3 > IF  8 ELSE R@ 1 > IF 3 ELSE 0 THEN THEN
      RDROP + 0 iol !
   THEN locxt @ 0= IF COMPILE, ELSE 0 locxt ! LIT, THEN  ;
 
 \ локально-именованные переменые
 : NOTFOUND ( a u --  ) \ типа 2variable variable wvariable bvariable
-  ')' nf1-exit 1- headl  L{ ldhere FLIT, RET, ldhere 2 CELLS + TO ldhere }L ;
+  ')' nf1-exit 1- headl  L{ ldhere LIT, RET, ldhere 2 CELLS + TO ldhere }L ;
 : NOTFOUND ( a u --  ) \ типа value
   '!' nf1-exit  1- headl ldhere LIT, ` !  L{ ldhere LIT, ` @ RET, ldhere LIT, ` ! RET,   ldhere 1 CELLS + TO ldhere }L ;
 : NOTFOUND ( a u --  ) \ 2value
   '!d' nf2-exit  2- headl ldhere LIT, ` 2!  L{ ldhere LIT, ` 2@ RET, ldhere LIT, ` 2! RET, ldhere 2 CELLS + TO ldhere }L ;
-: NOTFOUND ( a u --  ) \ 2value
-  '!f' nf2-exit  2- headl ` FLOAT>DATA ldhere LIT, ` 2!  L{ ldhere LIT, ` 2@ ` DATA>FLOAT RET, ` FLOAT>DATA ldhere LIT, ` 2! RET, ldhere 2 CELLS + TO ldhere }L ;
 : NOTFOUND ( a u --  ) \ wvalue
   '!w' nf2-exit  2- headl ldhere LIT, ` W!  L{ ldhere LIT, ` W@ RET, ldhere LIT, ` W! RET, ldhere 2+ TO ldhere }L ;
 : NOTFOUND ( a u --  ) \ bvalue
@@ -149,36 +130,7 @@ USER iol 0 iol !     \ направление ввода-вывода в лок 
 
 \ неименованные замыкания
 I: (c load-text xts LIT, ;   
-
-\ числа с плавающей запятой в виде 3,1415
-: NOTFOUND  ( a u -- )  u! a!  0. sq! sz! 0. pt! an!
-  a u OVER + SWAP ?DO I C@ '0' ':' WITHIN IF sq 1+ is sq THEN  I C@ ',' = IF I a - is pt sz 1+ is sz THEN LOOP
-  a C@ '-' = IF sq u 2- = ELSE sq u 1- = THEN sz 1 = AND 0= IF a u NOTFOUND EXIT THEN
-  u 2+ ALLOCATE THROW is an a an u MOVE 'e' an u + C! '.' an pt + C! an u 1+ EVALUATE
-; 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 
 \EOF

@@ -1,0 +1,15 @@
+M: SYM->DOPERATOR
+'a' OF ` DABS      ENDOF  '<' OF ` D<        ENDOF
+'b' OF ` W@        ENDOF  '=' OF ` D=        ENDOF
+'d' OF ` 2DUP      ENDOF  '>' OF ` D>        ENDOF
+'l' OF ` DLSHIFT   ENDOF  '@' OF ` 2@        ENDOF
+'n' OF ` DNEGATE   ENDOF  '^' OF ` DXOR      ENDOF
+'r' OF ` DRSHIFT   ENDOF  '|' OF ` OR        ENDOF
+'w' OF ` W!        ENDOF  '~' OF ` INVERT    ENDOF
+'x' OF ` 2DROP     ENDOF  '!' OF ` 2!        ENDOF
+'y' OF ` dodin     ENDOF  ',' OF ` DLITERAL  ENDOF
+'z' OF ` D0<>      ENDOF  '&' OF ` DAND      ENDOF
+'Z' OF ` D0=       ENDOF  '+' OF ` D+        ENDOF
+'i' OF ` 1-        ENDOF  '-' OF ` D-        ENDOF
+'j' OF ` 1-!       ENDOF  '.' OF ` D.        ENDOF
+;

@@ -502,7 +502,6 @@ M: XR!
 : NOTFOUND   S" 1@w??>>"     IDN 3 RG! 4 RG!       ` 1@wRR>>    ;
 : NOTFOUND   S" 1@b??>>"     IDN 3 RG! 4 RG!       ` 1@bRR>>    ;
 : NOTFOUND   S" 1?c>>"       IDN 1 RG!             ` 1Rc>>      ;
-: NOTFOUND   S" 1?a>>"       IDN 1 RG!             ` 1Ra>>      ;
 : NOTFOUND   S" 1w?c>>"      IDN 2 RG!             ` 1wRc>>     ;
 : NOTFOUND   S" 1b?c>>"      IDN 2 RG!             ` 1bRc>>     ;
 : NOTFOUND   S" 1@?c>>"      IDN 2 RG!             ` 1@Rc>>     ;
@@ -538,24 +537,6 @@ M: XR!
 : NOTFOUND   S" #@??>>"      IDN 2 RG! 3 RG!       ` #@RR>>     ;
 : NOTFOUND   S" #@w??>>"     IDN 3 RG! 4 RG!       ` #@wRR>>    ;
 : NOTFOUND   S" #@b??>>"     IDN 3 RG! 4 RG!       ` #@bRR>>    ;
-: NOTFOUND   S" ?a>>"        IDN 0 RG!             ` Ra>>       ;
-: NOTFOUND   S" w?a>>"       IDN 1 RG!             ` wRa>>      ;
-: NOTFOUND   S" b?a>>"       IDN 1 RG!             ` bRa>>      ;
-: NOTFOUND   S" @?a>>"       IDN 1 RG!             ` @Ra>>      ;
-: NOTFOUND   S" @w?a>>"      IDN 2 RG!             ` @wRa>>     ;
-: NOTFOUND   S" @b?a>>"      IDN 2 RG!             ` @bRa>>     ;
-: NOTFOUND   S" @??a>>"      IDN 1 RG! 2 RG!       ` @RRa>>     ;
-: NOTFOUND   S" @w??a>>"     IDN 2 RG! 3 RG!       ` @wRRa>>    ;
-: NOTFOUND   S" @b??a>>"     IDN 2 RG! 3 RG!       ` @bRRa>>    ;
-: NOTFOUND   S" #?a>>"       IDN 1 RG!             ` #Ra>>      ;
-: NOTFOUND   S" #w?a>>"      IDN 2 RG!             ` #wRa>>     ;
-: NOTFOUND   S" #b?a>>"      IDN 2 RG!             ` #bRa>>     ;
-: NOTFOUND   S" #@?a>>"      IDN 2 RG!             ` #@Ra>>     ;
-: NOTFOUND   S" #@w?a>>"     IDN 3 RG!             ` #@wRa>>    ;
-: NOTFOUND   S" #@b?a>>"     IDN 3 RG!             ` #@bRa>>    ;
-: NOTFOUND   S" #@??a>>"     IDN 2 RG! 3 RG!       ` #@RRa>>    ;
-: NOTFOUND   S" #@w??a>>"    IDN 3 RG! 4 RG!       ` #@wRRa>>   ;
-: NOTFOUND   S" #@b??a>>"    IDN 3 RG! 4 RG!       ` #@bRRa>>   ;
 : NOTFOUND   S" ?c>>"        IDN 0 RG!             ` Rc>>       ;
 : NOTFOUND   S" w?c>>"       IDN 1 RG!             ` wRc>>      ;
 : NOTFOUND   S" b?c>>"       IDN 1 RG!             ` bRc>>      ;
@@ -592,7 +573,6 @@ M: XR!
 : NOTFOUND   S" #@??o>>"     IDN 2 RG! 3 RG!       ` #@RRo>>    ;
 : NOTFOUND   S" #@w??o>>"    IDN 3 RG! 4 RG!       ` #@wRRo>>   ;
 : NOTFOUND   S" #@b??o>>"    IDN 3 RG! 4 RG!       ` #@bRRo>>   ;
-
 : NOTFOUND   S" 1?<<"        IDN 1 RG!             ` 1R<<       ;
 : NOTFOUND   S" 1w?<<"       IDN 2 RG!             ` 1wR<<      ;
 : NOTFOUND   S" 1b?<<"       IDN 2 RG!             ` 1bR<<      ;
@@ -829,26 +809,3 @@ L5: T=RS
 
 SEE TST
 \ .
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

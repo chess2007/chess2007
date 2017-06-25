@@ -1,8 +1,7 @@
-\ переставить два бита в 4-х байтном числе
-
 : SWAPB ( n bitmask -- n')
   2DUP AND OVER 1 SWAP WITHIN AND XOR ;
 
-\ на манипуляторах
 : SWAPBm ( n bitmask -- n')
-  2/12&o2H2&1^ ;
+  2/12&`12H2&1^ ;
+
+0x1004005 0x1000002 SWAPBm HEX . DECIMAL
