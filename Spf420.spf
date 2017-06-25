@@ -9,7 +9,7 @@ REQUIRE {            lib\ext\locals.f \ ~mak\locals4.f              \ локал
 REQUIRE SEE          ~chess\lib\disasm.spf       \ доработанный SEE ( дает размер кода слова и число инструкций процессора в нем )
 REQUIRE 0SQRT        ~chess\assm\mp-assm.spf     \ встроенный постфиксный ассемблер( с зачатками плав.точки)
 REQUIRE IDN          ~chess\assm\sp-assm.spf     \ встроенный двухпроходный ассемблер с метками и коротким синтаксисом для инструкций
-REQUIRE F.           lib/include/float2.f
+REQUIRE F.           lib\include\float2.f
 REQUIRE )            ~chess\lib\nloc.spf         \ локально-именованные слова, переменные и массивы в стат.памяти, суффиксы для форт-слов
 REQUIRE SPMOVE       ~chess\lib\n-manipula.spf \ стековые манипуляторы
 \ REQUIRE SPMOVE       ~chess\lib\manipulators.spf \ стековые манипуляторы 

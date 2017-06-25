@@ -65,23 +65,23 @@ USER iol 0 iol !     \ направление ввода-вывода в лок 
 : razd? ( a -- fl) DUP C@ 0= SWAP C@ 0x20 = OR ;
 
 \ процедура поиска имени в лок. словаре
-\ : lsearch { a u a1 u1 \ a2 u2 fl -- a u 0|1 } 
-\  0 TO fl BEGIN a u a1 u1 SEARCH >R TO u2 TO a2
-\             R> a2 u1 + razd? a2 1- razd? AND AND
-\             IF   1 TO fl a2 u1 TRUE 
-\             ELSE a2 u1 + 1+ TO a u2 u1 - 1- TO u
-\                u u1 < IF 1 TO fl a u FALSE THEN
-\             THEN
-\       fl UNTIL  ;
+ : lsearch { a u a1 u1 \ a2 u2 fl -- a u 0|1 } 
+  0 TO fl BEGIN a u a1 u1 SEARCH >R TO u2 TO a2
+             R> a2 u1 + razd? a2 1- razd? AND AND
+             IF   1 TO fl a2 u1 TRUE 
+             ELSE a2 u1 + 1+ TO a u2 u1 - 1- TO u
+                u u1 < IF 1 TO fl a u FALSE THEN
+             THEN
+       fl UNTIL  ;
 
- : lsearch { a u a1 u1 \ a2  }
+\ : lsearch { a u a1 u1 \ a2  }
 \  128 ALLOCATE THROW TO a2
 \  a2 128 ERASE a1 a2 u1  MOVE
-  0 a1 u1 + C!
-  a u a1 u1  1+ SEARCH IF DROP u1 TRUE ELSE FALSE THEN
+\  0 a1 u1 + C!
+\  a u a1 u1  1+ SEARCH IF DROP u1 TRUE ELSE FALSE THEN
 \  IF   DROP u1 2DUP ." lst" TYPE CR TRUE 
 \  ELSE ." lsf" 2DUP TYPE CR FALSE THEN 
-; 
+\ ; 
 
 : l' ( 'lname' -- xt ) TRUE locxt ! ; IMMEDIATE  \ аналог ' для локально-именованных слов
 
