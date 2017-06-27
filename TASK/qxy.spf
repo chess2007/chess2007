@@ -1,4 +1,4 @@
-
+\ задача Дейкстры о разложении чисел на суммы двух квадратов
 \  0   0 0
 \  1   1 0
 \  2   1 1
@@ -16,14 +16,14 @@
 \ ...
 
 : nxy. ( n -- x0 y0 ... xn yn )
-s( $ -4 @P=A $ -4 0=@P 0SQRT $ -4 @P=0- $ -4 A=@P x) \ n -- sqrt(n)
-2/Y:41i0$I2XiIyr2X$JId*-d2Xd:3d*=I3<~&30<~&?4J=~?J:4\J.gStI.3.yStLL'1f ;
-                                                             
+sq( $ -4 @P=A $ -4 0=@P 0SQRT $ -4 @P=0- $ -4 A=@P x) \ n -- sqrt(n)
+2/Y:41i0$I2XiIyr2X$JId*-ad2Xd:3d*=I3<~&30<~&?4J=~?J:4\J`5`bgStI`5`b3`5`byStLL ;
+
 
 : xy. ( n -- x0 y0 ... xn yn )
 s( $ -4 @P=A   $ -4 0=@P   0SQRT   $ -4 @P=0-   $ -4 A=@P x)
-2/12Xi1yr2X$1Id*-d2Xd:3d*=?I.3.tL'1f ;
+2/12Xi1yr2X$1Id*-d2Xd:3d*=?I.3.tL ;
 
-: tst 1234 nxy. ; tst
+: tst 12345 nxy. ; tst
 
 CR CR 1221025 xy.

@@ -15,11 +15,11 @@ M: compdata ( a u -- fl )  0 f!
    L` f ;
 
 : compbytes ( a u -- fl )
-  r( C@ ) L(m LOOP m)     k( 1 )  c( = )
+  r( C@ ) L[ LOOP ]     k( 1 )  c( = )
   compdata ;
 
 : compwords ( a u -- fl )
-  r( W@ ) L(m 2 +LOOP m)  k( 2 )  c( = )
+  r( W@ ) L[ 2 +LOOP ]  k( 2 )  c( = )
   compdata ;
 
 : compcells ( a u -- fl )

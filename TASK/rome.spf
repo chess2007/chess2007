@@ -7,20 +7,20 @@
 
 : DIG.  \ DIG SM --
   TO SMD 5 /MOD OVER 4 =
-  IF 0 SYM. 
-     IF   2 SYM.  
-     ELSE 1 SYM.  
+  IF 0 SYM.
+     IF   2 SYM.
+     ELSE 1 SYM.
      THEN DROP
-  ELSE  
-     IF 1 SYM. THEN 
-     0 ?DO 0 SYM. LOOP 
+  ELSE
+     IF 1 SYM. THEN
+     0 ?DO 0 SYM. LOOP
   THEN ;
 
 : ROME. \ N --
   1000 /MOD 6 DIG. 100 /MOD 4 DIG. 10 /MOD 2 DIG. 0 DIG. ;
 
-\ с локальными словами и манипуляторами
-: Rome. 0 smd! 
+\ с локально-именованными словами и манипуляторами
+: Rome. 0 smd!
   sym.( S" IVXLCDM" smd 3/13++bc )
   dig.( is smd 5 /MOD OVER 4 =
         IF 0 sym. IF 2 sym. ELSE 1 sym.  THEN DROP
@@ -31,4 +31,3 @@
 
 \ EOF
 3949 Rome.
-
