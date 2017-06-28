@@ -1,92 +1,97 @@
 Синтаксис стековых манипуляторов
 
-односимвольные операторы манипуляторов                           односимвольные операторы с префиксом `       
-                                                                 двойная разрядность                       
-A  ACCEPT      a  ABS                    ~  INVERT              `+  D+                  
-B  BEGIN       b  C@                     !  !                   `-  D-                  
-C  CASE        c  EMIT                   @  @                   `n  DNEGATE             
-D  ?DO         d  DUP                    #  >NUMBER             `a  DABS                            
-E  ENDCASE     e  ELSE                   $  SFIND               `|  DOR                                          
-F  FILL        f  FREE THROW             %  MOD                 `^  DXOR                
-G  BOUND ?DO   g  CELL (4)               ^  XOR                 `&  DAND                
-H  WITHIN      h  ALLOCATE THROW         &  AND                 `~  DINVERT             
-I  I           i  1+                     *  *                   `l  DLSHIFT             
-J  J           j  1+!                    (  OF                  `r  DRSHIFT             
-K  EKEY        k  KEY                    )  ENDOF               `>  D>                           
-L  LOOP        l  LSHIFT                 -  -                   `<  D<                  
-M  MAX         m  MIN                    ,  LITERAL             `=  D=                  
-N  +LOOP       n  NEGATE                 +  +                   `Z  D0=                 
-O  AGAIN       o  1                      =  =                   `z  D0= INVERT          
-P  DEPTH       p  префикс для параметров {  LAMBDA{             `d  2DUP                           
-Q  LEAVE       q  COMPARE                }  }LAMBDA             `x  2DROP               
-R  REPEAT      r  RSHIFT                 :  TO для параметров   `@  2@                            
-S  SPACES      s  SEARCH (au au - au f)  ;  EXIT                `!  2!                  
-T  TYPE        t  THEN                   \  CR                  `.  D.                               
-U  UNTIL       u  не исп-ся              |  OR                  `b  W@                           
-V  MOVE        v  префикс для векторов   /  /                   `w  W!                             
-W  WHILE       w  C!                     <  <                   противоположное значение операции                        
-X  EXECUTE     x  DROP                   >  >                   `i 1-                        
-Y  TRUE (-1)   y  FALSE (0)              .  .                   `j 1-!                    
-Z  0=          z  0<>                    ?  IF                  `? IFNOT                        
-                                          _  ТО для векторов                                       
-                                                                                
-двухсимвольные операторы с префиксом '                           трехсимвольные операторы с префиксом "                                                                          
-                                                                                                                                                         
-'hf  FREE                       '>=                              "hex HEX                                                                                           
-'ha  ALLOCATE                   '<=                              "dec DECIMAL                          
-'hr  RESIZE                     '<>                              "bin BINARY                           
-'ht  THROW                      '0>                                                                    
-                                '0<                              "b=? NB=?                             
-'cs  SET-CURSOR                                                  "blc LB0                              
-'c?  GET-CURSOR                 '..  .BL                         "bhc HB0                              
-                                '.0  .0                          "bsm SWBM                             
-'f;  CLOSE-FILE                 '.h  HEX . DECIMAL               "bMl MLB                                        
-'f:  CREATE-FILE                '.b  .BIN                                                
-'F:  CREATE-FILE-SHARED         'DS  D>S                         "rnd RANDOMIZE
-'Fo  OPEN-FILE-SHARED           'SD  S>D                         "cho CHOOSE 
-'fx  DELETE-FILE                'KB  kilobyte                       
-'fp  FILE-POSITION              'MB  megabyte                    "0>=            
-'fs  FILE-SIZE                  'Ks  EKEY>SCAN                   "0<=
-'fo  OPEN-FILE                  'Kc  EKEY>CHAR                   
-'fr  READ-FILE                  'k?  KEY?                        
-'fP  REPOSITION-FILE            'K?  EKEY?                       
-'lr  READ-LINE                                                   
-'fw  WRITE-FILE                 'b?  NB?                         
-'fS  RESIZE-FILE                'bs  NB1                         
-'lw  WRITE-LINE                 'bc  NB0                         
-'ff  FLUSH-FILE                 'b~  NB~                         
-'fe  FILE-EXIST                 'bl  NLB                         
-'fE  FILE-EXISTS                'bh  NHB                   
-'fh  FILE->HEAP                 'qb  QB1                   
+\ Символы     Символы с префиксами " `       исполняемые токены, числа, адреса ячеек буфера стека, содержимое ячеек буфера стека  
 
-'ts  START                                        
-'t|  SUSPEND                    '%/ /MOD          
-'tr  RESUME                     '/% MOD/          
-'t;  STOP                                         
-'tp  PAUSE                      'ev EVALUATE
-'tx  TERMINATE                  '+! +!
-'ti  THREAD-ID                  '-! -!
-                                '!+ !+
-                                '!- !- 
+a ABS         "a DABS         `a FABS        'S  - XT слова обозначенного символом S
+b C@          "b W@           `b .BL         '1..'9 'A..'F - адреса ячеек буфера, куда сбрасываются со стека параметры    
+c EMIT        "d 2DUP         `c FCOS                        и откуда они кладутся(копируются) на стек
+d DUP         "g 4cell        `d FDUP        1..9 A..F - содержимое ячеек буфера 
+e ELSE        "l DLSHIFT      `f DS>F        `1..`9 `A..`F - числа 1..9 A..F 
+f hFree       "n DNEGATE      `h hex         : - символ присвоения, верхнее значение со стека снимается со стека и записывается в  
+g CELL        "r DRSHIFT      `i 1-              указанную за символом : ячейку, например 12+:3(содержимое ячеек 1 2 кладется на стек
+h hAlloc      "w W!           `j 1-!             суммируется на стеке и сумма снимается со стека и помещается в ячейку 3.
+i 1+          "x 2DROP        `k kbyte  
+j 1+!         "y Dodin        `K mbyte  
+k KEY         "z D0<>         `m FMIN   
+l LSHIFT      "D FLOAT>DATA   `n FNEGATE
+m MIN         "F DATA>FLOAT   `p FPI    
+n NEGATE      "X estr         `q sqrt   
+o AGAIN       "Z D0=          `Q FSQRT  
+p DP          "+ D+           `s FSIN   
+q COMPARE     "- D-           `t n.0b   
+r RSHIFT      "< D<           `T n.0h   
+s SEARCH      "= D=           `x FDROP  
+t THEN        "> D>           `z F0<    
+u hResize     "@ 2@           `I F1+    
+v EVALUATE    "! 2!           `T FTAN   
+w C!          "^ DXOR         `P .0     
+x DROP        "| DOR          `M FMAX   
+y odin        "& DAND         `Z F0=    
+z 0<>         "~ DINVERT      `+ F+     
+G aDO         ", 2LITERAL     `- F-     
+H WITHIN      ". D.           `* F*     
+I I           "0 Dnull        `/ F/     
+J J                           `< F<     
+K EKEY                        `= F=     
+L LOOP                        `@ F@     
+M MAX                         `! F!     
+N +LOOP                       `. F.     
+O BEGIN                       `; RET,   
+P DEPTH  
+Q LEAVE  
+R REPEAT 
+S SPACES :
+T TYPE   
+U UNTIL  
+V MOVE   
+W WHILE  
+X EXECUTE
+Y TRUE   
+Z 0=     
+! !      
+# FILL   
+$ ?DO    
+% MOD    
+& AND    
+( OF     
+) ENDOF  
+* *      
++ +      
+, LITERAL
+- -      
+. .      
+/ /      
+; EXIT   
+< <      
+= =      
+> >      
+? IF     
+@ @      
+[ CASE   
+\ CR     
+] ENDCASE
+^ XOR    
+_ ACCEPT 
+{ LAMBDA{
+| OR     
+} }LAMBDA
+~ INVERT 
 
+\ пример - сложение строк
+\      1  2  3  4     5  6 
+: s+ \ a1 u1 a2 u2 -- a3 u3 
+4/24+d:6h:5152V352+4V56 ;
 
+\ комментарии: запись 4/ означает, что со стека 4 верхних параметра a1 u1 a2 u2 записываюся соответственно в ячейки 1 2 3 4 буфера стека, 
+\ размером 15 ячеек, который выделяется в хипе по полному заголовку манипулятора(то есть когда указано число параметров ячеек, или когда
+\ имеем самую первую запись манипулятора в определении в виде /sss, где sss - символы манипулятора).     
+\ итак 4/ - сбросили параметры 1(a1) 2(u1) 3(a2) 4(u2) со стека в ячейки 1 2 3 4 выделенного буфера, затем
+\ содержимое 2 и 4 ячеек буфера положили на стек, сложили, результат сложения продублировали на стеке и сбросили в ячейку 6 буфера, затем 
+\ сделали ALLOCATE THROW (h) и получили адрес массива размером, равном сумме длин исходных строк, который сбросили со стека в ячейку 5.
+\ дальше пересылаем строку a1 u1 в этот выделенный массив, для чего выкладываем на стек адрес строки1 a1(1), адрес выделенного массива (5)
+\ и длину пересылаемой строки1 u1(2), затем выполняем MOVE(V), аналогичные действия проводим для второй строки, а затем выкладываем на стек
+\ адрес и длину суммарной строки(56).
+\ второй вариант с использованием только пяти ячеек буфера : s+  4/24+:5152V352+4V524+ ; длина суммарной строки вычисляется как сумма исх. строк        
 
-
-назначение префиксов ` ' " p v     
-
-` перед 0...9 - число, перед a...z, A...Z, ~...? - односимвольные операторы двойной разрядности или противоположные по действию тем же односимвольным операторам                                                                                
-' перед 0...9 - адрес ячеек 0...9, перед a...z, A...Z, ~...? - признак двухсимвольных операторов
-" перед a...z, A...Z, ~...? - признак трехсимвольных операторов
-p перед a...z, A...Z, ~...? при разыменовании параметров, пример использования: 
-  :A ( это запись значения со стека в именованный параметр A), символ : используется также при присвоении значения со стека именованным символами цифр параметров (например, :2 ) 
-  pA ( положить это значение на стек)
-v перед a...z, A...Z, ~...? при исполнении векторов, пример использования:
-  _A ( это запись значения исполняемого токена со стека в именованный вектор A), 
-  vA ( исполнить вектор А)
-
-[] скобки включения форт-слов и числовых литералов в манипулятор
-
-[ отмечает начало имени слова
-] отмечает конец  имени слова
 
 

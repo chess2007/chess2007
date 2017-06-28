@@ -192,19 +192,20 @@ M: SYM->FOPERATOR
 \EOF 
 \ как пример использовани€ - манипул€торный вариант конвертора чисел с плавающей точки из формы 32,123 в форму 32.123е
 \ числа с плавающей зап€той в виде 3,1415 
-: NOTFOUND  ( a u -- ) '0' ':' ',' '.' 'e' '-' ( sq sz pt an ) \
+\             1 2       3   4   5   6   7   8    9  A  B  C 
+: NOTFOUND  ( a u -- ) '0' ':' ',' '.' 'e' '-' ( sq sz pt an ) 
   8/0:90:A0:B0:C12GIb34H?'9jtIb5=?I1-:B'AjtL
   /1b8=?92`i`i=e92`i=tAy=&Z?12 NOTFOUND /;t
   /2iih:C1C2V7C2+w6CB+w0C2i+wC2iv
 ; 
 
-\ —имволы     —имволы с префиксами " `
+\ —имволы     —имволы с префиксами " `         
 
-a ABS         "a DABS         `a FABS   
-b C@          "b W@           `b .BL    
-c EMIT        "d 2DUP         `c FCOS   
-d DUP         "g 4cell        `d FDUP   
-e ELSE        "l DLSHIFT      `f DS>F   
+a ABS         "a DABS         `a FABS        'S  - XT слова обозначенного символом S
+b C@          "b W@           `b .BL         '1..'9 'A..'F - адреса €чеек буфера, куда сбрасываютс€ со стека параметры    
+c EMIT        "d 2DUP         `c FCOS                        и откуда они кладутс€(копируютс€) на стек
+d DUP         "g 4cell        `d FDUP        1..9 A..F - содержимое €чеек буфера
+e ELSE        "l DLSHIFT      `f DS>F        `1..`9 `A..`F - значени€ 1..9 A..F
 f hFree       "n DNEGATE      `h hex    
 g CELL        "r DRSHIFT      `i 1-     
 h hAlloc      "w W!           `j 1-!    
