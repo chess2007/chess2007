@@ -69,7 +69,7 @@ M: XTSYM ` LAMBDA{ I 1+ C@ CASE SYM->OPERATOR ENDCASE ` }LAMBDA 1 I+ ;
 
 \ символы с префиксом " 
 M: SYM->DOPERATOR 
-'a' OF ` DABS       ENDOF   'A' OF              ENDOF    '!' OF ` 2!         ENDOF    '0' OF ` Dnull      ENDOF          
+'a' OF ` DABS       ENDOF   'A' OF              ENDOF    '!' OF ` 2!         ENDOF              
 'b' OF ` W@         ENDOF   'B' OF              ENDOF    '#' OF              ENDOF              
 'c' OF              ENDOF   'C' OF              ENDOF    '$' OF              ENDOF
 'd' OF ` 2DUP       ENDOF   'D' OF              ENDOF    '%' OF              ENDOF
@@ -97,46 +97,40 @@ M: SYM->DOPERATOR
 'z' OF ` D0<>       ENDOF   'Z' OF ` D0=        ENDOF    '|' OF ` DOR        ENDOF
                                                          '}' OF              ENDOF
                                                          '~' OF ` DINVERT    ENDOF
- 
- 
-
-
+                                                         '0' OF ` Dnull      ENDOF
 ;                                                        
 
 \ символы с префиксом `
 M: SYM->FOPERATOR
-'a' OF ` FABS       ENDOF   'A' OF              ENDOF    '+' OF ` F+         ENDOF   
-'b' OF ` .BL        ENDOF   'B' OF              ENDOF    '-' OF ` F-         ENDOF
-'c' OF ` FCOS       ENDOF   'C' OF              ENDOF    '*' OF ` F*         ENDOF
-'d' OF ` FDUP       ENDOF   'D' OF              ENDOF    '/' OF ` F/         ENDOF
-'e' OF              ENDOF   'E' OF              ENDOF    '<' OF ` F<         ENDOF
-'f' OF ` DS>F       ENDOF   'F' OF              ENDOF    '=' OF ` F=         ENDOF
-'g' OF              ENDOF   'G' OF              ENDOF    '@' OF ` F@         ENDOF                     
-'h' OF ` hex        ENDOF   'H' OF              ENDOF    '!' OF ` F!         ENDOF                     
-'i' OF ` 1-         ENDOF   'I' OF ` F1+        ENDOF    '.' OF ` F.         ENDOF
-'j' OF ` 1-!        ENDOF   'J' OF              ENDOF    ';' OF ` RET,       ENDOF
-'k' OF ` kbyte      ENDOF   'K' OF ` mbyte      ENDOF
-'l' OF              ENDOF   'L' OF              ENDOF
-'m' OF ` FMIN       ENDOF   'M' OF ` FMAX       ENDOF
-'n' OF ` FNEGATE    ENDOF   'O' OF              ENDOF
-'o' OF              ENDOF   'P' OF              ENDOF
-'p' OF ` FPI        ENDOF   'P' OF ` .0         ENDOF
-'q' OF ` sqrt       ENDOF   'Q' OF ` FSQRT      ENDOF
-'r' OF              ENDOF   'R' OF              ENDOF
-'s' OF ` FSIN       ENDOF   'S' OF              ENDOF               
-'t' OF ` n.0b       ENDOF   'T' OF ` n.0h       ENDOF
-'u' OF              ENDOF   'U' OF              ENDOF                      
-'v' OF              ENDOF   'V' OF              ENDOF
-'w' OF              ENDOF   'W' OF              ENDOF
-'x' OF ` FDROP      ENDOF   'X' OF              ENDOF
-'y' OF              ENDOF   'Y' OF              ENDOF                      
-'z' OF ` F0<        ENDOF   'Z' OF ` F0=        ENDOF
-
-
-
-
-
-
+'a' OF ` FABS       ENDOF   'A' OF              ENDOF    '!' OF ` F!         ENDOF   
+'b' OF ` .BL        ENDOF   'B' OF              ENDOF    '#' OF              ENDOF
+'c' OF ` FCOS       ENDOF   'C' OF              ENDOF    '$' OF              ENDOF
+'d' OF ` FDUP       ENDOF   'D' OF              ENDOF    '%' OF              ENDOF
+'e' OF              ENDOF   'E' OF              ENDOF    '&' OF              ENDOF
+'f' OF ` DS>F       ENDOF   'F' OF              ENDOF    '(' OF              ENDOF
+'g' OF              ENDOF   'G' OF              ENDOF    ')' OF              ENDOF                     
+'h' OF ` hex        ENDOF   'H' OF              ENDOF    '*' OF ` F*         ENDOF                     
+'i' OF ` 1-         ENDOF   'I' OF ` F1+        ENDOF    '+' OF ` F+         ENDOF
+'j' OF ` 1-!        ENDOF   'J' OF              ENDOF    ',' OF              ENDOF
+'k' OF ` kbyte      ENDOF   'K' OF ` mbyte      ENDOF    '-' OF ` F-         ENDOF
+'l' OF              ENDOF   'L' OF              ENDOF    '.' OF ` F.         ENDOF
+'m' OF ` FMIN       ENDOF   'M' OF ` FMAX       ENDOF    '/' OF ` F/         ENDOF
+'n' OF ` FNEGATE    ENDOF   'O' OF              ENDOF    ';' OF ` RET,       ENDOF
+'o' OF              ENDOF   'P' OF              ENDOF    '<' OF ` F<         ENDOF
+'p' OF ` FPI        ENDOF   'P' OF ` .0         ENDOF    '=' OF ` F=         ENDOF
+'q' OF ` sqrt       ENDOF   'Q' OF ` FSQRT      ENDOF    '>' OF              ENDOF
+'r' OF              ENDOF   'R' OF              ENDOF    '?' OF              ENDOF
+'s' OF ` FSIN       ENDOF   'S' OF              ENDOF    '@' OF ` F@         ENDOF           
+'t' OF ` n.0b       ENDOF   'T' OF ` n.0h       ENDOF    '[' OF              ENDOF
+'u' OF              ENDOF   'U' OF              ENDOF    '\' OF              ENDOF                  
+'v' OF              ENDOF   'V' OF              ENDOF    ']' OF              ENDOF
+'w' OF              ENDOF   'W' OF              ENDOF    '^' OF              ENDOF
+'x' OF ` FDROP      ENDOF   'X' OF              ENDOF    '_' OF              ENDOF
+'y' OF              ENDOF   'Y' OF              ENDOF    '{' OF              ENDOF                  
+'z' OF ` F0<        ENDOF   'Z' OF ` F0=        ENDOF    '|' OF              ENDOF
+                                                         '}' OF              ENDOF
+                                                         '~' OF              ENDOF
+                                                         '0' OF              ENDOF
 ;
 
 0 VALUE XSP
