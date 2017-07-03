@@ -142,7 +142,8 @@ M: SYM->FOPERATOR
   a z19? a zAF? OR          fz1!
   a    C@ '/'        =      fr1!
   a 1+ C@ '/'        =      fr2!
-  fz1 fr2 AND fr1 OR u 1 > AND 0= IF a u NOTFOUND EXIT THEN
+  a    C@ '\'        =      fr3!
+  fz1 fr2 AND fr1 OR fr3 OR u 1 > AND 0= IF a u NOTFOUND EXIT THEN
   fr1 XSP 0= AND  fz1 fr2 AND OR
   IF  64 ALLOCATE THROW sp! sp TO XSP THEN
   fz1 IF a C@ a z19? IF '0' ELSE '7' THEN - CELLS Lb! sp LIT, Lb LIT, ` SPMOVE  Lb LIT, ` SPDROP THEN
