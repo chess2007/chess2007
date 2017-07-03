@@ -115,8 +115,8 @@ M: SYM->FOPERATOR
 'k' OF ` kbyte      ENDOF   'K' OF ` mbyte      ENDOF    '-' OF ` F-         ENDOF
 'l' OF              ENDOF   'L' OF              ENDOF    '.' OF ` F.         ENDOF
 'm' OF ` FMIN       ENDOF   'M' OF ` FMAX       ENDOF    '/' OF ` F/         ENDOF
-'n' OF ` FNEGATE    ENDOF   'O' OF              ENDOF    ';' OF ` RET,       ENDOF
-'o' OF              ENDOF   'P' OF              ENDOF    '<' OF ` F<         ENDOF
+'n' OF ` FNEGATE    ENDOF   'N' OF              ENDOF    ';' OF ` RET,       ENDOF
+'o' OF              ENDOF   'O' OF              ENDOF    '<' OF ` F<         ENDOF
 'p' OF ` FPI        ENDOF   'P' OF ` .0         ENDOF    '=' OF ` F=         ENDOF
 'q' OF ` sqrt       ENDOF   'Q' OF ` FSQRT      ENDOF    '>' OF              ENDOF
 'r' OF ` R>         ENDOF   'R' OF ` >R         ENDOF    '?' OF              ENDOF
