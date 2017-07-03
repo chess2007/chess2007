@@ -76,7 +76,7 @@ M: SYM->DOPERATOR
 'e' OF              ENDOF   'E' OF              ENDOF    '&' OF ` DAND       ENDOF
 'f' OF              ENDOF   'F' OF              ENDOF    '(' OF              ENDOF
 'g' OF ` 4cell      ENDOF   'G' OF              ENDOF    ')' OF              ENDOF
-'h' OF              ENDOF   'H' OF              ENDOF    '*' OF              ENDOF
+'h' OF ` ALLOT      ENDOF   'H' OF              ENDOF    '*' OF              ENDOF
 'i' OF              ENDOF   'I' OF              ENDOF    '+' OF ` D+         ENDOF
 'j' OF              ENDOF   'J' OF              ENDOF    ',' OF ` 2LITERAL   ENDOF
 'k' OF              ENDOF   'K' OF              ENDOF    '-' OF ` D-         ENDOF
@@ -119,13 +119,13 @@ M: SYM->FOPERATOR
 'o' OF              ENDOF   'P' OF              ENDOF    '<' OF ` F<         ENDOF
 'p' OF ` FPI        ENDOF   'P' OF ` .0         ENDOF    '=' OF ` F=         ENDOF
 'q' OF ` sqrt       ENDOF   'Q' OF ` FSQRT      ENDOF    '>' OF              ENDOF
-'r' OF              ENDOF   'R' OF              ENDOF    '?' OF              ENDOF
+'r' OF ` R>         ENDOF   'R' OF ` >R         ENDOF    '?' OF              ENDOF
 's' OF ` FSIN       ENDOF   'S' OF              ENDOF    '@' OF ` F@         ENDOF           
 't' OF ` n.0b       ENDOF   'T' OF ` n.0h       ENDOF    '[' OF              ENDOF
 'u' OF              ENDOF   'U' OF              ENDOF    '\' OF              ENDOF                  
 'v' OF              ENDOF   'V' OF              ENDOF    ']' OF              ENDOF
 'w' OF              ENDOF   'W' OF              ENDOF    '^' OF              ENDOF
-'x' OF ` FDROP      ENDOF   'X' OF              ENDOF    '_' OF              ENDOF
+'x' OF ` FDROP      ENDOF   'X' OF ` R@         ENDOF    '_' OF              ENDOF
 'y' OF              ENDOF   'Y' OF              ENDOF    '{' OF              ENDOF                  
 'z' OF ` F0<        ENDOF   'Z' OF ` F0=        ENDOF    '|' OF              ENDOF
                                                          '}' OF              ENDOF
