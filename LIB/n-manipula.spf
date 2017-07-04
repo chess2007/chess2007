@@ -184,7 +184,7 @@ M: SYM->FOPERATOR
 
 
 \EOF 
-\ как пример использования - манипуляторный вариант конвертора чисел с плавающей точки из формы 32,123 в форму 32.123е
+\ как пример использования - манипуляторный вариант конвертора чисел с плавающей запятой из формы 32,123 в форму 32.123е
 \ числа с плавающей запятой в виде 3,1415 
 \             1 2       3   4   5   6   7   8    9  A  B  C 
 : NOTFOUND  ( a u -- ) '0' ':' ',' '.' 'e' '-' ( sq sz pt an ) 
@@ -208,7 +208,7 @@ j 1+!         "y Dodin        `K mbyte
 k KEY         "z D0<>         `m FMIN   
 l LSHIFT      "D FLOAT>DATA   `n FNEGATE
 m MIN         "F DATA>FLOAT   `p FPI    
-n NEGATE      "X estr         `q sqrt   
+n NEGATE      "X estr         `q sqrt                                  
 o AGAIN       "Z D0=          `Q FSQRT  
 p DP          "+ D+           `s FSIN   
 q COMPARE     "- D-           `t n.0b   
@@ -224,14 +224,14 @@ z 0<>         "~ DINVERT      `- F-
 G aDO         ", 2LITERAL     `* F*     
 H WITHIN      ". D.           `/ F/     
 I I           "0 Dnull        `< F<     
-J J                           `= F=     
+J J           "h ALLOT        `= F=     
 K EKEY                        `@ F@     
 L LOOP                        `! F!     
 M MAX                         `. F.     
 N +LOOP                       `; RET,   
-O BEGIN                          
-P DEPTH  
-Q LEAVE  
+O BEGIN                       `r R>   
+P DEPTH                       `R >R
+Q LEAVE                       `X R@
 R REPEAT 
 S SPACES 
 T TYPE   
