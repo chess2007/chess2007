@@ -23,7 +23,7 @@
         THEN
   UNTIL
   DP @ R@ 5 - DP ! 0xE9 C, DUP R@ - ,
-  DUP DP ! R@ SWAP R> - 1-  
+  DUP DP ! R@ SWAP R> -  1-  
 ; 
 
 : LOAD-TEXT ( a u -- )  load-text DLIT,  ;

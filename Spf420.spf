@@ -6,17 +6,23 @@ REQUIRE M:           ~chess\lib\nf-name.spf      \ макросы, слова-с
 REQUIRE $!           ~mak\place.f
 REQUIRE CASE         lib\ext\case.f              \ конструкция CASE
 REQUIRE {            lib\ext\locals.f            \ локальные переменные
+
+\ REQUIRE {            ~mak\locals4.f               \ локальные переменные
 REQUIRE SEE          ~chess\lib\disasm.spf       \ доработанный SEE ( дает размер кода слова и число инструкций процессора в нем )
 REQUIRE 0SQRT        ~chess\assm\mp-assm.spf     \ встроенный постфиксный ассемблер( с зачатками плав.точки)
 REQUIRE IDN          ~chess\assm\sp-assm.spf     \ встроенный двухпроходный ассемблер с метками и коротким синтаксисом для инструкций
 REQUIRE CHOOSE       lib\ext\rnd.f               \ случайный выбор
 REQUIRE F.           lib\include\float2.f        \ вещественные числа
+STARTLOG
 REQUIRE )            ~chess\lib\nloc.spf         \ локально-именованные слова, переменные и массивы в стат.памяти, суффиксы для форт-слов
+
 REQUIRE SPMOVE       ~chess\lib\n-manipula.spf   \ стековые манипуляторы, расширенные операторами
 REQUIRE METER        ~chess\lib\meter.spf        \ измеритель времени исполнения слова при разовом и циклическом его исполнении
 
 
 S" I:\SPF4\devel\~chess\BIN\spf4n.exe" SAVE BYE
+
+
 
 \EOF
 

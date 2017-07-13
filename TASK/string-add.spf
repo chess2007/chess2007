@@ -10,7 +10,7 @@ s+: \ a1 u1 a2 u2 -- a u
 S" 123" S" a b c" s+ TYPE CR
 
 \ сложение локально-именованных строк
-pr1: s1" 123 " 
-     s2" abc " 
+pr1: s1" 123 "
+     s2" abc "
      s1 s2 s+ TYPE ;
 pr1

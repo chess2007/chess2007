@@ -135,8 +135,7 @@ M: SYM->FOPERATOR
 
 0 VALUE XSP
 : ; 0 TO XSP POSTPONE ; ; IMMEDIATE
-
-: NOTFOUND ( a u -- ) u! a!
+: NOTFOUND ( a u -- ) u! a! 
   z19?( C@ '1' ':' WITHIN )
   zAF?( C@ 'A' 'G' WITHIN )
   a z19? a zAF? OR          fz1!
@@ -146,6 +145,7 @@ M: SYM->FOPERATOR
   fz1 fr2 AND fr1 OR fr3 OR u 1 > AND 0= IF a u NOTFOUND EXIT THEN
   fr1 XSP 0= AND  fz1 fr2 AND OR
   IF  64 ALLOCATE THROW sp! sp TO XSP THEN
+ \ IF HERE sp! 64 LIT, ` ALLOT  sp TO XSP THEN
   fz1 IF a C@ a z19? IF '0' ELSE '7' THEN - CELLS Lb! sp LIT, Lb LIT, ` SPMOVE  Lb LIT, ` SPDROP THEN
   a u + a fz1 IF 2+ ELSE 1+ THEN
   ?DO I z19? I zAF? OR
