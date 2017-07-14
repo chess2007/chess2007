@@ -7,10 +7,10 @@
    3 4 c1 y1!
    5 6 c1 y2!
    DO                   \ форт
-       y0 op` 
-       y1 op` 
-       y2 op` CR  
-   LOOP 
+       y0 op`
+       y1 op`
+       y2 op` CR
+   LOOP
 ;
 
 30 0 tst

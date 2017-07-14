@@ -15,7 +15,7 @@
 : swap-symbol ( a u n1 n2 -- a u )
 4/13+b14+b13+w14+w12 ;
 
-STARTLOG
+\ STARTLOG
 S" 0123456789" 2 6 car-symb TYPE CR
 S" 0123456789" 6 2 carry-symbol TYPE CR
 S" 0123456789" 6 2 swap-symbol  TYPE CR                                              \ 0123456789
