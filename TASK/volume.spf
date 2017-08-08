@@ -21,6 +21,6 @@ a \bZ? M m \-y=? ." volume memory  find: " M \`i.\
 
 \ EOF
 
-tst: RANDOMIZE 50000000 volume CR ;
+tst: RANDOMIZE 1200000000 volume CR ;
 
 DMETER tst

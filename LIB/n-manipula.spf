@@ -36,7 +36,7 @@ M: SYM->OPERATOR
    'm' OF ` MIN      ENDOF  'T' OF ` TYPE    ENDOF  '\' OF ` CR      ENDOF
    'n' OF ` NEGATE   ENDOF  'U' OF ` UNTIL   ENDOF  ']' OF ` ENDCASE ENDOF
    'o' OF ` AGAIN    ENDOF  'V' OF ` MOVE    ENDOF  '^' OF ` XOR     ENDOF
-   'p' OF ` DP       ENDOF  'W' OF ` WHILE   ENDOF  '_' OF ` ACCEPT  ENDOF
+   'p' OF ` DS>F     ENDOF  'W' OF ` WHILE   ENDOF  '_' OF ` ACCEPT  ENDOF
    'q' OF ` COMPARE  ENDOF  'X' OF ` EXECUTE ENDOF  '{' OF ` LAMBDA{ ENDOF
    'r' OF ` RSHIFT   ENDOF  'Y' OF ` TRUE    ENDOF  '|' OF ` OR      ENDOF
    's' OF ` SEARCH   ENDOF  'Z' OF ` 0=      ENDOF  '}' OF ` }LAMBDA ENDOF
@@ -92,7 +92,7 @@ M: SYM->DOPERATOR
 'u' OF              ENDOF   'U' OF              ENDOF    '\' OF              ENDOF
 'v' OF              ENDOF   'V' OF              ENDOF    ']' OF              ENDOF                         
 'w' OF ` W!         ENDOF   'W' OF              ENDOF    '^' OF ` DXOR       ENDOF
-'x' OF ` 2DROP      ENDOF   'X' OF ` estr       ENDOF    '_' OF              ENDOF
+'x' OF ` 2DROP      ENDOF   'X' OF              ENDOF    '_' OF              ENDOF
 'y' OF ` Dodin      ENDOF   'Y' OF              ENDOF    '{' OF              ENDOF                         
 'z' OF ` D0<>       ENDOF   'Z' OF ` D0=        ENDOF    '|' OF ` DOR        ENDOF
                                                          '}' OF              ENDOF
