@@ -20,33 +20,33 @@ I: LAMBDA{ ( -- res xt ) 0 BRANCH, >MARK HERE ;
 I: }LAMBDA ( res xt -- ) RET, >R >RESOLVE1 R> LIT, ;
 
 M: SYM->OPERATOR
-   '0' OF ` FALSE    ENDOF  'G' OF ` aDO     ENDOF  '*' OF ` *       ENDOF
-   'a' OF ` ABS      ENDOF  'H' OF ` WITHIN  ENDOF  '+' OF ` +       ENDOF                      
-   'b' OF ` C@       ENDOF  'I' OF ` I       ENDOF  ',' OF ` LITERAL ENDOF                
-   'c' OF ` EMIT     ENDOF  'J' OF ` J       ENDOF  '-' OF ` -       ENDOF                      
-   'd' OF ` DUP      ENDOF  'K' OF ` EKEY    ENDOF  '.' OF ` .       ENDOF                      
-   'e' OF ` ELSE     ENDOF  'L' OF ` LOOP    ENDOF  '/' OF ` /       ENDOF                      
-   'f' OF ` hFree    ENDOF  'M' OF ` MAX     ENDOF  ';' OF ` EXIT    ENDOF                      
-   'g' OF ` CELL     ENDOF  'N' OF ` +LOOP   ENDOF  '<' OF ` <       ENDOF
-   'h' OF ` hAlloc   ENDOF  'O' OF ` BEGIN   ENDOF  '=' OF ` =       ENDOF
-   'i' OF ` 1+       ENDOF  'P' OF ` DEPTH   ENDOF  '>' OF ` >       ENDOF             
-   'j' OF ` 1+!      ENDOF  'Q' OF ` LEAVE   ENDOF  '?' OF ` IF      ENDOF
-   'k' OF ` KEY      ENDOF  'R' OF ` REPEAT  ENDOF  '@' OF ` @       ENDOF
-   'l' OF ` LSHIFT   ENDOF  'S' OF ` SPACES  ENDOF  '[' OF ` CASE    ENDOF
-   'm' OF ` MIN      ENDOF  'T' OF ` TYPE    ENDOF  '\' OF ` CR      ENDOF
-   'n' OF ` NEGATE   ENDOF  'U' OF ` UNTIL   ENDOF  ']' OF ` ENDCASE ENDOF
-   'o' OF ` AGAIN    ENDOF  'V' OF ` MOVE    ENDOF  '^' OF ` XOR     ENDOF
-   'p' OF ` DS>F     ENDOF  'W' OF ` WHILE   ENDOF  '_' OF ` ACCEPT  ENDOF
-   'q' OF ` COMPARE  ENDOF  'X' OF ` EXECUTE ENDOF  '{' OF ` LAMBDA{ ENDOF
-   'r' OF ` RSHIFT   ENDOF  'Y' OF ` TRUE    ENDOF  '|' OF ` OR      ENDOF
-   's' OF ` SEARCH   ENDOF  'Z' OF ` 0=      ENDOF  '}' OF ` }LAMBDA ENDOF
-   't' OF ` THEN     ENDOF  '!' OF ` !       ENDOF  '~' OF ` INVERT  ENDOF
-   'u' OF ` hResize  ENDOF  '#' OF ` FILL    ENDOF                        
-   'v' OF ` EVALUATE ENDOF  '$' OF ` ?DO     ENDOF  
-   'w' OF ` C!       ENDOF  '%' OF ` MOD     ENDOF  
-   'x' OF ` DROP     ENDOF  '&' OF ` AND     ENDOF  
-   'y' OF ` odin     ENDOF  '(' OF ` OF      ENDOF  
-   'z' OF ` 0<>      ENDOF  ')' OF ` ENDOF   ENDOF                        
+   '0' OF ` FALSE      ENDOF  'G' OF ` aDO     ENDOF  '*' OF ` *       ENDOF
+   'a' OF ` ABS        ENDOF  'H' OF ` WITHIN  ENDOF  '+' OF ` +       ENDOF                      
+   'b' OF ` C@         ENDOF  'I' OF ` I       ENDOF  ',' OF ` LITERAL ENDOF                
+   'c' OF ` DS>F       ENDOF  'J' OF ` J       ENDOF  '-' OF ` -       ENDOF                      
+   'd' OF ` DUP        ENDOF  'K' OF ` EKEY    ENDOF  '.' OF ` .       ENDOF                      
+   'e' OF ` ELSE       ENDOF  'L' OF ` LOOP    ENDOF  '/' OF ` /       ENDOF                      
+   'f' OF ` hFree      ENDOF  'M' OF ` MAX     ENDOF  ';' OF ` EXIT    ENDOF                      
+   'g' OF ` CELL       ENDOF  'N' OF ` +LOOP   ENDOF  '<' OF ` <       ENDOF
+   'h' OF ` hAlloc     ENDOF  'O' OF ` BEGIN   ENDOF  '=' OF ` =       ENDOF
+   'i' OF ` 1+         ENDOF  'P' OF ` DEPTH   ENDOF  '>' OF ` >       ENDOF             
+   'j' OF ` 1+!        ENDOF  'Q' OF ` LEAVE   ENDOF  '?' OF ` IF      ENDOF
+   'k' OF ` KEY        ENDOF  'R' OF ` REPEAT  ENDOF  '@' OF ` @       ENDOF
+   'l' OF ` LSHIFT     ENDOF  'S' OF ` SPACES  ENDOF  '[' OF ` CASE    ENDOF
+   'm' OF ` MIN        ENDOF  'T' OF ` TYPE    ENDOF  '\' OF ` CR      ENDOF
+   'n' OF ` NEGATE     ENDOF  'U' OF ` UNTIL   ENDOF  ']' OF ` ENDCASE ENDOF
+   'o' OF ` AGAIN      ENDOF  'V' OF ` MOVE    ENDOF  '^' OF ` XOR     ENDOF
+   'p' OF ` DATA>FLOAT ENDOF  'W' OF ` WHILE   ENDOF  '_' OF ` ACCEPT  ENDOF
+   'q' OF ` FLOAT>DATA ENDOF  'X' OF ` EXECUTE ENDOF  '{' OF ` LAMBDA{ ENDOF
+   'r' OF ` RSHIFT     ENDOF  'Y' OF ` TRUE    ENDOF  '|' OF ` OR      ENDOF
+   's' OF ` SEARCH     ENDOF  'Z' OF ` 0=      ENDOF  '}' OF ` }LAMBDA ENDOF
+   't' OF ` THEN       ENDOF  '!' OF ` !       ENDOF  '~' OF ` INVERT  ENDOF
+   'u' OF ` hResize    ENDOF  '#' OF ` FILL    ENDOF                        
+   'v' OF ` EVALUATE   ENDOF  '$' OF ` ?DO     ENDOF  
+   'w' OF ` C!         ENDOF  '%' OF ` MOD     ENDOF  
+   'x' OF ` DROP       ENDOF  '&' OF ` AND     ENDOF  
+   'y' OF ` odin       ENDOF  '(' OF ` OF      ENDOF  
+   'z' OF ` 0<>        ENDOF  ')' OF ` ENDOF   ENDOF                        
 ;
  
 M: XTSYM ` LAMBDA{ I 1+ C@ CASE SYM->OPERATOR ENDCASE ` }LAMBDA 1 I+ ;
@@ -65,13 +65,12 @@ M: XTSYM ` LAMBDA{ I 1+ C@ CASE SYM->OPERATOR ENDCASE ` }LAMBDA 1 I+ ;
 : n.0h ( n -- ) HEX .0 DECIMAL ;
 : .BL ( n -- ) >R 0 <# #S #> R> OVER - 0 MAX DUP IF 0 DO BL EMIT LOOP ELSE DROP THEN TYPE ;
 : sqrt ( n -- sqrt )  $ -4 @P=A $ -4 0=@P 0SQRT $ -4 @P=0- $ -4 A=@P ;
-: estr  ( a u -- ) HERE -ROT EVALUATE RET, EXECUTE ;
 
 \ символы с префиксом " 
 M: SYM->DOPERATOR 
 'a' OF ` DABS       ENDOF   'A' OF              ENDOF    '!' OF ` 2!         ENDOF              
 'b' OF ` W@         ENDOF   'B' OF              ENDOF    '#' OF              ENDOF              
-'c' OF              ENDOF   'C' OF              ENDOF    '$' OF              ENDOF
+'c' OF ` COMPARE    ENDOF   'C' OF              ENDOF    '$' OF              ENDOF
 'd' OF ` 2DUP       ENDOF   'D' OF              ENDOF    '%' OF              ENDOF
 'e' OF              ENDOF   'E' OF              ENDOF    '&' OF ` DAND       ENDOF
 'f' OF              ENDOF   'F' OF              ENDOF    '(' OF              ENDOF
@@ -107,7 +106,7 @@ M: SYM->FOPERATOR
 'c' OF ` FCOS       ENDOF   'C' OF              ENDOF    '$' OF              ENDOF
 'd' OF ` FDUP       ENDOF   'D' OF              ENDOF    '%' OF              ENDOF
 'e' OF              ENDOF   'E' OF              ENDOF    '&' OF              ENDOF
-'f' OF ` DS>F       ENDOF   'F' OF              ENDOF    '(' OF              ENDOF
+'f' OF              ENDOF   'F' OF              ENDOF    '(' OF              ENDOF
 'g' OF              ENDOF   'G' OF              ENDOF    ')' OF              ENDOF                     
 'h' OF ` hex        ENDOF   'H' OF              ENDOF    '*' OF ` F*         ENDOF                     
 'i' OF ` 1-         ENDOF   'I' OF ` F1+        ENDOF    '+' OF ` F+         ENDOF
@@ -133,15 +132,15 @@ M: SYM->FOPERATOR
                                                          '0' OF              ENDOF
 ;
 
-0 VALUE XSP
-: ; 0 TO XSP POSTPONE ; ; IMMEDIATE
+0 VALUE XSP 0 VALUE XSF
+: ; 0 TO XSP 0 TO XSF POSTPONE ; ; IMMEDIATE
 : NOTFOUND ( a u -- ) u! a! 
   z19?( C@ '1' ':' WITHIN )
   zAF?( C@ 'A' 'G' WITHIN )
   a z19? a zAF? OR          fz1!
   a    C@ '/'        =      fr1!
   a 1+ C@ '/'        =      fr2!
-  a    C@ '\'        =      fr3!
+  a    C@ '\'        =      fr3!  
   fz1 fr2 AND fr1 OR fr3 OR u 1 > AND 0= IF a u NOTFOUND EXIT THEN
   fr1 XSP 0= AND  fz1 fr2 AND OR
   IF  64 ALLOCATE THROW sp! sp TO XSP THEN
@@ -182,6 +181,59 @@ M: SYM->FOPERATOR
   LOOP
 ;
 
+\ работа с числами с плав. точкой 
+M: S>FOPERATOR
+   '0' OF ` FALSE      ENDOF  'G' OF ` aDO     ENDOF  '*' OF ` F*       ENDOF
+   'a' OF ` FABS       ENDOF  'H' OF ` WITHIN  ENDOF  '+' OF ` F+       ENDOF
+   'b' OF ` C@         ENDOF  'I' OF ` I       ENDOF  ',' OF ` FLITERAL ENDOF
+   'c' OF ` DS>F       ENDOF  'J' OF ` J       ENDOF  '-' OF ` F-       ENDOF
+   'd' OF ` FDUP       ENDOF  'K' OF ` EKEY    ENDOF  '.' OF ` F.       ENDOF
+   'e' OF ` ELSE       ENDOF  'L' OF ` LOOP    ENDOF  '/' OF ` F/       ENDOF
+   'f' OF ` hFree      ENDOF  'M' OF ` FMAX    ENDOF  ';' OF ` EXIT     ENDOF
+   'g' OF ` CELL       ENDOF  'N' OF ` +LOOP   ENDOF  '<' OF ` F<       ENDOF
+   'h' OF ` hAlloc     ENDOF  'O' OF ` BEGIN   ENDOF  '=' OF ` F=       ENDOF
+   'i' OF ` F1+        ENDOF  'P' OF ` FDEPTH  ENDOF  '>' OF            ENDOF
+   'j' OF ` 1+!        ENDOF  'Q' OF ` LEAVE   ENDOF  '?' OF ` IF       ENDOF
+   'k' OF ` KEY        ENDOF  'R' OF ` REPEAT  ENDOF  '@' OF ` F@       ENDOF
+   'l' OF ` LSHIFT     ENDOF  'S' OF ` FSQRT   ENDOF  '[' OF ` CASE     ENDOF
+   'm' OF ` FMIN       ENDOF  'T' OF ` TYPE    ENDOF  '\' OF ` CR       ENDOF
+   'n' OF ` FNEGATE    ENDOF  'U' OF ` UNTIL   ENDOF  ']' OF ` ENDCASE  ENDOF
+   'o' OF ` AGAIN      ENDOF  'V' OF ` MOVE    ENDOF  '^' OF ` XOR      ENDOF
+   'p' OF ` DATA>FLOAT ENDOF  'W' OF ` WHILE   ENDOF  '_' OF ` ACCEPT   ENDOF
+   'q' OF ` FLOAT>DATA ENDOF  'X' OF ` EXECUTE ENDOF  '{' OF ` LAMBDA{  ENDOF
+   'r' OF ` RSHIFT     ENDOF  'Y' OF ` TRUE    ENDOF  '|' OF ` OR       ENDOF
+   's' OF ` SEARCH     ENDOF  'Z' OF ` F0=     ENDOF  '}' OF ` }LAMBDA  ENDOF
+   't' OF ` THEN       ENDOF  '!' OF ` F!      ENDOF  '~' OF ` INVERT   ENDOF
+   'u' OF ` hResize    ENDOF  '#' OF ` FILL    ENDOF
+   'v' OF ` EVALUATE   ENDOF  '$' OF ` ?DO     ENDOF
+   'w' OF ` C!         ENDOF  '%' OF ` MOD     ENDOF
+   'x' OF ` FDROP      ENDOF  '&' OF ` AND     ENDOF
+   'y' OF ` odin       ENDOF  '(' OF ` OF      ENDOF
+   'z' OF ` F0<        ENDOF  ')' OF ` ENDOF   ENDOF
+;
+
+0 VALUE XSF
+: NOTFOUND ( a u -- ) u! a!
+  z18?( C@ '1' '9' WITHIN )
+  a z18?                    fz1!
+  a    C@ '|'        =      fr1!
+  a 1+ C@ '|'        =      fr2!
+  fz1 fr2 AND fr1 OR u 1 > AND 0= IF a u NOTFOUND EXIT THEN
+  fr1 XSF 0= AND  fz1 fr2 AND OR
+  IF  64 ALLOCATE THROW sf! sf TO XSF THEN
+  mov( DUP >R 0 DO FLOAT>DATA LOOP R> 0 DO I 2* CELLS sf + 2! LOOP x) move!
+  fz1 IF a C@ '0' - LIT, move LIT, ` EXECUTE THEN
+  a u + a fz1 IF 2+ ELSE 1+ THEN
+  ?DO I z18?
+      IF   I C@ '0' -  1- 2* CELLS LIT, sf LIT, ` + ` 2@ ` DATA>FLOAT
+      ELSE I C@ ':' =
+          IF  I 1+ z18?
+               IF ` FLOAT>DATA  I 1+ C@ '0' - 1- 2* CELLS LIT,  sf LIT, ` + ` 2! 1 I+ THEN
+          ELSE I C@ CASE S>FOPERATOR ENDCASE
+          THEN
+      THEN
+  LOOP
+;
 
 \EOF 
 \ как пример использования - манипуляторный вариант конвертора чисел с плавающей запятой из формы 32,123 в форму 32.123е
@@ -199,16 +251,16 @@ a ABS         "a DABS         `a FABS        'S  - XT слова обознач�
 b C@          "b W@           `b .BL         '1..'9 'A..'F - адреса ячеек буфера, куда сбрасываются со стека параметры    
 c EMIT        "d 2DUP         `c FCOS                        и откуда они кладутся(копируются) на стек
 d DUP         "g 4cell        `d FDUP        1..9 A..F - содержимое ячеек буфера
-e ELSE        "l DLSHIFT      `f DS>F        `1..`9 `A..`F - значения 1..9 A..F
+e ELSE        "l DLSHIFT      `f            `1..`9 `A..`F - значения 1..9 A..F
 f hFree       "n DNEGATE      `h hex    
 g CELL        "r DRSHIFT      `i 1-     
 h hAlloc      "w W!           `j 1-!    
 i 1+          "x 2DROP        `k kbyte  
 j 1+!         "y Dodin        `K mbyte  
 k KEY         "z D0<>         `m FMIN   
-l LSHIFT      "D FLOAT>DATA   `n FNEGATE
-m MIN         "F DATA>FLOAT   `p FPI    
-n NEGATE      "X estr         `q sqrt                                  
+l LSHIFT      "D              `n FNEGATE
+m MIN         "F              `p FPI    
+n NEGATE      "X              `q sqrt                                  
 o AGAIN       "Z D0=          `Q FSQRT  
 p DP          "+ D+           `s FSIN   
 q COMPARE     "- D-           `t n.0b   
