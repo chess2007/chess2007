@@ -213,24 +213,25 @@ M: S>FOPERATOR
 ;
 
 0 VALUE XSF
-: NOTFOUND ( a u -- ) u! a!
+: NOTFOUND ( a u -- ) u! a! XSF sf!
   z18?( C@ '1' '9' WITHIN )
   a z18?                    fz1!
   a    C@ '|'        =      fr1!
   a 1+ C@ '|'        =      fr2!
   fz1 fr2 AND fr1 OR u 1 > AND 0= IF a u NOTFOUND EXIT THEN
   fr1 XSF 0= AND  fz1 fr2 AND OR
-  IF  64 ALLOCATE THROW sf! sf TO XSF THEN
-  mov( DUP >R 0 DO FLOAT>DATA LOOP R> 0 DO I 2* CELLS sf + 2! LOOP x) move!
-  fz1 IF a C@ '0' - LIT, move LIT, ` EXECUTE THEN
+  IF  64 ALLOCATE THROW is sf sf TO XSF THEN
+  fz1 IF a C@ '0' - DUP 
+         >R 0 DO ` FLOAT>DATA LOOP 
+         R> 0 DO I 2* CELLS LIT, sf LIT, ` + ` 2! LOOP 
+      THEN
   a u + a fz1 IF 2+ ELSE 1+ THEN
   ?DO I z18?
       IF   I C@ '0' -  1- 2* CELLS LIT, sf LIT, ` + ` 2@ ` DATA>FLOAT
       ELSE I C@ ':' =
-          IF  I 1+ z18?
-               IF ` FLOAT>DATA  I 1+ C@ '0' - 1- 2* CELLS LIT,  sf LIT, ` + ` 2! 1 I+ THEN
-          ELSE I C@ CASE S>FOPERATOR ENDCASE
-          THEN
+           IF ` FLOAT>DATA  I 1+ C@ '0' - 1- 2* CELLS LIT,  sf LIT, ` + ` 2!  1 I+ 
+           ELSE I C@ CASE S>FOPERATOR ENDCASE
+           THEN
       THEN
   LOOP
 ;
