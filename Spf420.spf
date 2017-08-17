@@ -15,10 +15,7 @@ REQUIRE )            ~chess\lib\nloc.spf         \ локально-именов
 REQUIRE SPMOVE       ~chess\lib\n-manipula.spf   \ стековые манипуляторы, расширенные операторами
 REQUIRE METER        ~chess\lib\meter.spf        \ измеритель времени исполнения слова при разовом и циклическом его исполнении
 
-
 S" I:\SPF4\devel\~chess\BIN\spf4n.exe" SAVE BYE
-
-
 
 \EOF
 

@@ -23,7 +23,7 @@ M: SYM->OPERATOR
    '0' OF ` FALSE      ENDOF  'G' OF ` aDO     ENDOF  '*' OF ` *       ENDOF
    'a' OF ` ABS        ENDOF  'H' OF ` WITHIN  ENDOF  '+' OF ` +       ENDOF                      
    'b' OF ` C@         ENDOF  'I' OF ` I       ENDOF  ',' OF ` LITERAL ENDOF                
-   'c' OF ` DS>F       ENDOF  'J' OF ` J       ENDOF  '-' OF ` -       ENDOF                      
+   'c' OF ` EMIT       ENDOF  'J' OF ` J       ENDOF  '-' OF ` -       ENDOF                      
    'd' OF ` DUP        ENDOF  'K' OF ` EKEY    ENDOF  '.' OF ` .       ENDOF                      
    'e' OF ` ELSE       ENDOF  'L' OF ` LOOP    ENDOF  '/' OF ` /       ENDOF                      
    'f' OF ` hFree      ENDOF  'M' OF ` MAX     ENDOF  ';' OF ` EXIT    ENDOF                      
@@ -36,8 +36,8 @@ M: SYM->OPERATOR
    'm' OF ` MIN        ENDOF  'T' OF ` TYPE    ENDOF  '\' OF ` CR      ENDOF
    'n' OF ` NEGATE     ENDOF  'U' OF ` UNTIL   ENDOF  ']' OF ` ENDCASE ENDOF
    'o' OF ` AGAIN      ENDOF  'V' OF ` MOVE    ENDOF  '^' OF ` XOR     ENDOF
-   'p' OF ` DATA>FLOAT ENDOF  'W' OF ` WHILE   ENDOF  '_' OF ` ACCEPT  ENDOF
-   'q' OF ` FLOAT>DATA ENDOF  'X' OF ` EXECUTE ENDOF  '{' OF ` LAMBDA{ ENDOF
+   'p' OF ` DS>F       ENDOF  'W' OF ` WHILE   ENDOF  '_' OF ` ACCEPT  ENDOF
+   'q' OF ` COMPARE    ENDOF  'X' OF ` EXECUTE ENDOF  '{' OF ` LAMBDA{ ENDOF
    'r' OF ` RSHIFT     ENDOF  'Y' OF ` TRUE    ENDOF  '|' OF ` OR      ENDOF
    's' OF ` SEARCH     ENDOF  'Z' OF ` 0=      ENDOF  '}' OF ` }LAMBDA ENDOF
    't' OF ` THEN       ENDOF  '!' OF ` !       ENDOF  '~' OF ` INVERT  ENDOF
@@ -70,7 +70,7 @@ M: XTSYM ` LAMBDA{ I 1+ C@ CASE SYM->OPERATOR ENDCASE ` }LAMBDA 1 I+ ;
 M: SYM->DOPERATOR 
 'a' OF ` DABS       ENDOF   'A' OF              ENDOF    '!' OF ` 2!         ENDOF              
 'b' OF ` W@         ENDOF   'B' OF              ENDOF    '#' OF              ENDOF              
-'c' OF ` COMPARE    ENDOF   'C' OF              ENDOF    '$' OF              ENDOF
+'c' OF              ENDOF   'C' OF              ENDOF    '$' OF              ENDOF
 'd' OF ` 2DUP       ENDOF   'D' OF              ENDOF    '%' OF              ENDOF
 'e' OF              ENDOF   'E' OF              ENDOF    '&' OF ` DAND       ENDOF
 'f' OF              ENDOF   'F' OF              ENDOF    '(' OF              ENDOF
@@ -181,7 +181,7 @@ M: SYM->FOPERATOR
   LOOP
 ;
 
-\ работа с числами с плав. точкой 
+\ работа с числами с плав. точкой - односимвольный вариант
 M: S>FOPERATOR
    '0' OF ` FALSE      ENDOF  'G' OF ` aDO     ENDOF  '*' OF ` F*       ENDOF
    'a' OF ` FABS       ENDOF  'H' OF ` WITHIN  ENDOF  '+' OF ` F+       ENDOF
@@ -215,27 +215,34 @@ M: S>FOPERATOR
 0 VALUE XSF
 : NOTFOUND ( a u -- ) u! a! XSF sf!
   z18?( C@ '1' '9' WITHIN )
+  z19?( C@ '1' ':' WITHIN )
+  zAF?( C@ 'A' 'G' WITHIN )
   a z18?                    fz1!
   a    C@ '|'        =      fr1!
   a 1+ C@ '|'        =      fr2!
   fz1 fr2 AND fr1 OR u 1 > AND 0= IF a u NOTFOUND EXIT THEN
   fr1 XSF 0= AND  fz1 fr2 AND OR
-  IF  64 ALLOCATE THROW is sf sf TO XSF THEN
+  IF  128 ALLOCATE THROW is sf sf TO XSF THEN
   fz1 IF a C@ '0' - DUP 
-         >R 0 DO ` FLOAT>DATA LOOP 
+         >R 0 DO `  FLOAT>DATA LOOP  
          R> 0 DO I 2* CELLS LIT, sf LIT, ` + ` 2! LOOP 
       THEN
   a u + a fz1 IF 2+ ELSE 1+ THEN
-  ?DO I z18?
-      IF   I C@ '0' -  1- 2* CELLS LIT, sf LIT, ` + ` 2@ ` DATA>FLOAT
+  ?DO I z19? I zAF? OR
+      IF   I C@  I z19? IF '0' ELSE '7' THEN -  1- 2* CELLS LIT, sf LIT, ` + ` 2@ ` DATA>FLOAT  
       ELSE I C@ ':' =
-           IF ` FLOAT>DATA  I 1+ C@ '0' - 1- 2* CELLS LIT,  sf LIT, ` + ` 2!  1 I+ 
-           ELSE I C@ CASE S>FOPERATOR ENDCASE
-           THEN
-      THEN
-  LOOP
+           IF ` FLOAT>DATA  I 1+ C@ I 1+ z19? IF '0' ELSE '7' THEN - 1- 2* CELLS LIT,  sf LIT, ` + ` 2! 1 I+  
+           ELSE I C@ '`' = I 1+ z19? I 1+ zAF? OR AND
+                IF I 1+ C@ I 1+ z19? IF '0' ELSE '7' THEN - DS>F ` FLITERAL  1 I+                                                     
+                ELSE I C@ ''' = I 1+ z19?  I 1+ zAF? OR AND                                  
+                     IF   I 1+ C@ I 1+ z19? IF '0' ELSE '7' THEN - 1- CELLS LIT, sf LIT, ` + 1 I+                                                                           
+                     ELSE I C@ CASE S>FOPERATOR ENDCASE
+                     THEN
+                THEN 
+           THEN      
+      THEN           
+  LOOP               
 ;
-
 \EOF 
 \ как пример использования - манипуляторный вариант конвертора чисел с плавающей запятой из формы 32,123 в форму 32.123е
 \ числа с плавающей запятой в виде 3,1415 
