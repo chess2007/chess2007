@@ -19,34 +19,37 @@ M: I+  ( n -- )  R@ + RP@ ! ; \ макрос: увеличить счетчик 
 I: LAMBDA{ ( -- res xt ) 0 BRANCH, >MARK HERE ;
 I: }LAMBDA ( res xt -- ) RET, >R >RESOLVE1 R> LIT, ;
 
+I: FO ` OF ` ` ;
+M: EF ENDOF ;
+
 M: SYM->OPERATOR
-   '0' OF ` FALSE      ENDOF  'G' OF ` aDO     ENDOF  '*' OF ` *       ENDOF
-   'a' OF ` ABS        ENDOF  'H' OF ` WITHIN  ENDOF  '+' OF ` +       ENDOF                      
-   'b' OF ` C@         ENDOF  'I' OF ` I       ENDOF  ',' OF ` LITERAL ENDOF                
-   'c' OF ` EMIT       ENDOF  'J' OF ` J       ENDOF  '-' OF ` -       ENDOF                      
-   'd' OF ` DUP        ENDOF  'K' OF ` EKEY    ENDOF  '.' OF ` .       ENDOF                      
-   'e' OF ` ELSE       ENDOF  'L' OF ` LOOP    ENDOF  '/' OF ` /       ENDOF                      
-   'f' OF ` hFree      ENDOF  'M' OF ` MAX     ENDOF  ';' OF ` EXIT    ENDOF                      
-   'g' OF ` CELL       ENDOF  'N' OF ` +LOOP   ENDOF  '<' OF ` <       ENDOF
-   'h' OF ` hAlloc     ENDOF  'O' OF ` BEGIN   ENDOF  '=' OF ` =       ENDOF
-   'i' OF ` 1+         ENDOF  'P' OF ` DEPTH   ENDOF  '>' OF ` >       ENDOF             
-   'j' OF ` 1+!        ENDOF  'Q' OF ` LEAVE   ENDOF  '?' OF ` IF      ENDOF
-   'k' OF ` KEY        ENDOF  'R' OF ` REPEAT  ENDOF  '@' OF ` @       ENDOF
-   'l' OF ` LSHIFT     ENDOF  'S' OF ` SPACES  ENDOF  '[' OF ` CASE    ENDOF
-   'm' OF ` MIN        ENDOF  'T' OF ` TYPE    ENDOF  '\' OF ` CR      ENDOF
-   'n' OF ` NEGATE     ENDOF  'U' OF ` UNTIL   ENDOF  ']' OF ` ENDCASE ENDOF
-   'o' OF ` AGAIN      ENDOF  'V' OF ` MOVE    ENDOF  '^' OF ` XOR     ENDOF
-   'p' OF ` DS>F       ENDOF  'W' OF ` WHILE   ENDOF  '_' OF ` ACCEPT  ENDOF
-   'q' OF ` COMPARE    ENDOF  'X' OF ` EXECUTE ENDOF  '{' OF ` LAMBDA{ ENDOF
-   'r' OF ` RSHIFT     ENDOF  'Y' OF ` TRUE    ENDOF  '|' OF ` OR      ENDOF
-   's' OF ` SEARCH     ENDOF  'Z' OF ` 0=      ENDOF  '}' OF ` }LAMBDA ENDOF
-   't' OF ` THEN       ENDOF  '!' OF ` !       ENDOF  '~' OF ` INVERT  ENDOF
-   'u' OF ` hResize    ENDOF  '#' OF ` FILL    ENDOF                        
-   'v' OF ` EVALUATE   ENDOF  '$' OF ` ?DO     ENDOF  
-   'w' OF ` C!         ENDOF  '%' OF ` MOD     ENDOF  
-   'x' OF ` DROP       ENDOF  '&' OF ` AND     ENDOF  
-   'y' OF ` odin       ENDOF  '(' OF ` OF      ENDOF  
-   'z' OF ` 0<>        ENDOF  ')' OF ` ENDOF   ENDOF                        
+   '0' FO FALSE      EF  'G' FO aDO     EF  '*' FO *       EF
+   'a' FO ABS        EF  'H' FO WITHIN  EF  '+' FO +       EF                      
+   'b' FO C@         EF  'I' FO I       EF  ',' FO LITERAL EF                
+   'c' FO EMIT       EF  'J' FO J       EF  '-' FO -       EF                      
+   'd' FO DUP        EF  'K' FO EKEY    EF  '.' FO .       EF                      
+   'e' FO ELSE       EF  'L' FO LOOP    EF  '/' FO /       EF                      
+   'f' FO hFree      EF  'M' FO MAX     EF  ';' FO EXIT    EF                      
+   'g' FO CELL       EF  'N' FO +LOOP   EF  '<' FO <       EF
+   'h' FO hAlloc     EF  'O' FO BEGIN   EF  '=' FO =       EF
+   'i' FO 1+         EF  'P' FO DEPTH   EF  '>' FO >       EF             
+   'j' FO 1+!        EF  'Q' FO LEAVE   EF  '?' FO IF      EF
+   'k' FO KEY        EF  'R' FO REPEAT  EF  '@' FO @       EF
+   'l' FO LSHIFT     EF  'S' FO SPACES  EF  '[' FO CASE    EF
+   'm' FO MIN        EF  'T' FO TYPE    EF  '\' FO CR      EF
+   'n' FO NEGATE     EF  'U' FO UNTIL   EF  ']' FO ENDCASE EF
+   'o' FO AGAIN      EF  'V' FO MOVE    EF  '^' FO XOR     EF
+   'p' FO DS>F       EF  'W' FO WHILE   EF  '_' FO ACCEPT  EF
+   'q' FO COMPARE    EF  'X' FO EXECUTE EF  '{' FO LAMBDA{ EF
+   'r' FO RSHIFT     EF  'Y' FO TRUE    EF  '|' FO OR      EF
+   's' FO SEARCH     EF  'Z' FO 0=      EF  '}' FO }LAMBDA EF
+   't' FO THEN       EF  '!' FO !       EF  '~' FO INVERT  EF
+   'u' FO hResize    EF  '#' FO FILL    EF                        
+   'v' FO EVALUATE   EF  '$' FO ?DO     EF  
+   'w' FO C!         EF  '%' FO MOD     EF  
+   'x' FO DROP       EF  '&' FO AND     EF  
+   'y' FO odin       EF  '(' FO OF      EF  
+   'z' FO 0<>        EF  ')' FO ENDOF   EF                        
 ;
  
 M: XTSYM ` LAMBDA{ I 1+ C@ CASE SYM->OPERATOR ENDCASE ` }LAMBDA 1 I+ ;
@@ -68,68 +71,68 @@ M: XTSYM ` LAMBDA{ I 1+ C@ CASE SYM->OPERATOR ENDCASE ` }LAMBDA 1 I+ ;
 
 \ символы с префиксом " 
 M: SYM->DOPERATOR 
-'a' OF ` DABS       ENDOF   'A' OF              ENDOF    '!' OF ` 2!         ENDOF              
-'b' OF ` W@         ENDOF   'B' OF              ENDOF    '#' OF              ENDOF              
-'c' OF              ENDOF   'C' OF              ENDOF    '$' OF              ENDOF
-'d' OF ` 2DUP       ENDOF   'D' OF              ENDOF    '%' OF              ENDOF
-'e' OF              ENDOF   'E' OF              ENDOF    '&' OF ` DAND       ENDOF
-'f' OF              ENDOF   'F' OF              ENDOF    '(' OF              ENDOF
-'g' OF ` 4cell      ENDOF   'G' OF              ENDOF    ')' OF              ENDOF
-'h' OF ` ALLOT      ENDOF   'H' OF              ENDOF    '*' OF              ENDOF
-'i' OF              ENDOF   'I' OF              ENDOF    '+' OF ` D+         ENDOF
-'j' OF              ENDOF   'J' OF              ENDOF    ',' OF ` 2LITERAL   ENDOF
-'k' OF              ENDOF   'K' OF              ENDOF    '-' OF ` D-         ENDOF
-'l' OF ` DLSHIFT    ENDOF   'L' OF              ENDOF    '.' OF ` D.         ENDOF
-'m' OF              ENDOF   'M' OF              ENDOF    '/' OF              ENDOF
-'n' OF ` DNEGATE    ENDOF   'N' OF              ENDOF    ';' OF              ENDOF
-'o' OF              ENDOF   'O' OF              ENDOF    '<' OF ` D<         ENDOF
-'p' OF              ENDOF   'P' OF              ENDOF    '=' OF ` D=         ENDOF
-'q' OF              ENDOF   'Q' OF              ENDOF    '>' OF ` D>         ENDOF             
-'r' OF ` DRSHIFT    ENDOF   'R' OF              ENDOF    '?' OF              ENDOF
-'s' OF              ENDOF   'S' OF              ENDOF    '@' OF ` 2@         ENDOF                         
-'t' OF              ENDOF   'T' OF              ENDOF    '[' OF              ENDOF
-'u' OF              ENDOF   'U' OF              ENDOF    '\' OF              ENDOF
-'v' OF              ENDOF   'V' OF              ENDOF    ']' OF              ENDOF                         
-'w' OF ` W!         ENDOF   'W' OF              ENDOF    '^' OF ` DXOR       ENDOF
-'x' OF ` 2DROP      ENDOF   'X' OF              ENDOF    '_' OF              ENDOF
-'y' OF ` Dodin      ENDOF   'Y' OF              ENDOF    '{' OF              ENDOF                         
-'z' OF ` D0<>       ENDOF   'Z' OF ` D0=        ENDOF    '|' OF ` DOR        ENDOF
-                                                         '}' OF              ENDOF
-                                                         '~' OF ` DINVERT    ENDOF
-                                                         '0' OF ` Dnull      ENDOF
+'a' FO DABS     EF 'A' FO NOOP    EF '!' FO 2!       EF              
+'b' FO W@       EF 'B' FO NOOP    EF '#' FO NOOP     EF              
+'c' FO NOOP     EF 'C' FO NOOP    EF '$' FO NOOP     EF
+'d' FO 2DUP     EF 'D' FO NOOP    EF '%' FO NOOP     EF
+'e' FO NOOP     EF 'E' FO NOOP    EF '&' FO DAND     EF
+'f' FO NOOP     EF 'F' FO NOOP    EF '(' FO NOOP     EF
+'g' FO 4cell    EF 'G' FO NOOP    EF ')' FO NOOP     EF
+'h' FO ALLOT    EF 'H' FO NOOP    EF '*' FO NOOP     EF
+'i' FO NOOP     EF 'I' FO NOOP    EF '+' FO D+       EF
+'j' FO NOOP     EF 'J' FO NOOP    EF ',' FO 2LITERAL EF
+'k' FO NOOP     EF 'K' FO NOOP    EF '-' FO D-       EF
+'l' FO DLSHIFT  EF 'L' FO NOOP    EF '.' FO D.       EF
+'m' FO NOOP     EF 'M' FO NOOP    EF '/' FO NOOP     EF
+'n' FO DNEGATE  EF 'N' FO NOOP    EF ';' FO NOOP     EF
+'o' FO NOOP     EF 'O' FO NOOP    EF '<' FO D<       EF
+'p' FO NOOP     EF 'P' FO NOOP    EF '=' FO D=       EF
+'q' FO NOOP     EF 'Q' FO NOOP    EF '>' FO D>       EF             
+'r' FO DRSHIFT  EF 'R' FO NOOP    EF '?' FO NOOP     EF
+'s' FO NOOP     EF 'S' FO NOOP    EF '@' FO 2@       EF                         
+'t' FO NOOP     EF 'T' FO NOOP    EF '[' FO NOOP     EF
+'u' FO NOOP     EF 'U' FO NOOP    EF '\' FO NOOP     EF
+'v' FO NOOP     EF 'V' FO NOOP    EF ']' FO NOOP     EF                         
+'w' FO W!       EF 'W' FO NOOP    EF '^' FO DXOR     EF
+'x' FO 2DROP    EF 'X' FO NOOP    EF '_' FO NOOP     EF
+'y' FO Dodin    EF 'Y' FO NOOP    EF '{' FO NOOP     EF                         
+'z' FO D0<>     EF 'Z' FO D0=     EF '|' FO DOR      EF
+                                     '}' FO NOOP     EF
+                                     '~' FO DINVERT  EF
+                                     '0' FO Dnull    EF
 ;                                                        
 
 \ символы с префиксом `
 M: SYM->FOPERATOR
-'a' OF ` FABS       ENDOF   'A' OF              ENDOF    '!' OF ` F!         ENDOF   
-'b' OF ` .BL        ENDOF   'B' OF              ENDOF    '#' OF              ENDOF
-'c' OF ` FCOS       ENDOF   'C' OF              ENDOF    '$' OF              ENDOF
-'d' OF ` FDUP       ENDOF   'D' OF              ENDOF    '%' OF              ENDOF
-'e' OF              ENDOF   'E' OF              ENDOF    '&' OF              ENDOF
-'f' OF              ENDOF   'F' OF              ENDOF    '(' OF              ENDOF
-'g' OF              ENDOF   'G' OF              ENDOF    ')' OF              ENDOF                     
-'h' OF ` hex        ENDOF   'H' OF              ENDOF    '*' OF ` F*         ENDOF                     
-'i' OF ` 1-         ENDOF   'I' OF ` F1+        ENDOF    '+' OF ` F+         ENDOF
-'j' OF ` 1-!        ENDOF   'J' OF              ENDOF    ',' OF              ENDOF
-'k' OF ` kbyte      ENDOF   'K' OF ` mbyte      ENDOF    '-' OF ` F-         ENDOF
-'l' OF              ENDOF   'L' OF              ENDOF    '.' OF ` F.         ENDOF
-'m' OF ` FMIN       ENDOF   'M' OF ` FMAX       ENDOF    '/' OF ` F/         ENDOF
-'n' OF ` FNEGATE    ENDOF   'N' OF              ENDOF    ';' OF ` RET,       ENDOF
-'o' OF              ENDOF   'O' OF              ENDOF    '<' OF ` F<         ENDOF
-'p' OF ` FPI        ENDOF   'P' OF ` .0         ENDOF    '=' OF ` F=         ENDOF
-'q' OF ` sqrt       ENDOF   'Q' OF ` FSQRT      ENDOF    '>' OF              ENDOF
-'r' OF ` R>         ENDOF   'R' OF ` >R         ENDOF    '?' OF              ENDOF
-'s' OF ` FSIN       ENDOF   'S' OF              ENDOF    '@' OF ` F@         ENDOF           
-'t' OF ` n.0b       ENDOF   'T' OF ` n.0h       ENDOF    '[' OF              ENDOF
-'u' OF              ENDOF   'U' OF              ENDOF    '\' OF              ENDOF                  
-'v' OF              ENDOF   'V' OF              ENDOF    ']' OF              ENDOF
-'w' OF              ENDOF   'W' OF              ENDOF    '^' OF              ENDOF
-'x' OF ` FDROP      ENDOF   'X' OF ` R@         ENDOF    '_' OF              ENDOF
-'y' OF              ENDOF   'Y' OF              ENDOF    '{' OF              ENDOF                  
-'z' OF ` F0<        ENDOF   'Z' OF ` F0=        ENDOF    '|' OF              ENDOF
-                                                         '}' OF              ENDOF
-                                                         '~' OF              ENDOF
-                                                         '0' OF              ENDOF
+'a' FO FABS     EF 'A' FO NOOP   EF '!' FO F!    EF   
+'b' FO .BL      EF 'B' FO NOOP   EF '#' FO NOOP  EF
+'c' FO FCOS     EF 'C' FO NOOP   EF '$' FO NOOP  EF
+'d' FO FDUP     EF 'D' FO NOOP   EF '%' FO NOOP  EF
+'e' FO NOOP     EF 'E' FO NOOP   EF '&' FO NOOP  EF
+'f' FO NOOP     EF 'F' FO NOOP   EF '(' FO NOOP  EF
+'g' FO NOOP     EF 'G' FO NOOP   EF ')' FO NOOP  EF                     
+'h' FO hex      EF 'H' FO NOOP   EF '*' FO F*    EF                     
+'i' FO 1-       EF 'I' FO F1+    EF '+' FO F+    EF
+'j' FO 1-!      EF 'J' FO NOOP   EF ',' FO NOOP  EF
+'k' FO kbyte    EF 'K' FO mbyte  EF '-' FO F-    EF
+'l' FO NOOP     EF 'L' FO NOOP   EF '.' FO F.    EF
+'m' FO FMIN     EF 'M' FO FMAX   EF '/' FO F/    EF
+'n' FO FNEGATE  EF 'N' FO NOOP   EF ';' FO RET,  EF
+'o' FO NOOP     EF 'O' FO NOOP   EF '<' FO F<    EF
+'p' FO FPI      EF 'P' FO .0     EF '=' FO F=    EF
+'q' FO sqrt     EF 'Q' FO FSQRT  EF '>' FO NOOP  EF
+'r' FO R>       EF 'R' FO >R     EF '?' FO NOOP  EF
+'s' FO FSIN     EF 'S' FO NOOP   EF '@' FO F@    EF           
+'t' FO n.0b     EF 'T' FO n.0h   EF '[' FO NOOP  EF
+'u' FO NOOP     EF 'U' FO NOOP   EF '\' FO NOOP  EF                  
+'v' FO NOOP     EF 'V' FO NOOP   EF ']' FO NOOP  EF
+'w' FO NOOP     EF 'W' FO NOOP   EF '^' FO NOOP  EF
+'x' FO FDROP    EF 'X' FO R@     EF '_' FO NOOP  EF
+'y' FO NOOP     EF 'Y' FO NOOP   EF '{' FO NOOP  EF                  
+'z' FO F0<      EF 'Z' FO F0=    EF '|' FO NOOP  EF
+                                    '}' FO NOOP  EF        
+                                    '~' FO NOOP  EF        
+                                    '0' FO NOOP  EF        
 ;
 
 0 VALUE XSP 0 VALUE XSF
@@ -182,37 +185,37 @@ M: SYM->FOPERATOR
 ;
 
 \ работа с числами с плав. точкой - односимвольный вариант
+
 M: S>FOPERATOR
-   '0' OF ` FALSE      ENDOF  'G' OF ` aDO     ENDOF  '*' OF ` F*       ENDOF
-   'a' OF ` FABS       ENDOF  'H' OF ` WITHIN  ENDOF  '+' OF ` F+       ENDOF
-   'b' OF ` C@         ENDOF  'I' OF ` I       ENDOF  ',' OF ` FLITERAL ENDOF
-   'c' OF ` DS>F       ENDOF  'J' OF ` J       ENDOF  '-' OF ` F-       ENDOF
-   'd' OF ` FDUP       ENDOF  'K' OF ` EKEY    ENDOF  '.' OF ` F.       ENDOF
-   'e' OF ` ELSE       ENDOF  'L' OF ` LOOP    ENDOF  '/' OF ` F/       ENDOF
-   'f' OF ` hFree      ENDOF  'M' OF ` FMAX    ENDOF  ';' OF ` EXIT     ENDOF
-   'g' OF ` CELL       ENDOF  'N' OF ` +LOOP   ENDOF  '<' OF ` F<       ENDOF
-   'h' OF ` hAlloc     ENDOF  'O' OF ` BEGIN   ENDOF  '=' OF ` F=       ENDOF
-   'i' OF ` F1+        ENDOF  'P' OF ` FDEPTH  ENDOF  '>' OF            ENDOF
-   'j' OF ` 1+!        ENDOF  'Q' OF ` LEAVE   ENDOF  '?' OF ` IF       ENDOF
-   'k' OF ` KEY        ENDOF  'R' OF ` REPEAT  ENDOF  '@' OF ` F@       ENDOF
-   'l' OF ` LSHIFT     ENDOF  'S' OF ` FSQRT   ENDOF  '[' OF ` CASE     ENDOF
-   'm' OF ` FMIN       ENDOF  'T' OF ` TYPE    ENDOF  '\' OF ` CR       ENDOF
-   'n' OF ` FNEGATE    ENDOF  'U' OF ` UNTIL   ENDOF  ']' OF ` ENDCASE  ENDOF
-   'o' OF ` AGAIN      ENDOF  'V' OF ` MOVE    ENDOF  '^' OF ` XOR      ENDOF
-   'p' OF ` DATA>FLOAT ENDOF  'W' OF ` WHILE   ENDOF  '_' OF ` ACCEPT   ENDOF
-   'q' OF ` FLOAT>DATA ENDOF  'X' OF ` EXECUTE ENDOF  '{' OF ` LAMBDA{  ENDOF
-   'r' OF ` RSHIFT     ENDOF  'Y' OF ` TRUE    ENDOF  '|' OF ` OR       ENDOF
-   's' OF ` SEARCH     ENDOF  'Z' OF ` F0=     ENDOF  '}' OF ` }LAMBDA  ENDOF
-   't' OF ` THEN       ENDOF  '!' OF ` F!      ENDOF  '~' OF ` INVERT   ENDOF
-   'u' OF ` hResize    ENDOF  '#' OF ` FILL    ENDOF
-   'v' OF ` EVALUATE   ENDOF  '$' OF ` ?DO     ENDOF
-   'w' OF ` C!         ENDOF  '%' OF ` MOD     ENDOF
-   'x' OF ` FDROP      ENDOF  '&' OF ` AND     ENDOF
-   'y' OF ` odin       ENDOF  '(' OF ` OF      ENDOF
-   'z' OF ` F0<        ENDOF  ')' OF ` ENDOF   ENDOF
+  '0' FO FALSE      EF 'G' FO aDO      EF '*' FO F*       EF     
+  'a' FO FABS       EF 'H' FO WITHIN   EF '+' FO F+       EF     
+  'b' FO NOOP       EF 'I' FO I        EF ',' FO FLITERAL EF     
+  'c' FO FCOS       EF 'J' FO J        EF '-' FO F-       EF     
+  'd' FO FDUP       EF 'K' FO EKEY     EF '.' FO F.       EF     
+  'e' FO ELSE       EF 'L' FO LOOP     EF '/' FO F/       EF     
+  'f' FO hFree      EF 'M' FO FMAX     EF ';' FO EXIT     EF     
+  'g' FO CELL       EF 'N' FO +LOOP    EF '<' FO F<       EF     
+  'h' FO hAlloc     EF 'O' FO BEGIN    EF '=' FO F=       EF     
+  'i' FO F1+        EF 'P' FO FDEPTH   EF '>' FO NOOP     EF     
+  'j' FO 1+!        EF 'Q' FO LEAVE    EF '?' FO IF       EF     
+  'k' FO KEY        EF 'R' FO REPEAT   EF '@' FO F@       EF     
+  'l' FO NOOP       EF 'S' FO FSQRT    EF '[' FO CASE     EF     
+  'm' FO FMIN       EF 'T' FO FTAN     EF '\' FO CR       EF     
+  'n' FO FNEGATE    EF 'U' FO UNTIL    EF ']' FO ENDCASE  EF     
+  'o' FO AGAIN      EF 'V' FO MOVE     EF '^' FO XOR      EF     
+  'p' FO DATA>FLOAT EF 'W' FO WHILE    EF '_' FO ACCEPT   EF     
+  'q' FO FLOAT>DATA EF 'X' FO EXECUTE  EF '{' FO LAMBDA{  EF     
+  'r' FO DS>F       EF 'Y' FO TRUE     EF '|' FO OR       EF     
+  's' FO FSIN       EF 'Z' FO F0=      EF '}' FO }LAMBDA  EF     
+  't' FO THEN       EF '!' FO F!       EF '~' FO INVERT   EF     
+  'u' FO hResize    EF '#' FO FILL     EF                     
+  'v' FO EVALUATE   EF '$' FO ?DO      EF                     
+  'w' FO NOOP       EF '%' FO MOD      EF                     
+  'x' FO FDROP      EF '&' FO AND      EF                     
+  'y' FO odin       EF '(' FO OF       EF                     
+  'z' FO F0<        EF ')' FO ENDOF    EF                        
 ;
 
-0 VALUE XSF
 : NOTFOUND ( a u -- ) u! a! XSF sf!
   z18?( C@ '1' '9' WITHIN )
   z19?( C@ '1' ':' WITHIN )
