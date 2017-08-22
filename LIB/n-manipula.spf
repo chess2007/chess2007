@@ -19,39 +19,52 @@ M: I+  ( n -- )  R@ + RP@ ! ; \ макрос: увеличить счетчик 
 I: LAMBDA{ ( -- res xt ) 0 BRANCH, >MARK HERE ;
 I: }LAMBDA ( res xt -- ) RET, >R >RESOLVE1 R> LIT, ;
 
-I: FO ` OF ` ` ;
-M: EF ENDOF ;
+I: FO ` OF ` ` ;  M: EF ENDOF ;
 
-M: SYM->OPERATOR
-   '0' FO FALSE      EF  'G' FO aDO     EF  '*' FO *       EF
-   'a' FO ABS        EF  'H' FO WITHIN  EF  '+' FO +       EF                      
-   'b' FO C@         EF  'I' FO I       EF  ',' FO LITERAL EF                
-   'c' FO EMIT       EF  'J' FO J       EF  '-' FO -       EF                      
-   'd' FO DUP        EF  'K' FO EKEY    EF  '.' FO .       EF                      
-   'e' FO ELSE       EF  'L' FO LOOP    EF  '/' FO /       EF                      
-   'f' FO hFree      EF  'M' FO MAX     EF  ';' FO EXIT    EF                      
-   'g' FO CELL       EF  'N' FO +LOOP   EF  '<' FO <       EF
-   'h' FO hAlloc     EF  'O' FO BEGIN   EF  '=' FO =       EF
-   'i' FO 1+         EF  'P' FO DEPTH   EF  '>' FO >       EF             
-   'j' FO 1+!        EF  'Q' FO LEAVE   EF  '?' FO IF      EF
-   'k' FO KEY        EF  'R' FO REPEAT  EF  '@' FO @       EF
-   'l' FO LSHIFT     EF  'S' FO SPACES  EF  '[' FO CASE    EF
-   'm' FO MIN        EF  'T' FO TYPE    EF  '\' FO CR      EF
-   'n' FO NEGATE     EF  'U' FO UNTIL   EF  ']' FO ENDCASE EF
-   'o' FO AGAIN      EF  'V' FO MOVE    EF  '^' FO XOR     EF
-   'p' FO DS>F       EF  'W' FO WHILE   EF  '_' FO ACCEPT  EF
-   'q' FO COMPARE    EF  'X' FO EXECUTE EF  '{' FO LAMBDA{ EF
-   'r' FO RSHIFT     EF  'Y' FO TRUE    EF  '|' FO OR      EF
-   's' FO SEARCH     EF  'Z' FO 0=      EF  '}' FO }LAMBDA EF
-   't' FO THEN       EF  '!' FO !       EF  '~' FO INVERT  EF
-   'u' FO hResize    EF  '#' FO FILL    EF                        
-   'v' FO EVALUATE   EF  '$' FO ?DO     EF  
-   'w' FO C!         EF  '%' FO MOD     EF  
-   'x' FO DROP       EF  '&' FO AND     EF  
-   'y' FO odin       EF  '(' FO OF      EF  
-   'z' FO 0<>        EF  ')' FO ENDOF   EF                        
+: conv-so ui! ai! ai i!
+  2000 DUP uo! ALLOCATE THROW o! o ao! ao uo ERASE
+  i+( i 1+ is i   )  o+( o 1+ is o )   
+  ro( ''' o C! o+ )  io( i C@ o C! i+ o+ )
+  _o( BL o C! o+  )  Fo( 'F' o C! o+ )
+  Oo( 'O' o C! o+ )  Eo( 'E' o C! o+ )
+  i>( i C@ BL > )
+  BEGIN  ro io i+ ro _o Fo Oo _o
+         BEGIN  i> IF io 0 ELSE i+ _o Eo Fo _o 1 THEN UNTIL
+  i ai - ui >
+  UNTIL ao o ao -
 ;
- 
+: S:  : IMMEDIATE load-text conv-so DLIT, ` EVALUATE ` ; ;
+
+S: SYM->OPERATOR
+0 FALSE    G aDO     * *       
+a ABS      H WITHIN  + +             
+b C@       I I       , LITERAL 
+c EMIT     J J       - -             
+d DUP      K EKEY    . .             
+e ELSE     L LOOP    / /             
+f hFree    M MAX     < <                
+g CELL     N +LOOP   = =       
+h hAlloc   O BEGIN   > >       
+i 1+       P DEPTH   ? IF      
+j 1+!      Q LEAVE   @ @       
+k KEY      R REPEAT  [ CASE    
+l LSHIFT   S SPACES  ^ XOR     
+m MIN      T TYPE    _ ACCEPT  
+n NEGATE   U UNTIL   { LAMBDA{
+o AGAIN    V MOVE    | OR          
+p DS>F     W WHILE   ~ INVERT 
+q COMPARE  X EXECUTE 
+r RSHIFT   Y TRUE          
+s SEARCH   Z 0=       
+t THEN     ! !         
+u hResize  # FILL                         
+v EVALUATE $ ?DO     
+w C!       % MOD     
+x DROP     & AND     
+y odin     ( OF      
+z 0<>      ) ENDOF                        
+;
+
 M: XTSYM ` LAMBDA{ I 1+ C@ CASE SYM->OPERATOR ENDCASE ` }LAMBDA 1 I+ ;
 
 : DOR     ( d1 d2 -- d3)  D=@P $ 8 Pa $ -4 A|@P @P|D ;
@@ -70,69 +83,40 @@ M: XTSYM ` LAMBDA{ I 1+ C@ CASE SYM->OPERATOR ENDCASE ` }LAMBDA 1 I+ ;
 : sqrt ( n -- sqrt )  $ -4 @P=A $ -4 0=@P 0SQRT $ -4 @P=0- $ -4 A=@P ;
 
 \ символы с префиксом " 
-M: SYM->DOPERATOR 
-'a' FO DABS     EF 'A' FO NOOP    EF '!' FO 2!       EF              
-'b' FO W@       EF 'B' FO NOOP    EF '#' FO NOOP     EF              
-'c' FO NOOP     EF 'C' FO NOOP    EF '$' FO NOOP     EF
-'d' FO 2DUP     EF 'D' FO NOOP    EF '%' FO NOOP     EF
-'e' FO NOOP     EF 'E' FO NOOP    EF '&' FO DAND     EF
-'f' FO NOOP     EF 'F' FO NOOP    EF '(' FO NOOP     EF
-'g' FO 4cell    EF 'G' FO NOOP    EF ')' FO NOOP     EF
-'h' FO ALLOT    EF 'H' FO NOOP    EF '*' FO NOOP     EF
-'i' FO NOOP     EF 'I' FO NOOP    EF '+' FO D+       EF
-'j' FO NOOP     EF 'J' FO NOOP    EF ',' FO 2LITERAL EF
-'k' FO NOOP     EF 'K' FO NOOP    EF '-' FO D-       EF
-'l' FO DLSHIFT  EF 'L' FO NOOP    EF '.' FO D.       EF
-'m' FO NOOP     EF 'M' FO NOOP    EF '/' FO NOOP     EF
-'n' FO DNEGATE  EF 'N' FO NOOP    EF ';' FO NOOP     EF
-'o' FO NOOP     EF 'O' FO NOOP    EF '<' FO D<       EF
-'p' FO NOOP     EF 'P' FO NOOP    EF '=' FO D=       EF
-'q' FO NOOP     EF 'Q' FO NOOP    EF '>' FO D>       EF             
-'r' FO DRSHIFT  EF 'R' FO NOOP    EF '?' FO NOOP     EF
-'s' FO NOOP     EF 'S' FO NOOP    EF '@' FO 2@       EF                         
-'t' FO NOOP     EF 'T' FO NOOP    EF '[' FO NOOP     EF
-'u' FO NOOP     EF 'U' FO NOOP    EF '\' FO NOOP     EF
-'v' FO NOOP     EF 'V' FO NOOP    EF ']' FO NOOP     EF                         
-'w' FO W!       EF 'W' FO NOOP    EF '^' FO DXOR     EF
-'x' FO 2DROP    EF 'X' FO NOOP    EF '_' FO NOOP     EF
-'y' FO Dodin    EF 'Y' FO NOOP    EF '{' FO NOOP     EF                         
-'z' FO D0<>     EF 'Z' FO D0=     EF '|' FO DOR      EF
-                                     '}' FO NOOP     EF
-                                     '~' FO DINVERT  EF
-                                     '0' FO Dnull    EF
-;                                                        
+S: SYM->DOPERATOR 
+a DABS    ! 2!       ~ DINVERT              
+b W@      & DAND     0 Dnull                              
+d 2DUP    + D+       Z D0=    
+g 4cell   , 2LITERAL     
+h ALLOT   - D-      
+l DLSHIFT . D.       
+n DNEGATE < D<          
+r DRSHIFT = D=       
+w W!      > D>                             
+x 2DROP   @ 2@                                         
+y Dodin   ^ DXOR                                                         
+z D0<>    | DOR                                           
+;                                 
 
 \ символы с префиксом `
-M: SYM->FOPERATOR
-'a' FO FABS     EF 'A' FO NOOP   EF '!' FO F!    EF   
-'b' FO .BL      EF 'B' FO NOOP   EF '#' FO NOOP  EF
-'c' FO FCOS     EF 'C' FO NOOP   EF '$' FO NOOP  EF
-'d' FO FDUP     EF 'D' FO NOOP   EF '%' FO NOOP  EF
-'e' FO NOOP     EF 'E' FO NOOP   EF '&' FO NOOP  EF
-'f' FO NOOP     EF 'F' FO NOOP   EF '(' FO NOOP  EF
-'g' FO NOOP     EF 'G' FO NOOP   EF ')' FO NOOP  EF                     
-'h' FO hex      EF 'H' FO NOOP   EF '*' FO F*    EF                     
-'i' FO 1-       EF 'I' FO F1+    EF '+' FO F+    EF
-'j' FO 1-!      EF 'J' FO NOOP   EF ',' FO NOOP  EF
-'k' FO kbyte    EF 'K' FO mbyte  EF '-' FO F-    EF
-'l' FO NOOP     EF 'L' FO NOOP   EF '.' FO F.    EF
-'m' FO FMIN     EF 'M' FO FMAX   EF '/' FO F/    EF
-'n' FO FNEGATE  EF 'N' FO NOOP   EF ';' FO RET,  EF
-'o' FO NOOP     EF 'O' FO NOOP   EF '<' FO F<    EF
-'p' FO FPI      EF 'P' FO .0     EF '=' FO F=    EF
-'q' FO sqrt     EF 'Q' FO FSQRT  EF '>' FO NOOP  EF
-'r' FO R>       EF 'R' FO >R     EF '?' FO NOOP  EF
-'s' FO FSIN     EF 'S' FO NOOP   EF '@' FO F@    EF           
-'t' FO n.0b     EF 'T' FO n.0h   EF '[' FO NOOP  EF
-'u' FO NOOP     EF 'U' FO NOOP   EF '\' FO NOOP  EF                  
-'v' FO NOOP     EF 'V' FO NOOP   EF ']' FO NOOP  EF
-'w' FO NOOP     EF 'W' FO NOOP   EF '^' FO NOOP  EF
-'x' FO FDROP    EF 'X' FO R@     EF '_' FO NOOP  EF
-'y' FO NOOP     EF 'Y' FO NOOP   EF '{' FO NOOP  EF                  
-'z' FO F0<      EF 'Z' FO F0=    EF '|' FO NOOP  EF
-                                    '}' FO NOOP  EF        
-                                    '~' FO NOOP  EF        
-                                    '0' FO NOOP  EF        
+S: SYM->FOPERATOR
+a FABS    + F+      
+b .BL     - F-       
+c FCOS    * F*    
+d FDUP    / F/     
+h hex     . F.                     
+i 1-      ! F!      
+j 1-!     @ F@        
+k kbyte   = F= 
+K mbyte   I F1+         
+M FMAX               
+N NOOP    
+P .0       
+Q FSQRT 
+R >R    
+T n.0h  
+X R@    
+Z F0=   
 ;
 
 0 VALUE XSP 0 VALUE XSF
@@ -147,7 +131,6 @@ M: SYM->FOPERATOR
   fz1 fr2 AND fr1 OR fr3 OR u 1 > AND 0= IF a u NOTFOUND EXIT THEN
   fr1 XSP 0= AND  fz1 fr2 AND OR
   IF  64 ALLOCATE THROW sp! sp TO XSP THEN
- \ IF HERE sp! 64 LIT, ` ALLOT  sp TO XSP THEN
   fz1 IF a C@ a z19? IF '0' ELSE '7' THEN - CELLS Lb! sp LIT, Lb LIT, ` SPMOVE  Lb LIT, ` SPDROP THEN
   a u + a fz1 IF 2+ ELSE 1+ THEN
   ?DO I z19? I zAF? OR
@@ -171,10 +154,12 @@ M: SYM->FOPERATOR
                         ELSE I 1+ C@ '7' - LIT,  
                         THEN 1 I+
                      ELSE I C@ '`' = 
-                          IF   I 1+ C@ CASE SYM->FOPERATOR ENDCASE 1 I+ 
+                          IF   I 1+ C@ CASE SYM->FOPERATOR ';' FO EXIT EF ENDCASE 1 I+ 
                           ELSE I C@ '"' = 
-                               IF   I 1+ C@ CASE SYM->DOPERATOR ENDCASE 1 I+
-                               ELSE I    C@ CASE SYM->OPERATOR ''' OF XTSYM  ENDOF ENDCASE
+                               IF   I 1+ C@ CASE SYM->DOPERATOR ';' FO RET, EF  ENDCASE 1 I+
+                               ELSE I    C@ CASE SYM->OPERATOR  ''' OF XTSYM ENDOF
+                                                 ';' FO EXIT EF ']' FO ENDCASE EF '}' FO }LAMBDA EF '\' FO CR EF
+                                         ENDCASE
                                THEN
                           THEN
                      THEN
@@ -186,34 +171,34 @@ M: SYM->FOPERATOR
 
 \ работа с числами с плав. точкой - односимвольный вариант
 
-M: S>FOPERATOR
-  '0' FO FALSE      EF 'G' FO aDO      EF '*' FO F*       EF     
-  'a' FO FABS       EF 'H' FO WITHIN   EF '+' FO F+       EF     
-  'b' FO NOOP       EF 'I' FO I        EF ',' FO FLITERAL EF     
-  'c' FO FCOS       EF 'J' FO J        EF '-' FO F-       EF     
-  'd' FO FDUP       EF 'K' FO EKEY     EF '.' FO F.       EF     
-  'e' FO ELSE       EF 'L' FO LOOP     EF '/' FO F/       EF     
-  'f' FO hFree      EF 'M' FO FMAX     EF ';' FO EXIT     EF     
-  'g' FO CELL       EF 'N' FO +LOOP    EF '<' FO F<       EF     
-  'h' FO hAlloc     EF 'O' FO BEGIN    EF '=' FO F=       EF     
-  'i' FO F1+        EF 'P' FO FDEPTH   EF '>' FO NOOP     EF     
-  'j' FO 1+!        EF 'Q' FO LEAVE    EF '?' FO IF       EF     
-  'k' FO KEY        EF 'R' FO REPEAT   EF '@' FO F@       EF     
-  'l' FO NOOP       EF 'S' FO FSQRT    EF '[' FO CASE     EF     
-  'm' FO FMIN       EF 'T' FO FTAN     EF '\' FO CR       EF     
-  'n' FO FNEGATE    EF 'U' FO UNTIL    EF ']' FO ENDCASE  EF     
-  'o' FO AGAIN      EF 'V' FO MOVE     EF '^' FO XOR      EF     
-  'p' FO DATA>FLOAT EF 'W' FO WHILE    EF '_' FO ACCEPT   EF     
-  'q' FO FLOAT>DATA EF 'X' FO EXECUTE  EF '{' FO LAMBDA{  EF     
-  'r' FO DS>F       EF 'Y' FO TRUE     EF '|' FO OR       EF     
-  's' FO FSIN       EF 'Z' FO F0=      EF '}' FO }LAMBDA  EF     
-  't' FO THEN       EF '!' FO F!       EF '~' FO INVERT   EF     
-  'u' FO hResize    EF '#' FO FILL     EF                     
-  'v' FO EVALUATE   EF '$' FO ?DO      EF                     
-  'w' FO NOOP       EF '%' FO MOD      EF                     
-  'x' FO FDROP      EF '&' FO AND      EF                     
-  'y' FO odin       EF '(' FO OF       EF                     
-  'z' FO F0<        EF ')' FO ENDOF    EF                        
+S: S>FOPERATOR
+0 FALSE      G aDO     * F*            
+a FABS       H WITHIN  + F+            
+b NOOP       I I       , FLITERAL      
+c FCOS       J J       - F-            
+d FDUP       K EKEY    . F.            
+e ELSE       L LOOP    / F/            
+f hFree      M FMAX    \ ; EXIT          
+g CELL       N +LOOP   < F<            
+h hAlloc     O BEGIN   = F=            
+i F1+        P FDEPTH  > NOOP          
+j 1+!        Q LEAVE   ? IF            
+k KEY        R REPEAT  @ F@            
+l NOOP       S FSQRT   [ CASE          
+m FMIN       T FTAN    \ \ CR            
+n FNEGATE    U UNTIL   \ ] ENDCASE       
+o AGAIN      V MOVE    ^ XOR           
+p DATA>FLOAT W WHILE   _ ACCEPT        
+q FLOAT>DATA X EXECUTE { LAMBDA{       
+r DS>F       Y TRUE    | OR            
+s FSIN       Z F0=     \ } }LAMBDA       
+t THEN       ! F!      ~ INVERT        
+u hResize    # FILL                       
+v EVALUATE   $ ?DO                        
+w NOOP       % MOD                        
+x FDROP      & AND                        
+y odin       ( OF                         
+z F0<        ) ENDOF                         
 ;
 
 : NOTFOUND ( a u -- ) u! a! XSF sf!
@@ -239,7 +224,9 @@ M: S>FOPERATOR
                 IF I 1+ C@ I 1+ z19? IF '0' ELSE '7' THEN - DS>F ` FLITERAL  1 I+                                                     
                 ELSE I C@ ''' = I 1+ z19?  I 1+ zAF? OR AND                                  
                      IF   I 1+ C@ I 1+ z19? IF '0' ELSE '7' THEN - 1- CELLS LIT, sf LIT, ` + 1 I+                                                                           
-                     ELSE I C@ CASE S>FOPERATOR ENDCASE
+                     ELSE I C@ CASE S>FOPERATOR
+                                    ';' FO EXIT EF ']' FO ENDCASE EF '}' FO }LAMBDA EF '\' FO CR EF 
+                               ENDCASE
                      THEN
                 THEN 
            THEN      
