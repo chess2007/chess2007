@@ -22,7 +22,7 @@ I: }LAMBDA ( res xt -- ) RET, >R >RESOLVE1 R> LIT, ;
 I: FO ` OF ` ` ;  M: EF ENDOF ;
 
 : conv-so ui! ai! ai i!
-  2000 DUP uo! ALLOCATE THROW o! o ao! ao uo ERASE
+  2000 ao] 2000 uo! ao o! ao uo ERASE
   i+( i 1+ is i   )  o+( o 1+ is o )   
   ro( ''' o C! o+ )  io( i C@ o C! i+ o+ )
   _o( BL o C! o+  )  Fo( 'F' o C! o+ )

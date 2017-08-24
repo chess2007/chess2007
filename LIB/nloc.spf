@@ -123,9 +123,10 @@ USER iol 0 iol !     \ направление ввода-вывода в лок 
   a u 1- SFIND DROP BRANCH, POSTPONE -; ;
 
 \ неименованные замыкания
-I: (c load-text xts LIT, ;   
+I: (c LOAD-TEXT ` xts RET, ;                  \ внутри определения (с ... с)
+: C: : IMMEDIATE LOAD-TEXT ` xts POSTPONE ; ; \ определение слова-замыкания C: Name .... ;
 
-\ числа с плавающей запятой в виде 3,1415
+\ числа с плавающей запятой в виде 3,141592
 : NOTFOUND  ( a u -- )  u! a!  0. sq! sz! 0. pt! an!
   a u OVER + SWAP ?DO I C@ '0' ':' WITHIN IF sq 1+ is sq THEN  I C@ ',' = IF I a - is pt sz 1+ is sz THEN LOOP
   a C@ '-' = IF sq u 2- = ELSE sq u 1- = THEN sz 1 = AND 0= IF a u NOTFOUND EXIT THEN

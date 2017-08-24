@@ -11,7 +11,7 @@
   5 ALLOT DP @ >R
   BEGIN NextWord ( -- a u )
   2DUP  DUP  2 = SWAP 1 = OR  \ a u a f
-        IF   DUP  W@ DUP ';M' = SWAP DUP 'm)' = SWAP DUP 'c)' = SWAP '")' = OR OR OR SWAP 
+        IF   DUP  W@ DUP ';M' = SWAP 'c)' =  OR SWAP 
                   C@ DUP ';'  = SWAP DUP '"'  = SWAP DUP '}'  = SWAP ']'  = OR OR OR OR \ a u f
              IF   2DROP 1
              ELSE OVER C@ '\' =
