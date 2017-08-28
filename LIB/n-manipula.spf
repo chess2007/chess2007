@@ -71,26 +71,26 @@ M: XTSYM ` LAMBDA{ I 1+ C@ CASE SYM->OPERATOR ENDCASE ` }LAMBDA 1 I+ ;
 
 \ символы с префиксом " 
 S: SYM->DOPERATOR 
-+ D+  - D-  a DABS  n DNEGATE                           \ арифметика
-| DOR  & DAND  ^ DXOR  ~ DINVERT  l DLSHIFT  r DRSHIFT  \ логика и сдвиги
-d 2DUP  x 2DROP                                         \ стек   
-< D<  > D>  = D=  z D0<>  Z D0=                         \ сравнения
-0 Dnull  y Dodin  g 4cell                               \ константы
-b W@  w W!  ! 2!  @ 2@  h ALLOT                         \ память 
-, 2LITERAL                                              \ компиляция-исполнение                
-. D.                                                    \ вывод 
++ D+    - D-    a DABS  n DNEGATE                         \ арифметика
+| DOR   & DAND  ^ DXOR  ~ DINVERT l DLSHIFT r DRSHIFT     \ логика и сдвиги
+d 2DUP  x 2DROP                                           \ стек   
+< D<    > D>    = D=    z D0<>    Z D0=                   \ сравнения
+0 Dnull y Dodin g 4cell                                   \ константы
+b W@    w W!    ! 2!    @ 2@      h ALLOT                 \ память 
+, 2LITERAL                                                \ компиляция-исполнение                
+. D.                                                      \ вывод 
 ;                                 
 
 \ символы с префиксом `
 S: SYM->FOPERATOR
-+ F+  - F-  * F*  / F/  a FABS  n FNEGATE  I F1+  i 1-  \ арифметика         
-d FDUP  x FDROP                                         \ стек
-= F=  Z F0=  M FMAX  m FMIN                             \ сравнения
-! F!  @ F@  j 1-!                                       \ константы
-b .BL  t n.0b  P .0  . F.  T n.0h                       \ вывод 
-c FCOS Q FSQRT                                          \ функции
-h hex  k kbyte  K mbyte                                 \ константы
-R >R   X R@                                             \ стек возвратов 
++ F+   - F-    * F*    / F/   a FABS n FNEGATE I F1+ i 1- \ арифметика         
+d FDUP x FDROP                                            \ стек
+= F=   Z F0=   M FMAX  m FMIN                             \ сравнения
+! F!   @ F@    j 1-!                                      \ константы
+b .BL  t n.0b  P .0    . F.   T n.0h                      \ вывод 
+c FCOS Q FSQRT                                            \ функции
+h hex  k kbyte K mbyte                                    \ константы
+R >R   X R@                                               \ стек возвратов 
 ;
 
 0 VALUE XSP 0 VALUE XSF
@@ -141,38 +141,24 @@ R >R   X R@                                             \ стек возвра�
   LOOP
 ;
 
-\ работа с числами с плав. точкой - односимвольный вариант с переключением словарей
+\ работа с числами с плав. точкой - односимвольный вариант в отдельном словаре ( n| ) 
 
 S: S>FOPERATOR
-0 FALSE      G aDO     * F*             
-a FABS       H WITHIN  + F+             
-             I I       , FLITERAL       
-c FCOS       J J       - F-             
-d FDUP       K EKEY    . F.             
-e ELSE       L LOOP    / F/             
-f hFree      M FMAX                 
-g CELL       N +LOOP   < F<             
-h hAlloc     O BEGIN   = F=             
-i F1+        P FDEPTH             
-j 1+!        Q LEAVE   ? IF             
-k KEY        R REPEAT  @ F@             
-             S FSQRT   [ CASE           
-m FMIN       T FTAN                   
-n FNEGATE    U UNTIL   ] ENDCASE          
-o AGAIN      V MOVE    ^ XOR            
-p DATA>FLOAT W WHILE   _ ACCEPT         
-q FLOAT>DATA X EXECUTE { LAMBDA{        
-r DS>F       Y TRUE    | OR             
-s FSIN       Z F0=     } }LAMBDA          
-t THEN       ! F!      ~ INVERT         
-u hResize    # FILL            
-v EVALUATE   $ ?DO             
-             % MOD             
-x FDROP      & AND             
-y odin       ( OF              
-z F0<        ) ENDOF              
++ F+         - F-         * F*      / F/      a FABS    n FNEGATE i F1+            \ арифметика    
+| OR         & AND        ^ XOR     ~ INVERT                                       \ логика
+d FDUP       x FDROP      P FDEPTH                                                 \ стек          
+< F<         = F=         m FMIN    M FMAX    z F0<     Z F0=     H WITHIN         \ сравнения     
+0 FALSE      y odin       Y TRUE                                                   \ константы     
+@ F@         ! F!         j 1+!     h hAlloc  f hFree   u hResize V MOVE    # FILL \ память
+c FCOS       s FSIN       S FSQRT   T FTAN                                         \ функции 
+? IF         e ELSE       t THEN    [ CASE    ( OF      ) ENDOF   ] ENDCASE        \ ветвление
+O BEGIN      o AGAIN      U UNTIL   W WHILE   R REPEAT                             \ циклы
+$ ?DO        G aDO        I I       J J       Q LEAVE   L LOOP    N +LOOP          \ циклы со счетчиком
+p DATA>FLOAT q FLOAT>DATA r DS>F                                                   \ конверсия в числа с плав. точкой
+_ ACCEPT     k KEY        K EKEY                                                   \ ввод
+. F.         g CELL                                                                \ вывод         
+, FLITERAL   v EVALUATE   { LAMBDA{ } }LAMBDA X EXECUTE                            \ компиляция-исполнение
 ;
-
 : NOTFOUND ( a u -- ) u! a! XSF sf!
   z18?( C@ '1' '9' WITHIN )
   z19?( C@ '1' ':' WITHIN )
