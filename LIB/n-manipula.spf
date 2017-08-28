@@ -22,7 +22,7 @@ I: }LAMBDA ( res xt -- ) RET, >R >RESOLVE1 R> LIT, ;
 I: FO ` OF ` ` ;  M: EF ENDOF ;
 
 : conv-so ui! ai! ai i!
-  2000 ao] 2000 uo! ao o! ao uo ERASE
+  2000 ALLOCATE THROW ao! 2000 uo! ao o! ao uo ERASE
   i+( i 1+ is i   )  o+( o 1+ is o )   
   ro( ''' o C! o+ )  io( i C@ o C! i+ o+ )
   _o( BL o C! o+  )  Fo( 'F' o C! o+ )
@@ -33,37 +33,24 @@ I: FO ` OF ` ` ;  M: EF ENDOF ;
   i ai - ui >
   UNTIL ao o ao -
 ;
-: S:  : IMMEDIATE load-text conv-so DLIT, ` EVALUATE ` ; ;
+: S:  : IMMEDIATE load-str conv-so DLIT, ` EVALUATE ` ; ;
 
 S: SYM->OPERATOR
-0 FALSE    G aDO     * *       
-a ABS      H WITHIN  + +             
-b C@       I I       , LITERAL 
-c EMIT     J J       - -             
-d DUP      K EKEY    . .             
-e ELSE     L LOOP    / /             
-f hFree    M MAX     < <                
-g CELL     N +LOOP   = =       
-h hAlloc   O BEGIN   > >       
-i 1+       P DEPTH   ? IF      
-j 1+!      Q LEAVE   @ @       
-k KEY      R REPEAT  [ CASE    
-l LSHIFT   S SPACES  ^ XOR     
-m MIN      T TYPE    _ ACCEPT  
-n NEGATE   U UNTIL   { LAMBDA{
-o AGAIN    V MOVE    | OR          
-p DS>F     W WHILE   ~ INVERT 
-q COMPARE  X EXECUTE 
-r RSHIFT   Y TRUE          
-s SEARCH   Z 0=       
-t THEN     ! !         
-u hResize  # FILL                         
-v EVALUATE $ ?DO     
-w C!       % MOD     
-x DROP     & AND     
-y odin     ( OF      
-z 0<>      ) ENDOF                        
-;
++ +  - -  * *  / /  % MOD  i 1+  a ABS  n NEGATE                  \ арифметика
+| OR  & AND  ^ XOR  ~ INVERT  l LSHIFT  r RSHIFT                  \ логика и сдвиги
+d DUP  x DROP  P DEPTH                                            \ стек 
+< <  = =  > >  z 0<>  Z 0=  m MIN  M MAX  H WITHIN                \ сравнения   
+0 FALSE y odin  Y TRUE  g CELL                                    \ константы
+b C@  w C!  @ @  ! !  q COMPARE  s SEARCH  j 1+!  # FILL  V MOVE  \ память
+h hAlloc  f hFree  u hResize                                      \ хип
+? IF  e ELSE  t THEN  [ CASE  ( OF  ) ENDOF  ] ENDCASE            \ ветвления
+O BEGIN  o AGAIN  U UNTIL  W WHILE  R REPEAT                      \ циклы
+$ ?DO  G aDO  I I  J J  Q LEAVE  L LOOP  N +LOOP                  \ циклы со счетчиком 
+, LITERAL  v EVALUATE  { LAMBDA{  } }LAMBDA  X EXECUTE  \ ; EXIT  \ компиляция-исполнение
+_ ACCEPT  k KEY  K EKEY                                           \ ввод
+S SPACES  T TYPE  . .  c EMIT  \ \ CR                             \ вывод 
+p DS>F                                                            \ конверсия в числа с плав. точкой
+;                  
 
 M: XTSYM ` LAMBDA{ I 1+ C@ CASE SYM->OPERATOR ENDCASE ` }LAMBDA 1 I+ ;
 
@@ -84,39 +71,26 @@ M: XTSYM ` LAMBDA{ I 1+ C@ CASE SYM->OPERATOR ENDCASE ` }LAMBDA 1 I+ ;
 
 \ символы с префиксом " 
 S: SYM->DOPERATOR 
-a DABS    ! 2!       ~ DINVERT              
-b W@      & DAND     0 Dnull                              
-d 2DUP    + D+       Z D0=    
-g 4cell   , 2LITERAL     
-h ALLOT   - D-      
-l DLSHIFT . D.       
-n DNEGATE < D<          
-r DRSHIFT = D=       
-w W!      > D>                             
-x 2DROP   @ 2@                                         
-y Dodin   ^ DXOR                                                         
-z D0<>    | DOR                                           
++ D+  - D-  a DABS  n DNEGATE                           \ арифметика
+| DOR  & DAND  ^ DXOR  ~ DINVERT  l DLSHIFT  r DRSHIFT  \ логика и сдвиги
+d 2DUP  x 2DROP                                         \ стек   
+< D<  > D>  = D=  z D0<>  Z D0=                         \ сравнения
+0 Dnull  y Dodin  g 4cell                               \ константы
+b W@  w W!  ! 2!  @ 2@  h ALLOT                         \ память 
+, 2LITERAL                                              \ компиляция-исполнение                
+. D.                                                    \ вывод 
 ;                                 
 
 \ символы с префиксом `
 S: SYM->FOPERATOR
-a FABS    + F+      
-b .BL     - F-       
-c FCOS    * F*    
-d FDUP    / F/     
-h hex     . F.                     
-i 1-      ! F!      
-j 1-!     @ F@        
-k kbyte   = F= 
-K mbyte   I F1+         
-M FMAX               
-N NOOP    
-P .0       
-Q FSQRT 
-R >R    
-T n.0h  
-X R@    
-Z F0=   
++ F+  - F-  * F*  / F/  a FABS  n FNEGATE  I F1+  i 1-  \ арифметика         
+d FDUP  x FDROP                                         \ стек
+= F=  Z F0=  M FMAX  m FMIN                             \ сравнения
+! F!  @ F@  j 1-!                                       \ константы
+b .BL  t n.0b  P .0  . F.  T n.0h                       \ вывод 
+c FCOS Q FSQRT                                          \ функции
+h hex  k kbyte  K mbyte                                 \ константы
+R >R   X R@                                             \ стек возвратов 
 ;
 
 0 VALUE XSP 0 VALUE XSF
@@ -154,12 +128,10 @@ Z F0=
                         ELSE I 1+ C@ '7' - LIT,  
                         THEN 1 I+
                      ELSE I C@ '`' = 
-                          IF   I 1+ C@ CASE SYM->FOPERATOR ';' FO EXIT EF ENDCASE 1 I+ 
+                          IF   I 1+ C@ CASE SYM->FOPERATOR ENDCASE 1 I+ 
                           ELSE I C@ '"' = 
-                               IF   I 1+ C@ CASE SYM->DOPERATOR ';' FO RET, EF  ENDCASE 1 I+
-                               ELSE I    C@ CASE SYM->OPERATOR  ''' OF XTSYM ENDOF
-                                                 ';' FO EXIT EF ']' FO ENDCASE EF '}' FO }LAMBDA EF '\' FO CR EF
-                                         ENDCASE
+                               IF   I 1+ C@ CASE SYM->DOPERATOR  ENDCASE 1 I+
+                               ELSE I    C@ CASE SYM->OPERATOR ''' OF XTSYM ENDOF ';' FO EXIT EF '\' FO CR EF ENDCASE                                        
                                THEN
                           THEN
                      THEN
@@ -169,36 +141,36 @@ Z F0=
   LOOP
 ;
 
-\ работа с числами с плав. точкой - односимвольный вариант
+\ работа с числами с плав. точкой - односимвольный вариант с переключением словарей
 
 S: S>FOPERATOR
-0 FALSE      G aDO     * F*            
-a FABS       H WITHIN  + F+            
-b NOOP       I I       , FLITERAL      
-c FCOS       J J       - F-            
-d FDUP       K EKEY    . F.            
-e ELSE       L LOOP    / F/            
-f hFree      M FMAX    \ ; EXIT          
-g CELL       N +LOOP   < F<            
-h hAlloc     O BEGIN   = F=            
-i F1+        P FDEPTH  > NOOP          
-j 1+!        Q LEAVE   ? IF            
-k KEY        R REPEAT  @ F@            
-l NOOP       S FSQRT   [ CASE          
-m FMIN       T FTAN    \ \ CR            
-n FNEGATE    U UNTIL   \ ] ENDCASE       
-o AGAIN      V MOVE    ^ XOR           
-p DATA>FLOAT W WHILE   _ ACCEPT        
-q FLOAT>DATA X EXECUTE { LAMBDA{       
-r DS>F       Y TRUE    | OR            
-s FSIN       Z F0=     \ } }LAMBDA       
-t THEN       ! F!      ~ INVERT        
-u hResize    # FILL                       
-v EVALUATE   $ ?DO                        
-w NOOP       % MOD                        
-x FDROP      & AND                        
-y odin       ( OF                         
-z F0<        ) ENDOF                         
+0 FALSE      G aDO     * F*             
+a FABS       H WITHIN  + F+             
+             I I       , FLITERAL       
+c FCOS       J J       - F-             
+d FDUP       K EKEY    . F.             
+e ELSE       L LOOP    / F/             
+f hFree      M FMAX                 
+g CELL       N +LOOP   < F<             
+h hAlloc     O BEGIN   = F=             
+i F1+        P FDEPTH             
+j 1+!        Q LEAVE   ? IF             
+k KEY        R REPEAT  @ F@             
+             S FSQRT   [ CASE           
+m FMIN       T FTAN                   
+n FNEGATE    U UNTIL   ] ENDCASE          
+o AGAIN      V MOVE    ^ XOR            
+p DATA>FLOAT W WHILE   _ ACCEPT         
+q FLOAT>DATA X EXECUTE { LAMBDA{        
+r DS>F       Y TRUE    | OR             
+s FSIN       Z F0=     } }LAMBDA          
+t THEN       ! F!      ~ INVERT         
+u hResize    # FILL            
+v EVALUATE   $ ?DO             
+             % MOD             
+x FDROP      & AND             
+y odin       ( OF              
+z F0<        ) ENDOF              
 ;
 
 : NOTFOUND ( a u -- ) u! a! XSF sf!
@@ -224,9 +196,7 @@ z F0<        ) ENDOF
                 IF I 1+ C@ I 1+ z19? IF '0' ELSE '7' THEN - DS>F ` FLITERAL  1 I+                                                     
                 ELSE I C@ ''' = I 1+ z19?  I 1+ zAF? OR AND                                  
                      IF   I 1+ C@ I 1+ z19? IF '0' ELSE '7' THEN - 1- CELLS LIT, sf LIT, ` + 1 I+                                                                           
-                     ELSE I C@ CASE S>FOPERATOR
-                                    ';' FO EXIT EF ']' FO ENDCASE EF '}' FO }LAMBDA EF '\' FO CR EF 
-                               ENDCASE
+                     ELSE I C@ CASE S>FOPERATOR '\' FO CR EF ';' FO EXIT EF ENDCASE                                                                    
                      THEN
                 THEN 
            THEN      

@@ -11,7 +11,7 @@
   5 ALLOT DP @ >R
   BEGIN NextWord ( -- a u )
   2DUP  DUP  2 = SWAP 1 = OR  \ a u a f
-        IF   DUP  W@ DUP ';M' = SWAP 'c)' =  OR SWAP 
+        IF   DUP  W@ DUP ';M' = SWAP DUP 'm)' = SWAP DUP 'c)' = SWAP '")' = OR OR OR SWAP 
                   C@ DUP ';'  = SWAP DUP '"'  = SWAP DUP '}'  = SWAP ']'  = OR OR OR OR \ a u f
              IF   2DROP 1
              ELSE OVER C@ '\' =
@@ -23,15 +23,32 @@
         THEN
   UNTIL
   DP @ R@ 5 - DP ! 0xE9 C, DUP R@ - ,
-  DUP DP ! R@ SWAP R> -  1-  
+  DUP DP ! R@ SWAP R> - 1-  
 ; 
-
 : LOAD-TEXT ( a u -- )  load-text DLIT,  ;
-  
+
+: load-str ( -- a u )
+  5 ALLOT DP @ >R
+  BEGIN NextWord ( -- a u )
+  2DUP  1 =   \ a u a f
+        IF   B@ ';' =  \ a u f
+             IF   2DROP 1
+             ELSE OVER B@ '\' =
+                  IF   DROP 0xD PARSE DROP OVER - ERASE  \ a a1 a
+                  ELSE LOAD-LEX THEN 0
+             THEN
+        ELSE DROP DUP 0=
+             IF 2DROP REFILL DROP ELSE LOAD-LEX THEN 0
+        THEN
+  UNTIL
+  DP @ R@ 5 - DP ! 0xE9 C, DUP R@ - ,
+  DUP DP ! R@ SWAP R> - 1-
+;
+: LOAD-STR  ( a u -- )  load-str  DLIT,  ;  
   
 \ Слова-строки многострочные - допускают комментарии вида \ .....
 : T: ( name "text" -- ) : LOAD-TEXT POSTPONE ; ;
-
+: t: ( name "text" -- ) : LOAD-STR  POSTPONE ; ;
 \ Макросы многострочные - допускают комментарии вида \ .....
 : M: ( name "text" -- ) : IMMEDIATE LOAD-TEXT POSTPONE EVALUATE POSTPONE ; ;
 
@@ -40,4 +57,7 @@
   DP @ >R 1024  ALLOCATE THROW DUP >R DP !
   TRUE STATE ! EVALUATE RET, FALSE STATE !
   R@ DP @ R> -  RESIZE THROW  R> DP ! ;
+
+
+
 
