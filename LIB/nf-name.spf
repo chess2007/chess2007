@@ -45,7 +45,17 @@
   DUP DP ! R@ SWAP R> - 1-
 ;
 : LOAD-STR  ( a u -- )  load-str  DLIT,  ;  
-  
+
+VECT lex VECT out 
+: interp  5 ALLOT HERE >R 
+  BEGIN NextWord 2DUP 1 =          
+        IF B@ out = IF 2DROP 1 ELSE 0 THEN
+        ELSE DROP DUP 0=
+             IF 2DROP REFILL DROP ELSE EVALUATE lex THEN 0
+        THEN
+  UNTIL RET,
+  HERE R@ 5 - DP ! 0xE9 C, DUP R@ - , DP ! R> EXECUTE
+;  
 \ Слова-строки многострочные - допускают комментарии вида \ .....
 : T: ( name "text" -- ) : LOAD-TEXT POSTPONE ; ;
 : t: ( name "text" -- ) : LOAD-STR  POSTPONE ; ;

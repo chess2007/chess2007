@@ -73,20 +73,21 @@ d 2DUP      x 2DROP                                              \ стек
 < D<        > D>    = D=     z D0<>     Z D0=                    \ сравнения
 0 Dnull     y Dodin g 4cell                                      \ константы
 b W@        w W!    ! 2!     @ 2@       h ALLOT                  \ память 
-, 2LITERAL                                                       \ компиляция-исполнение                
 . D.                                                             \ вывод 
+, 2LITERAL                                                       \ компиляция-исполнение                
 ;                                 
 \ символы с префиксом `
 S: SYM->FOPERATOR
 + F+    - F-     * F*     / F/    a FABS  n FNEGATE  I F1+  i 1-  \ арифметика         
-d FDUP  x FDROP                                                   \ стек
+d FDUP  x SPDROP V SPMOVE                                         \ стек
 = F=    Z F0=    M FMAX   m FMIN                                  \ сравнения
 ! F!    @ F@     j 1-!                                            \ константы
 . F.    P .0     b .BL    t n.0b  T n.0h                          \ вывод 
 c FCOS  Q FSQRT                                                   \ функции
 h hex   k kbyte  K mbyte                                          \ константы
 R >R    X R@                                                      \ стек возвратов 
-;
+r RET,                                                            \ компиляция-исполнение
+;                                                                 
 0 VALUE XSP 0 VALUE XSF
 : ; 0 TO XSP 0 TO XSF POSTPONE ; ; IMMEDIATE
 : NOTFOUND ( a u -- ) u! a! 
@@ -147,10 +148,10 @@ c FCOS       s FSIN       S FSQRT   T FTAN                                      
 ? IF         e ELSE       t THEN    [ CASE    ( OF      ) ENDOF   ] ENDCASE        \ ветвление
 O BEGIN      o AGAIN      U UNTIL   W WHILE   R REPEAT                             \ циклы
 $ ?DO        G aDO        I I       J J       Q LEAVE   L LOOP    N +LOOP          \ циклы со счетчиком
-p DATA>FLOAT q FLOAT>DATA r DS>F                                                   \ конверсия в числа с плав. точкой
+p DATA>FLOAT q FLOAT>DATA % DS>F                                                   \ конверсия в числа с плав. точкой
 _ ACCEPT     k KEY        K EKEY                                                   \ ввод
 . F.         g CELL                                                                \ вывод         
-, FLITERAL   v EVALUATE   { LAMBDA{ } }LAMBDA X EXECUTE                            \ компиляция-исполнение
+, FLITERAL   v EVALUATE   { LAMBDA{ } }LAMBDA X EXECUTE r RET,                     \ компиляция-исполнение
 ;
 : NOTFOUND ( a u -- ) u! a! XSF sf!
   z18?( C@ '1' '9' WITHIN )
