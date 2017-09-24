@@ -12,7 +12,9 @@ REQUIRE IDN          ~chess\assm\sp-assm.spf     \ встроенный двух
 REQUIRE CHOOSE       lib\ext\rnd.f               \ случайный выбор
 REQUIRE F.           lib\include\float2.f        \ вещественные числа
 REQUIRE )            ~chess\lib\nloc.spf         \ локально-именованные слова, переменные и массивы в стат.памяти, суффиксы для форт-слов
-REQUIRE SPMOVE       ~chess\lib\n-manipula.spf   \ стековые манипуляторы, расширенные операторами
+\ REQUIRE SPMOVE       ~chess\lib\n-manipula.spf   \ стековые манипуляторы, расширенные операторами
+REQUIRE SPMOVE       ~chess\lib\n-manipulas.spf   \ стековые манипуляторы, расширенные операторами
+
 REQUIRE METER        ~chess\lib\meter.spf        \ измеритель времени исполнения слова при разовом и циклическом его исполнении
 
 S" I:\SPF4\devel\~chess\BIN\spf4n.exe" SAVE BYE

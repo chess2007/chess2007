@@ -1,7 +1,24 @@
 \ стековые манипуляторы, расширенные операторами (для быстрого прототипирования и отладки программных модулей)
 
-: SPDROP ( p*n n --)  P+A DROP ;  \ убрать со стека n байтов
-: SPMOVE ( p*n addr n --) $ 4 B=aP D=A D+@P L1: $ -4 Da C=@B @D=C $ 4 Ba $ 4 A-# L1 J0<> 2DROP ; \ скопировать n байтов стека в память
+: bst ( N -- )  >R DEPTH CELLS >R S0 @ >CS S0 @ R> - R> CELLS + DUP >CS 15 CELLS - SP! SP@ S0 !  ;
+: prm ( n -- An ) CELLS NEGATE CS@ +  ;
+: est DEPTH CELLS >R CS@ 15 CELLS - R@ - CS@ R@ - R@ MOVE CS> CS> S0 ! R> - SP! ;
+
+: 1prm  1 prm   ; : 1>  1 prm @ ; : >1  1 prm ! ;
+: 2prm  2 prm   ; : 2>  2 prm @ ; : >2  2 prm ! ;
+: 3prm  3 prm   ; : 3>  3 prm @ ; : >3  3 prm ! ;
+: 4prm  4 prm   ; : 4>  4 prm @ ; : >4  4 prm ! ;
+: 5prm  5 prm   ; : 5>  5 prm @ ; : >5  5 prm ! ;
+: 6prm  6 prm   ; : 6>  6 prm @ ; : >6  6 prm ! ;
+: 7prm  7 prm   ; : 7>  7 prm @ ; : >7  7 prm ! ;
+: 8prm  8 prm   ; : 8>  8 prm @ ; : >8  8 prm ! ;
+: 9prm  9 prm   ; : 9>  9 prm @ ; : >9  9 prm ! ;
+: aprm 10 prm   ; : a> 10 prm @ ; : >a 10 prm ! ;
+: bprm 11 prm   ; : b> 11 prm @ ; : >b 11 prm ! ;
+: cprm 12 prm   ; : c> 12 prm @ ; : >c 12 prm ! ;
+: dprm 13 prm   ; : d> 13 prm @ ; : >d 13 prm ! ;
+: eprm 14 prm   ; : e> 14 prm @ ; : >e 14 prm ! ;
+: fprm 15 prm   ; : f> 15 prm @ ; : >f 15 prm ! ;
 
 M: aDO   OVER + SWAP ?DO ;    \ макрос ( BOUND ?DO )
 M: I+  ( n -- )  R@ + RP@ ! ; \ макрос: увеличить счетчик цикла на n со стека
@@ -31,21 +48,33 @@ I: FO ` OF ` ` ;  M: EF ENDOF ;
 ;
 : S:  : IMMEDIATE load-str conv-so DLIT, ` EVALUATE ` ; ;
 
-S: SYM->OPERATOR
-+ +        - -         * *        / /        % MOD      i 1+      a ABS      n NEGATE          \ арифметика
-| OR       & AND       ^ XOR      ~ INVERT   l LSHIFT   r RSHIFT                               \ логика и сдвиги
-d DUP      x DROP      P DEPTH                                                                 \ стек 
-< <        = =         > >        z 0<>      Z 0=       m MIN     M MAX      H WITHIN          \ сравнения   
-0 FALSE    y odin      Y TRUE     g CELL                                                       \ константы
-b C@       w C!        @ @        ! !        q COMPARE  s SEARCH  j 1+!      # FILL    V MOVE  \ память
-h hAlloc   f hFree     u hResize                                                               \ хип
-? IF       e ELSE      t THEN     [ CASE     ( OF       ) ENDOF   ] ENDCASE                    \ ветвления
-O BEGIN    o AGAIN     U UNTIL    W WHILE    R REPEAT                                          \ циклы
-$ ?DO      G aDO       I I        J J        Q LEAVE    L LOOP    N +LOOP                      \ циклы со счетчиком 
-, LITERAL  v EVALUATE  { LAMBDA{  } }LAMBDA  X EXECUTE  \ ; EXIT                               \ компиляция-исполнение
-_ ACCEPT   k KEY       K EKEY                                                                  \ ввод
-S SPACES   T TYPE      . .        c EMIT     \ \ CR                                            \ вывод 
-p DS>F                                                                                         \ конверсия в числа с плав. точкой
+S: SYM->OPERATOR 
+a ABS        A a>          ! !          0 FALSE
+b C@         B b>          # FILL       1 1>
+c EMIT       C c>          $ ?DO        2 2>
+d DUP        D d>          % MOD        3 3>
+e ELSE       E e>          & AND        4 4>
+f hFree      F f>          ( OF         5 5>
+g CELL       H WITHIN      ) ENDOF      6 6>
+h hAlloc     G aDO         * *          7 7>
+i 1+         I I           + +          8 8>
+j 1+!        J J           , LITERAL    9 9>
+k KEY        K EKEY        - -
+l LSHIFT     L LOOP        . .
+m MIN        M MAX         / /
+n NEGATE     N +LOOP       < <
+o AGAIN      O BEGIN       = =
+p DS>F       P DEPTH       > >
+q COMPARE    Q LEAVE       ? IF
+r RSHIFT     R REPEAT      @ @
+s SEARCH     S SPACES      [ bst
+t THEN       T TYPE        ] est
+u hResize    U UNTIL       ^ XOR
+v EVALUATE   V MOVE        _ ACCEPT
+w C!         W WHILE       { LAMBDA{
+x DROP       X EXECUTE     | OR
+y odin       Y TRUE        } }LAMBDA
+z 0<>        Z 0=          ~ INVERT                                                                  
 ;                  
 
 M: XTSYM ` LAMBDA{ I 1+ C@ CASE SYM->OPERATOR ENDCASE ` }LAMBDA 1 I+ ;
@@ -67,97 +96,98 @@ M: XTSYM ` LAMBDA{ I 1+ C@ CASE SYM->OPERATOR ENDCASE ` }LAMBDA 1 I+ ;
 
 \ символы с префиксом " 
 S: SYM->DOPERATOR 
-+ D+        - D-    a DABS   n DNEGATE                           \ арифметика
-| DOR       & DAND  ^ DXOR   ~ DINVERT  l DLSHIFT r DRSHIFT      \ логика и сдвиги
-d 2DUP      x 2DROP                                              \ стек   
-< D<        > D>    = D=     z D0<>     Z D0=                    \ сравнения
-0 Dnull     y Dodin g 4cell                                      \ константы
-b W@        w W!    ! 2!     @ 2@                                \ память 
-. D.                                                             \ вывод 
-, 2LITERAL                                                       \ компиляция-исполнение                
+a DABS       Z D0=         ! 2!         0 Dnull
+b W@                       & DAND
+d 2DUP                     + D+
+g 4cell                    , 2LITERAL
+l DLSHIFT                  - D-
+n DNEGATE                  . D.
+r DRSHIFT                  < D<
+w W!                       = D=
+x 2DROP                    > D>
+y Dodin                    @ 2@
+z D0<>                     ^ DXOR
+                           | DOR
+                           ~ DINVERT
 ;                                 
-
-: bst ( N -- )  >R DEPTH CELLS >R S0 @ >CS S0 @ R> - R> CELLS + DUP >CS 15 CELLS - SP! SP@ S0 !  ;
-: prm ( n -- An ) CELLS NEGATE CS@ +  ;
-: est DEPTH CELLS >R CS@ 15 CELLS - R@ - CS@ R@ - R@ MOVE CS> CS> S0 ! R> - SP! ;
-
-: 1>  1 prm @ ;   : >1  1 prm ! ;
-: 2>  2 prm @ ;   : >2  2 prm ! ;
-: 3>  3 prm @ ;   : >3  3 prm ! ;
-: 4>  4 prm @ ;   : >4  4 prm ! ;
-: 5>  5 prm @ ;   : >5  5 prm ! ;
-: 6>  6 prm @ ;   : >6  6 prm ! ;
-: 7>  7 prm @ ;   : >7  7 prm ! ;
-: 8>  8 prm @ ;   : >8  8 prm ! ;
-: 9>  9 prm @ ;   : >9  9 prm ! ;
-: a> 10 prm @ ;   : >a 10 prm ! ;
-: b> 11 prm @ ;   : >b 11 prm ! ;
-: c> 12 prm @ ;   : >c 12 prm ! ;
-: d> 13 prm @ ;   : >d 13 prm ! ;
-: e> 14 prm @ ;   : >e 14 prm ! ;
-: f> 15 prm @ ;   : >f 15 prm ! ;
-
+\ символы с префиксом : 
+S: SYM->POPERATOR 
+1 >1     A >a
+2 >2     B >b
+3 >3     C >c
+4 >4     D >d
+5 >5     E >e
+6 >6     F >f
+7 >7    
+8 >8    
+9 >9    
+;
+\ символы с префиксом ' 
+S: SYM->XOPERATOR 
+1 1prm   A aprm
+2 2prm   B bprm
+3 3prm   C cprm
+4 4prm   D dprm
+5 5prm   E eprm
+6 6prm   F fprm
+7 7prm  
+8 8prm  
+9 9prm
+;
+: SPDROP ( p*n n --)  P+A DROP ;  \ убрать со стека n байтов
+: SPMOVE ( p*n addr n --) $ 4 B=aP D=A D+@P L1: $ -4 Da C=@B @D=C $ 4 Ba $ 4 A-# L1 J0<> 2DROP ; \ скопировать n байтов стека в память
 
 \ символы с префиксом `
 S: SYM->FOPERATOR
-+ F+    - F-     * F*     / F/    a FABS  n FNEGATE  I F1+  i 1-  \ арифметика         
-d FDUP  x SPDROP V SPMOVE                                         \ стеки
-= F=    Z F0=    M FMAX   m FMIN                                  \ сравнения
-! F!    @ F@     j 1-!    _ ALLOT                                 \ память
-. F.    P .0     b .BL    t n.0b  T n.0h                          \ вывод 
-c FCOS  Q FSQRT  ( bst    ) est                                   \ функции
-h hex   k kbyte  K mbyte                                          \ константы
-R >R    X R@     r R>                                             \ стек возвратов 
-p DP    s C,     S ,      N NextWord                              \ компиляция-исполнение
+a FABS       I F1+         ! F!
+b .BL        K mbyte       * F*
+c FCOS       M FMAX        + F+
+d FDUP       N NextWord    - F-
+h hex        P .0          . F.
+i 1-         Q FSQRT       / F/
+j 1-!        R >R          = F=
+k kbyte      S ,           @ F@
+m FMIN       T n.0h        _ ALLOT
+n FNEGATE    V SPMOVE    
+p DP         X R@        
+r R>         Z F0=       
+s C,                     
+t n.0b                   
+x SPDROP                 
 ;                                                                 
-0 VALUE XSP 0 VALUE XSF
-: ; 0 TO XSP 0 TO XSF POSTPONE ; ; IMMEDIATE
 : NOTFOUND ( a u -- ) u! a! 
-  z19?( C@ '1' ':' WITHIN )
-  zAF?( C@ 'A' 'G' WITHIN )
-  a z19? a zAF? OR          fz1!
-  a    C@ '/'        =      fr1!
-  a 1+ C@ '/'        =      fr2!
-  a    C@ '\'        =      fr3!  
-  fz1 fr2 AND fr1 OR fr3 OR u 1 > AND 0= IF a u NOTFOUND EXIT THEN
-  fr1 XSP 0= AND  fz1 fr2 AND OR
-  IF  64 ALLOCATE THROW sp! sp TO XSP THEN
-  fz1 IF a C@ a z19? IF '0' ELSE '7' THEN - CELLS Lb! sp LIT, Lb LIT, ` SPMOVE  Lb LIT, ` SPDROP THEN
-  a u + a fz1 IF 2+ ELSE 1+ THEN
-  ?DO I z19? I zAF? OR
-      IF I z19? 
-         IF   I C@ '0' -  1- CELLS LIT, sp LIT, ` + ` @ 
-         ELSE I C@ '7' -  1- CELLS LIT, sp LIT, ` + ` @ 
+  z19?( C@ '1' ':' WITHIN )  zAF?( C@ 'A' 'G' WITHIN )   
+  a C@ '/' = u 1 > AND 0= IF a u NOTFOUND EXIT THEN
+  a u + a 1+ 
+  ?DO I C@ '`' = I 1+ z19? I 1+ zAF? OR AND 
+      IF I 1+ z19? 
+         IF   I 1+ C@ '0' - LIT,  
+         ELSE I 1+ C@ '7' - LIT,  
+         THEN 1 I+
+      ELSE I C@ '`' = 
+         IF   I 1+ C@ CASE SYM->FOPERATOR ';' FO RET, EF ENDCASE 1 I+ 
+         ELSE I C@ '"' = 
+              IF   I 1+ C@ CASE SYM->DOPERATOR  ENDCASE 1 I+
+              ELSE I C@ ':' =
+                   IF   I 1+ C@ CASE SYM->POPERATOR  ENDCASE 1 I+
+                   ELSE I C@ ''' = I 1+ z19? I 1+ zAF? OR AND
+                        IF   I 1+ C@ CASE SYM->XOPERATOR  ENDCASE 1 I+
+                        ELSE I C@ CASE SYM->OPERATOR ''' OF XTSYM ENDOF ';' FO EXIT EF '\' FO CR EF ENDCASE
+                        THEN
+                   THEN                                                                              
+              THEN
          THEN
-      ELSE I C@ ':' =
-           IF   I 1+ z19? 
-                IF   I 1+ C@ '0' - 1- CELLS LIT,  sp LIT, ` + ` ! 
-                ELSE I 1+ C@ '7' - 1- CELLS LIT,  sp LIT, ` + ` !
-                THEN 1 I+
-           ELSE I C@ ''' = I 1+ z19?  I 1+ zAF? OR AND
-                IF I 1+ z19? 
-                   IF   I 1+ C@ '0' - 1- CELLS LIT, sp LIT, ` +  
-                   ELSE I 1+ C@ '7' - 1- CELLS LIT, sp LIT, ` +  
-                   THEN 1 I+                
-                ELSE I C@ '`' = I 1+ z19? I 1+ zAF? OR AND 
-                     IF I 1+ z19? 
-                        IF   I 1+ C@ '0' - LIT,  
-                        ELSE I 1+ C@ '7' - LIT,  
-                        THEN 1 I+
-                     ELSE I C@ '`' = 
-                          IF   I 1+ C@ CASE SYM->FOPERATOR ';' FO RET, EF ENDCASE 1 I+ 
-                          ELSE I C@ '"' = 
-                               IF   I 1+ C@ CASE SYM->DOPERATOR  ENDCASE 1 I+
-                               ELSE I    C@ CASE SYM->OPERATOR ''' OF XTSYM ENDOF ';' FO EXIT EF '\' FO CR EF ENDCASE                                        
-                               THEN
-                          THEN
-                     THEN
-                THEN                                                                               
-           THEN   
-      THEN        
+      THEN
   LOOP
 ;
+
+\ EOF 
+
+
 \ работа с числами с плав. точкой - односимвольный вариант в отдельном словаре ( n| ) 
+
+0 VALUE XSP 0 VALUE XSF
+: ; 0 TO XSP 0 TO XSF POSTPONE ; ; IMMEDIATE
 
 S: S>FOPERATOR
 + F+         - F-         * F*      / F/      a FABS    n FNEGATE i F1+            \ арифметика    
@@ -205,6 +235,7 @@ _ ACCEPT     k KEY        K EKEY                                                
       THEN           
   LOOP               
 ;
+
 \EOF 
 \ как пример использования - манипуляторный вариант конвертора чисел с плавающей запятой из формы 32,123 в форму 32.123е
 \ числа с плавающей запятой в виде 3,1415 
