@@ -1,5 +1,5 @@
 : QuickSortBytes ( a u -- a u )
-1024 3/3h:412GIbg*4+jL /1:543GI@0$J4-g/5w'5jLgN /124f
+1024 /`3[3h:412GIbg*4+jL /1:543GI@0$J4-g/5w'5jLgN /124f]
 ;
 
 \ EOF

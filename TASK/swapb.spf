@@ -2,6 +2,6 @@
   2DUP AND OVER 1 SWAP WITHIN AND XOR ;
 
 : SWAPBm ( n bitmask -- n')
-  2/12&`12H2&1^ ;
+  /`2[12&`12H2&1^] ;
 
 0x1004005 0x1000002 SWAPBm HEX . DECIMAL

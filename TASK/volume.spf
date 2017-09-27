@@ -8,19 +8,19 @@ CHOOSE v! v /h b! b v + e! b v CHOOSE + a!
 
 \ реализация алгоритма определения объема памяти ( сложность O(Nlog2N))
 0 m! 1 M! 0 MM! 0 f!
-\O
-a \bZ? a \b~ a \wt
-m 0  \$ a e \=? b \e a \it is a \L
-M m  \$ a e \=? b \e a \it is a a \b? a \b~ a \wtL
-M 0  \$ a b \=? e \e a \`it is a \L
-a \bZ? M m \-y=? ." volume memory  find: " M \`i.\
-                 ." volume memory model: " v . b \f /;
-                   \e M is MM M m + 2/ is M 1 is f \t
-        \e M is m f \? MM is M 0 is f \e M 2* is M \tt
-\o ;
+/O
+a /bZ? a /b~ a /wt
+m 0  /$ a e /=? b /e a /it is a /L
+M m  /$ a e /=? b /e a /it is a a /b? a /b~ a /wtL
+M 0  /$ a b /=? e /e a /`it is a /L
+a /bZ? M m /-y=? ." volume memory  find: " M /`i.\
+                 ." volume memory model: " v . b /f /;
+                   /e M is MM M m + 2/ is M 1 is f /t
+        /e M is m f /? MM is M 0 is f /e M 2* is M /tt
+/o ;
 
 \ EOF
 
-tst: RANDOMIZE 1200000000 volume CR ;
+tst: RANDOMIZE 120000000 volume CR ;
 
 DMETER tst

@@ -21,7 +21,7 @@
 
 \ с локально-именованными словами и манипуляторами
 : Rome. 0 smd!
-  sym.( S" IVXLCDM" smd 3/13++bc )
+  sym.( S" IVXLCDM" smd /`4[12+4+bc] )
   dig.( is smd 5 /MOD OVER 4 =
         IF 0 sym. IF 2 sym. ELSE 1 sym.  THEN DROP
         ELSE  IF 1 sym. THEN 0 ?DO 0 sym. LOOP THEN )

@@ -150,7 +150,8 @@ k kbyte      S ,           @ F@
 m FMIN       T n.0h        _ ALLOT
 n FNEGATE    V SPMOVE    
 p DP         X R@        
-r R>         Z F0=       
+q sqrt       Z F0= 
+r R>               
 s C,                     
 t n.0b                   
 x SPDROP                 

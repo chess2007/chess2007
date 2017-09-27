@@ -8,11 +8,11 @@ CREATE ARr  1   , 2   , 3   , 4   , 5   ,
 CREATE ARR  1. 2, 2. 2, 3. 2, 4. 2, 5. 2,
 
 M: compdata ( a u -- fl )  0 f!
-   2/2 k * 0
+   2 /[2 k * 0
    DO /2 k * I k +
       ?DO J /1 + r I /1 + r c IF 1 is f LEAVE THEN  L`
       f IF LEAVE THEN
-   L` f ;
+   L` f /] ;
 
 : compbytes ( a u -- fl )
   r( C@ ) L[ LOOP ]     k( 1 )  c( = )
